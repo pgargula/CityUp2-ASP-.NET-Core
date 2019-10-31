@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Services
 {
-    interface IUserService
+   public interface IUserService
     {
-        public JwtSecurityToken LoginUser(string login, string password);
+        public Task<JwtSecurityToken> LoginUser(string login, string password);
     }
 }

@@ -28,7 +28,8 @@ namespace PracaInzWebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+
+            services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSwaggerGen(c =>
@@ -59,7 +60,7 @@ namespace PracaInzWebApplication
                 };
             });
 
-            services.AddTransient<IUserService, SqlUserService>();
+            services.AddTransient<IUserService, MockUserService>();
             
         }
 
@@ -76,6 +77,7 @@ namespace PracaInzWebApplication
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
@@ -98,6 +100,8 @@ namespace PracaInzWebApplication
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
             });
         }
     }

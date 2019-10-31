@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Services
 {
-    public class SqlUserService : IUserService
+    public class MockUserService : IUserService
     {
         private List<User> _userList = new List<User>
         {
@@ -30,7 +30,7 @@ namespace PracaInzWebApplication.Services
         }
 
 
-        public JwtSecurityToken LoginUser(string login, string password)
+        public async Task<JwtSecurityToken> LoginUser(string login, string password)
         {
             User user = _userList.Single(x => x.Login == login);
 
@@ -40,7 +40,7 @@ namespace PracaInzWebApplication.Services
             {
                 var secretKey = System.Text.Encoding.ASCII.GetBytes("70ZaBE-5LxoAjV4ibfCdS8afpizTY60GjY7tebchbTHTiayOQa1Eaetxy5T4nS7DVf");
                 //Generate Token for user 
-                var JWToken = new JwtSecurityToken(
+                 var JWToken = new JwtSecurityToken(
                     issuer: Consts.appAdress,
                     audience: Consts.appAdress,
                     claims: _getUserClaims(user),
@@ -50,7 +50,7 @@ namespace PracaInzWebApplication.Services
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(secretKey),
                                         SecurityAlgorithms.HmacSha256Signature)
                 );
-                return JWToken;
+                return  JWToken;
             }
             else
                 return null;
