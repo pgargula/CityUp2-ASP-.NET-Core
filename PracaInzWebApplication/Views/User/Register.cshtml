@@ -1,24 +1,40 @@
-﻿<div id="fb-root"></div>
+﻿@model PracaInzWebApplication.Models.DTO.UserRegisterDTO
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v4.0&appId=541925099164239&autoLogAppEvents=1"></script>
-<form>
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row justify-content-md-center">
         <div class="col-md-6 ">
             <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <label for="InputEmail">Email:</label>
+                <input asp-for="Email" class="form-control" placeholder="Wprowadź adres email" />
+                <span asp-validation-for="Email" class="text-danger" />
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Type password</label>
-                <input type="password" class="form-control" id="Password" placeholder="Password">
+                <label for="InputLogin">Login:</label>
+                <input asp-for="Login" class="form-control" placeholder="Wprowadź Login" />
+                <span asp-validation-for="Login" class="text-danger" />
             </div>
             <div class="form-group">
-                <label>Confirm your password</label>
-                <input type="password" class="form-control" id="ConfirmPassword" placeholder="Password">
+                <label for="exampleInputPassword1">Hasło:</label>
+                <input asp-for="Password" class="form-control" placeholder="Wprowadź hasło" />
+                <span asp-validation-for="Password" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label>Potwierdź hasło</label>
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Wprowadź hasło" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger" />
             </div>
             <div class="form-group">
                 <label>Enter your city</label>
-                <input type="text" class="form-control" id="City" placeholder="City">
+                <select asp-for="City" class="form-control" >
+                   <option value=1>Kraków</option>
+                   <option value=2>Kurów</option>     
+                </select>
             </div>
 
 
@@ -30,7 +46,7 @@
                     <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
                 </div>
             </div>
-        </div> 
-        
+        </div>
+
     </div>
 </form>

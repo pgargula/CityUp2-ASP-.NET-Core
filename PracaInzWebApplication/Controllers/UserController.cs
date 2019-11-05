@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using PracaInzWebApplication.CustomAtributes;
 using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Models.DTO;
@@ -21,6 +22,7 @@ namespace PracaInzWebApplication.Controllers
     {
         private HttpClient _httpClient = new HttpClient();
         // GET: /<controller>/
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -39,20 +41,21 @@ namespace PracaInzWebApplication.Controllers
                     var requestBody = new StringContent(JsonConvert.SerializeObject(userLoginDTO),Encoding.UTF8, "application/json");
                     var response = await _httpClient.PostAsync(uri, requestBody);
                     var resultContent = await response.Content.ReadAsStringAsync();
-
+                 
                     if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        //var token = JsonConvert.DeserializeObject<string>(resultContent);
+                    {  
+                      //var token = JsonConvert.DeserializeObject<string>(resultContent);
                         if (resultContent != null)
-                        {
-                            //Save token in session object
-                            HttpContext.Session.SetString("JWToken", resultContent);
+                            {
+                                //Save token in session object
+                                HttpContext.Session.SetString("JWToken", resultContent);
+                      
                             return Redirect("~/Home/Index");
                             
-                        }
+                            }
                     }
-                ModelState.AddModelError(string.Empty, "Nieudana próba logowania");
-                }
+                    ModelState.AddModelError(string.Empty, "Nieudana próba logowania");
+                 }
                 catch (Exception e)
                 {
                     throw new WebException("Nie udało sie zalogować");
@@ -60,7 +63,29 @@ namespace PracaInzWebApplication.Controllers
 
             return View(userLoginDTO);
         }
+        [HttpPost]
+        public async Task<IActionResult> Register(UserRegisterDTO userRegisterDTO)
+        {
+            UserLoginDTO userLoginDTO = new UserLoginDTO() {Login=userRegisterDTO.Login,Password=userRegisterDTO.Password};
+            var uri = new Uri(Consts.appAdress + "api/User/RegisterUser");
+            try 
+            { 
+                var requestBody = new StringContent(JsonConvert.SerializeObject(userRegisterDTO), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(uri, requestBody);
+                var resultContent = await response.Content.ReadAsStringAsync();
 
+                if (response.StatusCode == HttpStatusCode.OK)
+                 return await Login(userLoginDTO);
+                ModelState.AddModelError(string.Empty, "Nieudana próba rejestracji");
+            }
+            catch (Exception e)
+            {
+                throw new WebException("Nie udało sie zarejestrować");
+            }
+            return View(userRegisterDTO);
+        }
+       
+        [Authorize]
         public IActionResult Logoff()
         {
             HttpContext.Session.Clear();

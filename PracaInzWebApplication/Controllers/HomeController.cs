@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PracaInzWebApplication.CustomAtributes;
+using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Models;
+
 
 namespace PracaInzWebApplication.Controllers
 {
@@ -23,6 +27,7 @@ namespace PracaInzWebApplication.Controllers
             return View();
         }
 
+        [Authorize(Roles.CityAdministrator)]
         public IActionResult Privacy()
         {
             return View();

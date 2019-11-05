@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PracaInzWebApplication.CustomAtributes;
+using PracaInzWebApplication.Helpers;
 
 namespace PracaInzWebApplication.API
 {
@@ -11,13 +13,14 @@ namespace PracaInzWebApplication.API
     [ApiController]
     public class TssdaController : ControllerBase
     {
+        [Authorize]
         // GET: api/Tssda
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
-
+        [Authorize(Roles.CityAdministrator)]
         // GET: api/Tssda/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
