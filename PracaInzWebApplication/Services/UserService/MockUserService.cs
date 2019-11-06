@@ -23,7 +23,8 @@ namespace PracaInzWebApplication.Services.UserService
         {
             new User(){Id=1, Login="admin", Password="admin", Email="admin@test.pl",City = 1, Role=Roles.SystemAdministrator},
             new User(){Id=1, Login="user", Password="user", Email="user@test.pl",City = 1, Role=Roles.User},
-            new User(){Id=1, Login="cityadmin", Password="cityadmin", Email="cityadmin@test.pl",City = 1, Role=Roles.CityAdministrator}
+            new User(){Id=1, Login="cityadmin", Password="cityadmin", Email="cityadmin@test.pl",City = 1, Role=Roles.CityAdministrator},
+             new User(){Id=1, Login="citymoderator", Password="citymoderator", Email="citymoderator@test.pl",City = 1, Role=Roles.CityModerator}
         };
 
         public MockUserService(IAuthenticationService authenticationService, IMapper mapper)

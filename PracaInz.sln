@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAndAPI", "WebAndAPI", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracaInzWebApplication", "PracaInzWebApplication\PracaInzWebApplication.csproj", "{2DAB92E3-2A99-4D7B-B763-7F8E1BCE3A56}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{0AE49498-993E-468E-A874-97DF761CFF57}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
