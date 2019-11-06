@@ -18,12 +18,39 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.HasClaim("Role", "CityModerator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="SubCityApplications">Moja dzielnica</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="SubCityStats">Statystyki</a>
+                                </li>
+                            }
+                            @if (User.HasClaim("Role", "CityAdministrator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="CityApplications">Przeglądaj zgłoszenia</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Stats">Statystyki</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Moderate">Zarządzaj</a>
+                                </li>
+                            }
+                            @if (User.HasClaim("Role", "User"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="UserApplications">Moje zgłoszenia</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyProfile">Moj profil</a>
+                                </li>
+                            }
+                        }
                     </ul>
                     <ul class="navbar-nav flex-grow-1-reverse">
                         @if (User.Identity.IsAuthenticated)

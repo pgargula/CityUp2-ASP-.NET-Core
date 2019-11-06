@@ -32,10 +32,16 @@ namespace PracaInzWebApplication.Controllers
         {
             return View();
         }
+        [Authorize]
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task <IActionResult> Login(UserLoginDTO userLoginDTO)   
         {        
-                var uri = new Uri(Consts.appAdress + "api/User/LoginUser");
+                var uri = new Uri(Consts.appAdress + "api/ApiUser/LoginUser");
                 try
                 {
                     var requestBody = new StringContent(JsonConvert.SerializeObject(userLoginDTO),Encoding.UTF8, "application/json");
@@ -67,7 +73,7 @@ namespace PracaInzWebApplication.Controllers
         public async Task<IActionResult> Register(UserRegisterDTO userRegisterDTO)
         {
             UserLoginDTO userLoginDTO = new UserLoginDTO() {Login=userRegisterDTO.Login,Password=userRegisterDTO.Password};
-            var uri = new Uri(Consts.appAdress + "api/User/RegisterUser");
+            var uri = new Uri(Consts.appAdress + "api/ApiUser/RegisterUser");
             try 
             { 
                 var requestBody = new StringContent(JsonConvert.SerializeObject(userRegisterDTO), Encoding.UTF8, "application/json");
