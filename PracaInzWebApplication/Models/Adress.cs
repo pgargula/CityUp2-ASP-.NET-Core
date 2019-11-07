@@ -10,10 +10,13 @@ namespace PracaInzWebApplication.Models
     {
         [Key]
         public int AdressId { get; set; }
-        [Required]
+        //[Required]
+        public int CityId { get; set; }
         public City City { get; set; }
+        public int? DistrictId { get; set; }
         public District? District { get; set; }
         public string Street { get; set; }
-        Geolocation Geolocation { get; set; }
+        public int? GeolocationId { get; set; }
+        public Geolocation? Geolocation { get; set; }
     }
 }

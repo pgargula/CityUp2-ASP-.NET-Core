@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Models
 {
-    public class City
+    public class ApplicationPicture
     {
         [Key]
-        public int CityId { get; set; }
+        public int ApplicationPictureId { get; set; }
         //[Required]
-        public string Name { get; set; }
+        public string PicturePath { get; set; }
+        //[Required]
+        public int ApplicationId { get; set; }
     }
 }

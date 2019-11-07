@@ -11,12 +11,10 @@ namespace PracaInzWebApplication.Models
         [Key]
         public int ApplicationId { get; set; }
 
-        public int UsertId { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
-
-       // public ICollection<ApplicationPicture> AppplicationPictures { get; set; }
-
-       // public int GeolocationId { get; set; }
+        public ICollection<ApplicationPicture> AppplicationPictures { get; set; }
+        public int AdressId { get; set; }
         public Adress Adress { get; set; }
 
         public int StatusId { get; set; }

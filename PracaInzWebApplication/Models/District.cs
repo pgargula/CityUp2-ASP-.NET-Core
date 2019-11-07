@@ -10,7 +10,7 @@ namespace PracaInzWebApplication.Models
     {
         [Key]
         public int DistrictId { get; set; }
-        [Required]
+        //[Required]
         public string Name { get; set; }
     }
 }

@@ -5,6 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191106230300_InitialMigration.cs" />
+    <Compile Remove="Migrations\20191106230300_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20191107215835_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107215835_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107221831_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107221831_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107222826_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107222826_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107223454_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107223454_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107224433_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107224433_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107224527_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107224527_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107224830_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107224830_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107225948_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107225948_FixedModelsAndSeedData.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

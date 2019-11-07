@@ -97,7 +97,7 @@ namespace PracaInzWebApplication
                 };
             });
 
-            services.AddSingleton<IUserService, MockUserService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
         }
 
