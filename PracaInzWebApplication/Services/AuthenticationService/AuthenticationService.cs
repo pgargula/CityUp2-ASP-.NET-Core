@@ -34,7 +34,10 @@ namespace PracaInzWebApplication.Services.AuthenticationService
         {
             IEnumerable<Claim> claims = new Claim[]
             {
-             
+                new Claim(ClaimTypes.Name, user.UserId+user.Login),
+                new Claim("Id",user.UserId.ToString()),
+                new Claim("Login", user.Login),
+                new Claim("Role",user.Role)
             };
             return claims;
         }

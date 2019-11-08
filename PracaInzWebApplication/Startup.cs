@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Helpers;
+using PracaInzWebApplication.Services.ApplicationService;
 using PracaInzWebApplication.Services.AuthenticationService;
 using PracaInzWebApplication.Services.UserService;
 
@@ -99,6 +100,7 @@ namespace PracaInzWebApplication
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IApplicationService, ApplicationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
