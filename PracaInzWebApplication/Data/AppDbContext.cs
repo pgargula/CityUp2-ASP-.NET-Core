@@ -22,6 +22,8 @@ namespace PracaInzWebApplication.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ApplicationCategory>().HasKey(sc => new { sc.ApplicationId, sc.CategoryId });
+            
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Login = "admin", Password = "admin", Email = "admin@test.pl", CityId = 1, Role = Roles.SystemAdministrator },
                 new User { UserId = 2, Login = "user", Password = "user", Email = "user@test.pl", CityId = 1, Role = Roles.User },

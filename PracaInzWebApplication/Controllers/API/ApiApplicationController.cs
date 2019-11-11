@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Services.ApplicationService;
@@ -14,10 +17,12 @@ namespace PracaInzWebApplication.Controllers.API
     public class ApiApplicationController : Controller
     {
         private readonly IApplicationService _applicationService;
-       
-        public ApiApplicationController(IApplicationService applicationService)
+        private IWebHostEnvironment _hostingEnvironment;
+
+        public ApiApplicationController(IApplicationService applicationService,IWebHostEnvironment webHostEnvironment)
         {
             _applicationService = applicationService;
+            _hostingEnvironment = webHostEnvironment;
         }
 
 
@@ -37,9 +42,27 @@ namespace PracaInzWebApplication.Controllers.API
 
         // POST api/ApiApplication
         [HttpPost]
-        public async Task Add([FromBody]Application application)
+        public async Task Add([FromBody]Application application, IFormFile pictures)
         {
-           await _applicationService.AddApplication(application);
+            List<string> picturePaths = new List<string>();
+            //todo : multiple pictures
+            if (pictures != null /*&& files.Count > 0*/)
+            {
+                if (pictures.Length > 0)
+                {
+                    string shortPicturePath = "/applications_pictures/" + application.ApplicationId + "/" + pictures.FileName;
+                    string PicturePath = _hostingEnvironment.WebRootPath + shortPicturePath.Replace('/', '\\');
+
+                    picturePaths.Add(shortPicturePath);
+
+                    using (var stream = new FileStream(PicturePath, FileMode.Create))
+                    {
+                        await pictures.CopyToAsync(stream);
+                    }
+                }
+                //}
+            }
+            await _applicationService.AddApplication(application, picturePaths);
         }
 
 

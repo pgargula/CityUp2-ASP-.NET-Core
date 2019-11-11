@@ -17,10 +17,17 @@ namespace PracaInzWebApplication.Services.ApplicationService
             _context = context;
         }
 
-        public async Task AddApplication(Application application)
+        public async Task AddApplication(Application application, IEnumerable<string> picurePaths)
         {
+
             await _context.Applications.AddAsync(application);
             await _context.SaveChangesAsync();
+            List<ApplicationPicture> applicationPictures = new List<ApplicationPicture>();
+            foreach(var picturePath in picurePaths)
+            {
+             applicationPictures.Add(new ApplicationPicture { ApplicationId = application.ApplicationId, PicturePath = picturePath });
+            }
+
         }
 
         public async Task DeleteApplication(int applicationId)
