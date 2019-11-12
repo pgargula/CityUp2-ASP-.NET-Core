@@ -37,7 +37,8 @@ namespace PracaInzWebApplication.Controllers.API
         [HttpGet("{cityId}")]
         public async Task<IEnumerable<Application>> GetAllByCity(int cityId)
         {
-            return await _applicationService.GetAllByCity(cityId);
+            var dasd =await _applicationService.GetAllByCity(cityId);
+            return dasd;
         }
 
         // POST api/ApiApplication

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Services.ApplicationService;
@@ -36,9 +37,8 @@ namespace PracaInzWebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppDbConn")));
-            
             services.AddSession();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore); ;
             services.AddRazorPages();
             services.AddSwaggerGen(c =>
             {

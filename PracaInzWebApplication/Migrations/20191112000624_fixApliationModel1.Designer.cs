@@ -10,8 +10,8 @@ using PracaInzWebApplication.Data;
 namespace PracaInzWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191111184513_updatedModels")]
-    partial class updatedModels
+    [Migration("20191112000624_fixApliationModel1")]
+    partial class fixApliationModel1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,11 +87,17 @@ namespace PracaInzWebApplication.Migrations
                     b.Property<int>("AdressId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -99,6 +105,8 @@ namespace PracaInzWebApplication.Migrations
                     b.HasKey("ApplicationId");
 
                     b.HasIndex("AdressId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("StatusId");
 
@@ -111,41 +119,32 @@ namespace PracaInzWebApplication.Migrations
                         {
                             ApplicationId = 1,
                             AdressId = 1,
+                            CategoryId = 1,
                             Description = "fasfa",
                             StatusId = 1,
+                            Title = "Rozwalony śmietnk",
                             UserId = 2
                         },
                         new
                         {
                             ApplicationId = 2,
                             AdressId = 2,
+                            CategoryId = 2,
                             Description = "facascsfa",
                             StatusId = 2,
+                            Title = "Wrak na poboczu",
                             UserId = 2
                         },
                         new
                         {
                             ApplicationId = 3,
                             AdressId = 4,
+                            CategoryId = 3,
                             Description = "fasfasfqfasfa",
                             StatusId = 1,
+                            Title = "Dzikie Psy",
                             UserId = 3
                         });
-                });
-
-            modelBuilder.Entity("PracaInzWebApplication.Models.ApplicationCategory", b =>
-                {
-                    b.Property<int>("ApplicationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ApplicationId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ApplicationCategory");
                 });
 
             modelBuilder.Entity("PracaInzWebApplication.Models.ApplicationPicture", b =>
@@ -206,7 +205,24 @@ namespace PracaInzWebApplication.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            Name = "Zaniszczenie"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            Name = "Inicjatywa"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            Name = "Inne"
+                        });
                 });
 
             modelBuilder.Entity("PracaInzWebApplication.Models.City", b =>
@@ -402,6 +418,12 @@ namespace PracaInzWebApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PracaInzWebApplication.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PracaInzWebApplication.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -415,24 +437,9 @@ namespace PracaInzWebApplication.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PracaInzWebApplication.Models.ApplicationCategory", b =>
-                {
-                    b.HasOne("PracaInzWebApplication.Models.Application", "Aplication")
-                        .WithMany()
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PracaInzWebApplication.Models.Category", "Category")
-                        .WithMany("ApplicationCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PracaInzWebApplication.Models.ApplicationPicture", b =>
                 {
-                    b.HasOne("PracaInzWebApplication.Models.Application", "Application")
+                    b.HasOne("PracaInzWebApplication.Models.Application", null)
                         .WithMany("AppplicationPictures")
                         .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)

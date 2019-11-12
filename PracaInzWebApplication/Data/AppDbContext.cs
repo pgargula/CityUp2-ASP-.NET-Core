@@ -19,10 +19,11 @@ namespace PracaInzWebApplication.Data
        public DbSet<District> Districts { get; set; }
        public DbSet<Geolocation> Geolocations { get; set; }
        public DbSet<Status> Statuses { get; set; }
+       public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ApplicationCategory>().HasKey(sc => new { sc.ApplicationId, sc.CategoryId });
+           // modelBuilder.Entity<ApplicationCategory>().HasKey(sc => new { sc.ApplicationId, sc.CategoryId });
             
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Login = "admin", Password = "admin", Email = "admin@test.pl", CityId = 1, Role = Roles.SystemAdministrator },
@@ -42,10 +43,15 @@ namespace PracaInzWebApplication.Data
                 new Adress { AdressId = 3, CityId = 2, Street = "Tarnowska" },
                 new Adress { AdressId = 4, CityId = 1, Street = "Siemaszki" }
                 );
+            modelBuilder.Entity<Category>().HasData(
+                new Category { CategoryId=1, Name="Zaniszczenie"},
+                new Category { CategoryId = 2, Name = "Inicjatywa" },
+                new Category { CategoryId = 3, Name = "Inne" }
+                );
             modelBuilder.Entity<Application>().HasData(
-                new Application { ApplicationId = 1, AdressId = 1, Description = "fasfa", StatusId = 1, UserId = 2 },
-                new Application { ApplicationId = 2, AdressId = 2, Description = "facascsfa", StatusId = 2, UserId = 2 },
-                new Application { ApplicationId = 3, AdressId = 4, Description = "fasfasfqfasfa", StatusId = 1, UserId = 3 }
+                new Application { ApplicationId = 1, AdressId = 1, Description = "fasfa", StatusId = 1, UserId = 2, CategoryId=1, Title="Rozwalony śmietnk" },
+                new Application { ApplicationId = 2, AdressId = 2, Description = "facascsfa", StatusId = 2, UserId = 2, CategoryId=2, Title="Wrak na poboczu" },
+                new Application { ApplicationId = 3, AdressId = 4, Description = "fasfasfqfasfa", StatusId = 1, UserId = 3, CategoryId=3, Title= "Dzikie Psy" }
                 );
             modelBuilder.Entity<Status>().HasData(
                 new Status { StatusId = 1, Label = "1" },

@@ -22,6 +22,12 @@ namespace PracaInzWebApplication.Controllers
             return View();
         }
         [Authorize(Roles.CityAdministrator)]
+        public IActionResult ApplicationDetails(int applicationId)
+        {
+            ViewBag.ApplicationId = applicationId;
+            return View();
+        }
+        [Authorize(Roles.CityAdministrator)]
         public IActionResult Stats()
         {
             return View();

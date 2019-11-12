@@ -37,7 +37,8 @@ namespace PracaInzWebApplication.Services.AuthenticationService
                 new Claim(ClaimTypes.Name, user.UserId+user.Login),
                 new Claim("Id",user.UserId.ToString()),
                 new Claim("Login", user.Login),
-                new Claim("Role",user.Role)
+                new Claim("Role",user.Role),
+                new Claim("CityId",user.CityId.ToString())
             };
             return claims;
         }

@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - PracaInzWebApplication</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
@@ -54,7 +55,7 @@
                     </ul>
                     <ul class="navbar-nav flex-grow-1-reverse">
                         @if (User.Identity.IsAuthenticated)
-                        { 
+                        {
                             <h1>@User.Identity.Name</h1>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logoff">Wyloguj</a>
@@ -88,6 +89,12 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/js/datatables.js" asp-append-version="true"></script> 
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/datatables.min.js" asp-append-version="true" ></script>/>
+    </environment>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

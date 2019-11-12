@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracaInzWebApplication.Data;
 
 namespace PracaInzWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191111232556_updateModels")]
+    partial class updateModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +96,7 @@ namespace PracaInzWebApplication.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Titlle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
@@ -120,7 +122,6 @@ namespace PracaInzWebApplication.Migrations
                             CategoryId = 1,
                             Description = "fasfa",
                             StatusId = 1,
-                            Title = "Rozwalony śmietnk",
                             UserId = 2
                         },
                         new
@@ -130,7 +131,6 @@ namespace PracaInzWebApplication.Migrations
                             CategoryId = 2,
                             Description = "facascsfa",
                             StatusId = 2,
-                            Title = "Wrak na poboczu",
                             UserId = 2
                         },
                         new
@@ -140,7 +140,6 @@ namespace PracaInzWebApplication.Migrations
                             CategoryId = 3,
                             Description = "fasfasfqfasfa",
                             StatusId = 1,
-                            Title = "Dzikie Psy",
                             UserId = 3
                         });
                 });

@@ -2,10 +2,23 @@
 
 namespace PracaInzWebApplication.Migrations
 {
-    public partial class FixedModelsAndSeedData : Migration
+    public partial class updateModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
@@ -125,6 +138,8 @@ namespace PracaInzWebApplication.Migrations
                     UserId = table.Column<int>(nullable: false),
                     AdressId = table.Column<int>(nullable: false),
                     StatusId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false),
+                    Titlle = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -135,6 +150,12 @@ namespace PracaInzWebApplication.Migrations
                         column: x => x.AdressId,
                         principalTable: "Adress",
                         principalColumn: "AdressId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Applications_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Applications_Statuses_StatusId",
@@ -168,6 +189,16 @@ namespace PracaInzWebApplication.Migrations
                         principalTable: "Applications",
                         principalColumn: "ApplicationId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "CategoryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Zaniszczenie" },
+                    { 2, "Inicjatywa" },
+                    { 3, "Inne" }
                 });
 
             migrationBuilder.InsertData(
@@ -214,18 +245,18 @@ namespace PracaInzWebApplication.Migrations
 
             migrationBuilder.InsertData(
                 table: "Applications",
-                columns: new[] { "ApplicationId", "AdressId", "Description", "StatusId", "UserId" },
-                values: new object[] { 1, 1, "fasfa", 1, 2 });
+                columns: new[] { "ApplicationId", "AdressId", "CategoryId", "Description", "StatusId", "Titlle", "UserId" },
+                values: new object[] { 1, 1, 1, "fasfa", 1, null, 2 });
 
             migrationBuilder.InsertData(
                 table: "Applications",
-                columns: new[] { "ApplicationId", "AdressId", "Description", "StatusId", "UserId" },
-                values: new object[] { 2, 2, "facascsfa", 2, 2 });
+                columns: new[] { "ApplicationId", "AdressId", "CategoryId", "Description", "StatusId", "Titlle", "UserId" },
+                values: new object[] { 2, 2, 2, "facascsfa", 2, null, 2 });
 
             migrationBuilder.InsertData(
                 table: "Applications",
-                columns: new[] { "ApplicationId", "AdressId", "Description", "StatusId", "UserId" },
-                values: new object[] { 3, 4, "fasfasfqfasfa", 1, 3 });
+                columns: new[] { "ApplicationId", "AdressId", "CategoryId", "Description", "StatusId", "Titlle", "UserId" },
+                values: new object[] { 3, 4, 3, "fasfasfqfasfa", 1, null, 3 });
 
             migrationBuilder.InsertData(
                 table: "ApplicationPicture",
@@ -264,6 +295,11 @@ namespace PracaInzWebApplication.Migrations
                 column: "AdressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Applications_CategoryId",
+                table: "Applications",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Applications_StatusId",
                 table: "Applications",
                 column: "StatusId");
@@ -289,6 +325,9 @@ namespace PracaInzWebApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "Adress");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Statuses");

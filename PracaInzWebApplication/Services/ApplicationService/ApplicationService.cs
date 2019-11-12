@@ -39,12 +39,21 @@ namespace PracaInzWebApplication.Services.ApplicationService
 
         public async Task<IEnumerable<Application>> GetAllByCity(int cityId)
         {
-            return await _context.Applications.Include(x => x.Adress)
-                 .Include(x => x.Adress.City)
-                 .Include(x => x.Status)
-                 .Include(x => x.AppplicationPictures)
-                 .Include(x => x.User)
-                 .Where(x => x.Adress.CityId == cityId).ToListAsync();
+            try
+            {
+                return await _context.Applications.Include(x => x.Adress)
+                     .Include(x => x.Adress.City)
+                     .Include(x => x.Status)
+                     .Include(x => x.AppplicationPictures)
+                     .Include(x => x.User)
+                     .Include(x => x.Category)
+                     .Where(x => x.Adress.CityId == cityId).ToListAsync();  
+            }
+            catch(Exception ex)
+            { 
+                throw ex; 
+            }
+
         }
 
         public async Task<IEnumerable<Application>> GetAllByUser(int userId)

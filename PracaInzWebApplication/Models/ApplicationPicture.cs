@@ -14,6 +14,6 @@ namespace PracaInzWebApplication.Models
         public string PicturePath { get; set; }
         //[Required]
         public int ApplicationId { get; set; }
-        public Application Application { get; set; }
+       // public Application Application { get; set; }
     }
 }

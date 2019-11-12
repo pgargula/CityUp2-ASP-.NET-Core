@@ -10,8 +10,8 @@ using PracaInzWebApplication.Data;
 namespace PracaInzWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191107230408_FixedModelsAndSeedData")]
-    partial class FixedModelsAndSeedData
+    [Migration("20191112000044_fixApliationModel")]
+    partial class fixApliationModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,11 +87,17 @@ namespace PracaInzWebApplication.Migrations
                     b.Property<int>("AdressId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -99,6 +105,8 @@ namespace PracaInzWebApplication.Migrations
                     b.HasKey("ApplicationId");
 
                     b.HasIndex("AdressId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("StatusId");
 
@@ -111,6 +119,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             ApplicationId = 1,
                             AdressId = 1,
+                            CategoryId = 1,
                             Description = "fasfa",
                             StatusId = 1,
                             UserId = 2
@@ -119,6 +128,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             ApplicationId = 2,
                             AdressId = 2,
+                            CategoryId = 2,
                             Description = "facascsfa",
                             StatusId = 2,
                             UserId = 2
@@ -127,6 +137,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             ApplicationId = 3,
                             AdressId = 4,
+                            CategoryId = 3,
                             Description = "fasfasfqfasfa",
                             StatusId = 1,
                             UserId = 3
@@ -176,6 +187,38 @@ namespace PracaInzWebApplication.Migrations
                             ApplicationPictureId = 4,
                             ApplicationId = 3,
                             PicturePath = "https://czasnawywczas.pl/wp-content/uploads/krakow-runek-glowa.jpg"
+                        });
+                });
+
+            modelBuilder.Entity("PracaInzWebApplication.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            Name = "Zaniszczenie"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            Name = "Inicjatywa"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            Name = "Inne"
                         });
                 });
 
@@ -369,6 +412,12 @@ namespace PracaInzWebApplication.Migrations
                     b.HasOne("PracaInzWebApplication.Models.Adress", "Adress")
                         .WithMany()
                         .HasForeignKey("AdressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PracaInzWebApplication.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
