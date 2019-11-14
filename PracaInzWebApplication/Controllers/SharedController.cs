@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace PracaInzWebApplication.Controllers
 {
-    public class ApplicationController : Controller
+    public class SharedController : Controller
     {
-        public IActionResult UserApplications()
+        
+        public IActionResult Index()
         {
             return View();
         }
-
     }
 }
