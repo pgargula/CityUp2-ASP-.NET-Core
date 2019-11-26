@@ -1,26 +1,54 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Views.Shared.Components
 {
     public class ApplicationDetailsViewComponent : ViewComponent
     {
-        public static List<ApplicationPicture> pp = new List<ApplicationPicture>
+        //public static list<applicationpicture> pp = new list<applicationpicture>
+        //{
+        //   new applicationpicture { applicationpictureid = 1, picturepath = "https://mpi.krakow.pl/zalacznik/320782/4.jpg", applicationid = 1 },
+        //   new applicationpicture { applicationpictureid = 2, picturepath = "https://fajnepodroze.pl/wp-content/uploads/2018/01/krakow.jpg", applicationid = 2 },
+        //   new applicationpicture { applicationpictureid = 3, picturepath = "https://czasnawywczas.pl/wp-content/uploads/krakow-budynki.jpg", applicationid = 2 },
+        //   new applicationpicture { applicationpictureid = 4, picturepath = "https://czasnawywczas.pl/wp-content/uploads/krakow-runek-glowa.jpg", applicationid = 3 }
+        //};
+        //private applicationdetails aa = new applicationdetails { title = "weq", description = "dasd", category = "adasd", district = "district", city = "krakow", status = "wtrakcie", street = "dsa", user = "user", pictures=pp};
+        private ApplicationDetails _applicationDetails;        
+        public async Task<ApplicationDetails> GetDetails(int applicationId)
         {
-           new ApplicationPicture { ApplicationPictureId = 1, PicturePath = "https://mpi.krakow.pl/zalacznik/320782/4.jpg", ApplicationId = 1 },
-           new ApplicationPicture { ApplicationPictureId = 2, PicturePath = "https://fajnepodroze.pl/wp-content/uploads/2018/01/krakow.jpg", ApplicationId = 2 },
-           new ApplicationPicture { ApplicationPictureId = 3, PicturePath = "https://czasnawywczas.pl/wp-content/uploads/krakow-budynki.jpg", ApplicationId = 2 },
-           new ApplicationPicture { ApplicationPictureId = 4, PicturePath = "https://czasnawywczas.pl/wp-content/uploads/krakow-runek-glowa.jpg", ApplicationId = 3 }
-        };
-        private ApplicationDetails aa = new ApplicationDetails { Title = "weq", Description = "dasd", Category = "adasd", District = "District", City = "krakow", Status = "wtrakcie", Street = "dsa", User = "user", Pictures=pp};
+            var uri = new Uri(Consts.appAdress + "api/ApiApplication/GetDetails/"+applicationId);
+            try
+            {
+                using (HttpClient _httpClient = new HttpClient())
+                {
+                    var response = await _httpClient.GetAsync(uri);
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<ApplicationDetails>(await response.Content.ReadAsStringAsync());
+                    }
+                    else
+                        return null;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
         public async Task<IViewComponentResult> InvokeAsync(int applicationId)
         {
-            return View("Details",aa);
+            _applicationDetails =await GetDetails(applicationId);
+            return View("Details",_applicationDetails);
         }
     }
 }

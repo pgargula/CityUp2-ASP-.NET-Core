@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PracaInzWebApplication.Models;
+using PracaInzWebApplication.Models.ViewModels;
 using PracaInzWebApplication.Services.ApplicationService;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,7 +20,7 @@ namespace PracaInzWebApplication.Controllers.API
         private readonly IApplicationService _applicationService;
         private IWebHostEnvironment _hostingEnvironment;
 
-        public ApiApplicationController(IApplicationService applicationService,IWebHostEnvironment webHostEnvironment)
+        public ApiApplicationController(IApplicationService applicationService, IWebHostEnvironment webHostEnvironment)
         {
             _applicationService = applicationService;
             _hostingEnvironment = webHostEnvironment;
@@ -37,8 +38,14 @@ namespace PracaInzWebApplication.Controllers.API
         [HttpGet("{cityId}")]
         public async Task<IEnumerable<Application>> GetAllByCity(int cityId)
         {
-            var dasd =await _applicationService.GetAllByCity(cityId);
-            return dasd;
+            return await _applicationService.GetAllByCity(cityId);
+
+        }
+        // GET: api/ApiApplication/applkicationId
+        [HttpGet("{applicationId}")]
+        public async Task<ApplicationDetails> GetDetails(int applicationId)
+        {
+            return await _applicationService.GetDetails(applicationId);
         }
 
         // POST api/ApiApplication

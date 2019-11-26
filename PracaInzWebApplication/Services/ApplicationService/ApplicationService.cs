@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Models;
+using PracaInzWebApplication.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,11 @@ namespace PracaInzWebApplication.Services.ApplicationService
     public class ApplicationService : IApplicationService
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ApplicationService(AppDbContext context)
+        public ApplicationService(AppDbContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
@@ -54,6 +58,46 @@ namespace PracaInzWebApplication.Services.ApplicationService
                 throw ex; 
             }
 
+        }
+
+        public async Task<ApplicationDetails> GetDetails(int applicationId)
+        {
+            try
+            {
+                var appDetails = await _context.Applications
+                         .Include(x => x.Adress.City)
+                         .Include(x => x.Adress)
+                         .Include(x => x.Status)
+                         .Include(x => x.AppplicationPictures)
+                         .Include(x => x.User)
+                         .Include(x => x.Category)
+                         .Where(x => x.ApplicationId == applicationId).FirstOrDefaultAsync();
+                //var tmp = _mapper.Map<ApplicationDetails>(appDetails);
+                if (appDetails != null)
+                {
+                    return new ApplicationDetails()
+                    {
+                        Title = appDetails.Title,
+                        Category = appDetails.Category.Name,
+                        City = appDetails.Adress.City.Name,
+                        Description = appDetails.Description,
+                       // District = appDetails.Adress.District.Name,
+                        Pictures = appDetails.AppplicationPictures.ToList(),
+                        Status = appDetails.Status.Label,
+                        Street = appDetails.Adress.Street,
+                        User = appDetails.User.Login
+                    };
+                }
+                else
+                {
+                    return null;
+                }
+                //return tmp;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<IEnumerable<Application>> GetAllByUser(int userId)

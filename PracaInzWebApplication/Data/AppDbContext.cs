@@ -61,7 +61,14 @@ namespace PracaInzWebApplication.Data
                 new ApplicationPicture { ApplicationPictureId = 1, PicturePath = "https://mpi.krakow.pl/zalacznik/320782/4.jpg", ApplicationId = 1 },
                 new ApplicationPicture { ApplicationPictureId = 2, PicturePath = "https://fajnepodroze.pl/wp-content/uploads/2018/01/krakow.jpg", ApplicationId = 2 },
                 new ApplicationPicture { ApplicationPictureId = 3, PicturePath = "https://czasnawywczas.pl/wp-content/uploads/krakow-budynki.jpg", ApplicationId = 2 },
-                new ApplicationPicture { ApplicationPictureId = 4, PicturePath = "https://czasnawywczas.pl/wp-content/uploads/krakow-runek-glowa.jpg", ApplicationId = 3 }
+                new ApplicationPicture { ApplicationPictureId = 4, PicturePath = "https://czasnawywczas.pl/wp-content/uploads/krakow-runek-glowa.jpg", ApplicationId = 2 },             
+                new ApplicationPicture { ApplicationPictureId = 5, PicturePath = "https://picsum.photos/500", ApplicationId = 1 },
+                new ApplicationPicture { ApplicationPictureId = 6, PicturePath = "https://picsum.photos/500", ApplicationId = 1 },
+                new ApplicationPicture { ApplicationPictureId = 7, PicturePath = "https://picsum.photos/500", ApplicationId = 1 },
+                new ApplicationPicture { ApplicationPictureId = 8, PicturePath = "https://picsum.photos/500", ApplicationId = 3 },
+                new ApplicationPicture { ApplicationPictureId = 9, PicturePath = "https://picsum.photos/500", ApplicationId = 3 },
+                new ApplicationPicture { ApplicationPictureId = 10, PicturePath = "https://picsum.photos/500", ApplicationId = 3 },
+                new ApplicationPicture { ApplicationPictureId = 11, PicturePath = "https://picsum.photos/500", ApplicationId = 3 }
             );
         }
     
