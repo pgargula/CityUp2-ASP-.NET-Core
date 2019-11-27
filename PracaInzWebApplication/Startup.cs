@@ -38,8 +38,10 @@ namespace PracaInzWebApplication
         {
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppDbConn")));
             services.AddSession();
-            services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore); ;
-            services.AddRazorPages();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .AddRazorRuntimeCompilation(); 
+       
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -74,7 +76,7 @@ namespace PracaInzWebApplication
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-
+            //jwt config
             var secretKey = System.Text.Encoding.ASCII.GetBytes("70ZaBE-5LxoAjV4ibfCdS8afpizTY60GjY7tebchbTHTiayOQa1Eaetxy5T4nS7DVf");
             services.AddAuthentication(authentication =>
             {

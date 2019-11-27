@@ -2,5 +2,22 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-appplication details 
-@await Component.InvokeAsync("ApplicationDetails",@ViewBag.ApplicationId)
+<div class="row">
+    <div class="col-md-4">
+        <div class="box">
+            dsadasda
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box">
+            @await Component.InvokeAsync("ApplicationDetails", @ViewBag.ApplicationId)
+        </div>
+    </div>
+    </div>
+
+@section styles{
+<style>
+   
+</style>
+
+ }
