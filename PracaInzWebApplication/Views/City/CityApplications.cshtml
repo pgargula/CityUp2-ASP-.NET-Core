@@ -2,25 +2,29 @@
 @{
     ViewData["Title"] = "CityApplications";
 }
-    <div class="box">
-        <div class="row justify-content-center">
-        <button type="button" class="btn btn-outline-secondary"><img src="~/images/map.png" width="20" />Lista</button><button type="button" class="btn btn-outline-secondary"><img src="~/images/list.png" width="20" />Mapa</button>
-            </div>
-        <div class="dataTable-custom">
-            <table id="applicationTable" class="display table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Tytuł</th>
-                        <th>Kategoria</th>
-                        <th>Ulica</th>
-                        <th>Zdjęcie</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+<div class="box">
+    <div class="row justify-content-center">
+        <button onclick="showList()" type="button" class="btn btn-outline-secondary"><img src="~/images/list.png" width="20" /> Lista</button>
+        <button onclick="showMap()" type="button" class="btn btn-outline-secondary"><img src="~/images/map.png" width="20" /> Mapa</button>
     </div>
 
+    <div class="dataTable-custom" id="list">
+        <table id="applicationTable" class="display table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Kategoria</th>
+                    <th>Ulica</th>
+                    <th>Zdjęcie</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div style="display: none;" id="googleMap"></div>
+
+</div>
 
 
 @section Styles{
@@ -32,76 +36,42 @@
     </environment>
 }
 
-@section Scripts {
+@section Scripts{
 
     <script>
-        $(document).ready(function () {
-            var CityId =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
-            var mainPicture;
-            var results;
-            $.when(
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/ApiApplication/GetAllByCity/' + CityId,
-                    contentType: "application/json",
-                    dataType: 'json',
-                    success: function (result) {
-                        results = result;
-                    }
-                })
-            ).then(initTable);
+        var list = document.getElementById("list");
+        var map = document.getElementById("googleMap");
+        function showList() {
+            list.style.display = "block";
+            map.style.display = "none";
+        }
+        function showMap() {
+            list.style.display = "none";
+            map.style.display = "block";
+        }
 
-    function initTable() {
-        table = $('#applicationTable').DataTable({
-            data: results,
-            autoWidth: true,
-            columns: [
-                {
-                    data: 'title'
-                },
-                {
-                    data: 'category.name'
-                },
-                {
-                    data: 'adress.street'
-                },
-                {
-                    data: 'appplicationPictures.0.picturePath',
-                    render: function (data) {
-                        return '<img style="width: 150px; height: 150px"  src="' + data + '"/>';
-                    }
-                },
-                {
-                    data: "applicationId",
-                    render: function (data) {
-                        return `<a class="btn btn-primary" role="button" href="ApplicationDetails?applicationId=${data}">Detale</a>`;
-                    }
-                }
-            ],
-            columnDefs: [
-                {
-                    targets: [4],
-                    className: 'dt-body-center action-column',
-                    width: "130px",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    targets: [3],
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    targets: [0],
-                    width: "250px"
-                }
-            ]
-        });
 
-    }
-        });
+           var CityId =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
+           var url="GetAllByCity/" + CityId
+    </script>
+    <script src="~/js/applicationTableContent.js" asp-append-version="true"></script>
+
+    <script>
+        function initMap() {
+            // The location of Uluru
+            var uluru = { lat: -25.344, lng: 131.036 };
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('googleMap'), { zoom: 4, center: uluru });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({ position: uluru, map: map });
+        }
 
     </script>
-}
 
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&callback=initMap">
+    </script>
+
+}
 
