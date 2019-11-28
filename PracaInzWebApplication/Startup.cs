@@ -8,12 +8,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Helpers;
+using PracaInzWebApplication.Services.ApplicationService;
 using PracaInzWebApplication.Services.AuthenticationService;
 using PracaInzWebApplication.Services.UserService;
 
@@ -32,10 +36,12 @@ namespace PracaInzWebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppDbConn")));
             services.AddSession();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .AddRazorRuntimeCompilation(); 
+       
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -70,7 +76,7 @@ namespace PracaInzWebApplication
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-
+            //jwt config
             var secretKey = System.Text.Encoding.ASCII.GetBytes("70ZaBE-5LxoAjV4ibfCdS8afpizTY60GjY7tebchbTHTiayOQa1Eaetxy5T4nS7DVf");
             services.AddAuthentication(authentication =>
             {
@@ -94,8 +100,9 @@ namespace PracaInzWebApplication
                 };
             });
 
-            services.AddSingleton<IUserService, MockUserService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IApplicationService, ApplicationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -147,6 +154,7 @@ namespace PracaInzWebApplication
 
 
             });
+
         }
     }
 }

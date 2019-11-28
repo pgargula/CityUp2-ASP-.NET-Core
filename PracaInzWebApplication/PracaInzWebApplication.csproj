@@ -5,6 +5,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191106230300_InitialMigration.cs" />
+    <Compile Remove="Migrations\20191106230300_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20191107215835_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107215835_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107221831_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107221831_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107222826_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107222826_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107223454_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107223454_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107224433_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107224433_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107224527_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107224527_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107224830_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107224830_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107225948_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107225948_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191107230408_FixedModelsAndSeedData.cs" />
+    <Compile Remove="Migrations\20191107230408_FixedModelsAndSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20191111215955_updateModels.cs" />
+    <Compile Remove="Migrations\20191111215955_updateModels.Designer.cs" />
+    <Compile Remove="Migrations\20191111220221_updateModels.cs" />
+    <Compile Remove="Migrations\20191111220221_updateModels.Designer.cs" />
+    <Compile Remove="Migrations\20191111220449_updateModels.cs" />
+    <Compile Remove="Migrations\20191111220449_updateModels.Designer.cs" />
+    <Compile Remove="Migrations\20191111221013_updateModels.cs" />
+    <Compile Remove="Migrations\20191111221013_updateModels.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
@@ -14,6 +45,8 @@
     <PackageReference Include="bootstrap" Version="4.3.1" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -21,6 +54,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
 

@@ -19,6 +19,13 @@ namespace PracaInzWebApplication.Controllers
         [Authorize(Roles.CityAdministrator)]
         public IActionResult CityApplications()
         {
+            ViewBag.GetBy = "CityId";
+            return View();
+        }
+        [Authorize(Roles.CityAdministrator)]       
+        public IActionResult ApplicationDetails(int applicationId)
+        {
+            ViewBag.ApplicationId = applicationId;
             return View();
         }
         [Authorize(Roles.CityAdministrator)]

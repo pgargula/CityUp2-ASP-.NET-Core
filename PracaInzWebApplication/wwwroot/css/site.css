@@ -59,8 +59,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-image: url(../images/ravenna.png);
 }
 .footer {
   position: absolute;
@@ -68,4 +70,21 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.box {
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.container{
+    max-width: 1340px;
+}
+
+/*map style*/
+#googleMap {
+    height: 800px;
+    width: 100%;
+    min-height: 250px;
 }

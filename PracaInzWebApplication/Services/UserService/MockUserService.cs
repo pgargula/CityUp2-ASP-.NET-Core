@@ -21,10 +21,10 @@ namespace PracaInzWebApplication.Services.UserService
         private readonly IMapper _mapper;
         private List<User> _userList = new List<User>
         {
-            new User(){Id=1, Login="admin", Password="admin", Email="admin@test.pl",City = 1, Role=Roles.SystemAdministrator},
-            new User(){Id=1, Login="user", Password="user", Email="user@test.pl",City = 1, Role=Roles.User},
-            new User(){Id=1, Login="cityadmin", Password="cityadmin", Email="cityadmin@test.pl",City = 1, Role=Roles.CityAdministrator},
-             new User(){Id=1, Login="citymoderator", Password="citymoderator", Email="citymoderator@test.pl",City = 1, Role=Roles.CityModerator}
+            new User(){UserId=1, Login="admin", Password="admin", Email="admin@test.pl",CityId = 1, Role=Roles.SystemAdministrator},
+            new User(){UserId=1, Login="user", Password="user", Email="user@test.pl",CityId = 1, Role=Roles.User},
+            new User(){UserId=1, Login="cityadmin", Password="cityadmin", Email="cityadmin@test.pl",CityId = 1, Role=Roles.CityAdministrator},
+             new User(){UserId=1, Login="citymoderator", Password="citymoderator", Email="citymoderator@test.pl",CityId = 1, Role=Roles.CityModerator}
         };
 
         public MockUserService(IAuthenticationService authenticationService, IMapper mapper)
