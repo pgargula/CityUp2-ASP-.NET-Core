@@ -23,8 +23,18 @@ namespace PracaInzWebApplication.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           // modelBuilder.Entity<ApplicationCategory>().HasKey(sc => new { sc.ApplicationId, sc.CategoryId });
-            
+            // modelBuilder.Entity<ApplicationCategory>().HasKey(sc => new { sc.ApplicationId, sc.CategoryId });
+            modelBuilder.Entity<Geolocation>().HasData(
+                new Geolocation { GeolocationId = 1, Latitude = 50.0647, Longitude = 19.945 },//Kraków coordinates
+                new Geolocation { GeolocationId = 2, Latitude = 50.1647, Longitude = 19.945 },
+                new Geolocation { GeolocationId = 3, Latitude = 50.0650, Longitude = 19.955 },
+                new Geolocation { GeolocationId = 4, Latitude = 50.0677, Longitude = 19.965 },
+                new Geolocation { GeolocationId = 5, Latitude = 50.0647, Longitude = 19.915 },
+                new Geolocation { GeolocationId = 6, Latitude = 50.0547, Longitude = 19.900 },
+                new Geolocation { GeolocationId = 7, Latitude = 50.0747, Longitude = 19.845 },
+                new Geolocation { GeolocationId = 8, Latitude = 55.0547, Longitude = 18.900 },
+                new Geolocation { GeolocationId = 9, Latitude = 53.0547, Longitude = 19.600 }
+                );
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Login = "admin", Password = "admin", Email = "admin@test.pl", CityId = 1, Role = Roles.SystemAdministrator },
                 new User { UserId = 2, Login = "user", Password = "user", Email = "user@test.pl", CityId = 1, Role = Roles.User },
@@ -33,15 +43,15 @@ namespace PracaInzWebApplication.Data
                 new User { UserId = 5, Login = "citymoderator", Password = "citymoderator", Email = "citymoderator@test.pl", CityId = 1, Role = Roles.CityModerator }
                 );
             modelBuilder.Entity<City>().HasData(
-                new City { CityId = 1, Name = "Kraków" },
-                new City { CityId = 2, Name = "Kurów" },
-                new City { CityId = 3, Name = "Warszawa" }
+                new City { CityId = 1, Name = "Kraków", GeolocationId=1 },
+                new City { CityId = 2, Name = "Kurów", GeolocationId=8 },
+                new City { CityId = 3, Name = "Warszawa", GeolocationId=9 }
                 );
             modelBuilder.Entity<Adress>().HasData(
-                new Adress { AdressId = 1, CityId = 1, Street = "Jagielońska" },
-                new Adress { AdressId = 2, CityId = 1, Street = "Kujawska" },
-                new Adress { AdressId = 3, CityId = 2, Street = "Tarnowska" },
-                new Adress { AdressId = 4, CityId = 1, Street = "Siemaszki" }
+                new Adress { AdressId = 1, CityId = 1, Street = "Jagielońska", GeolocationId=5 },
+                new Adress { AdressId = 2, CityId = 1, Street = "Kujawska", GeolocationId=4 },
+                new Adress { AdressId = 3, CityId = 2, Street = "Tarnowska", GeolocationId=3 },
+                new Adress { AdressId = 4, CityId = 1, Street = "Siemaszki", GeolocationId=2 }
                 );
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId=1, Name="Zaniszczenie"},
@@ -70,6 +80,7 @@ namespace PracaInzWebApplication.Data
                 new ApplicationPicture { ApplicationPictureId = 10, PicturePath = "https://picsum.photos/500", ApplicationId = 3 },
                 new ApplicationPicture { ApplicationPictureId = 11, PicturePath = "https://picsum.photos/500", ApplicationId = 3 }
             );
+
         }
     
     }

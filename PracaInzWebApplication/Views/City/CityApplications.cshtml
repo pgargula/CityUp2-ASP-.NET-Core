@@ -40,35 +40,23 @@
 
     <script>
         var list = document.getElementById("list");
-        var map = document.getElementById("googleMap");
+        var googleMap = document.getElementById("googleMap");
         function showList() {
             list.style.display = "block";
-            map.style.display = "none";
+            googleMap.style.display = "none";
         }
         function showMap() {
             list.style.display = "none";
-            map.style.display = "block";
+            googleMap.style.display = "block";
         }
 
 
-           var CityId =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
-           var url="GetAllByCity/" + CityId
+           var cityId =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
+           var url="GetAllByCity/" + cityId
     </script>
+    <script src="~/js/getMapTableData.js" asp-append-version="true"></script>
     <script src="~/js/applicationTableContent.js" asp-append-version="true"></script>
-
-    <script>
-        function initMap() {
-            // The location of Uluru
-            var uluru = { lat: -25.344, lng: 131.036 };
-            // The map, centered at Uluru
-            var map = new google.maps.Map(
-                document.getElementById('googleMap'), { zoom: 4, center: uluru });
-            // The marker, positioned at Uluru
-            var marker = new google.maps.Marker({ position: uluru, map: map });
-        }
-
-    </script>
-
+    <script src="~/js/map.js" asp-append-version="true"></script>  
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&callback=initMap">
     </script>

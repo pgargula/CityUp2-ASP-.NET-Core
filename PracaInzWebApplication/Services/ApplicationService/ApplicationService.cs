@@ -47,8 +47,9 @@ namespace PracaInzWebApplication.Services.ApplicationService
             {
                 return await _context.Applications.Include(x => x.Adress)
                      .Include(x => x.Adress.City)
+                     .Include(x => x.Adress.Geolocation)
                      .Include(x => x.Status)
-                     .Include(x => x.AppplicationPictures)
+                     .Include(x => x.ApplicationPictures)
                      .Include(x => x.User)
                      .Include(x => x.Category)
                      .Where(x => x.Adress.CityId == cityId).ToListAsync();  
@@ -68,7 +69,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                          .Include(x => x.Adress.City)
                          .Include(x => x.Adress)
                          .Include(x => x.Status)
-                         .Include(x => x.AppplicationPictures)
+                         .Include(x => x.ApplicationPictures)
                          .Include(x => x.User)
                          .Include(x => x.Category)
                          .Where(x => x.ApplicationId == applicationId).FirstOrDefaultAsync();
@@ -82,7 +83,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                         City = appDetails.Adress.City.Name,
                         Description = appDetails.Description,
                        // District = appDetails.Adress.District.Name,
-                        Pictures = appDetails.AppplicationPictures.ToList(),
+                        Pictures = appDetails.ApplicationPictures.ToList(),
                         Status = appDetails.Status.Label,
                         Street = appDetails.Adress.Street,
                         User = appDetails.User.Login
@@ -105,7 +106,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
             return await _context.Applications.Include(x => x.Adress)
                  .Include(x => x.Adress.City)
                  .Include(x => x.Status)
-                 .Include(x => x.AppplicationPictures)
+                 .Include(x => x.ApplicationPictures)
                  .Include(x=>x.User)
                  .Where(x => x.UserId == userId).ToListAsync();
         }

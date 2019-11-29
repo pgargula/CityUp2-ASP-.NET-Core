@@ -1,20 +1,5 @@
-﻿$(document).ready(function () {
-    //var CityId =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
-    var mainPicture;
-    var results;
-    $.when(
-        $.ajax({
-            type: 'GET',
-            url: '/api/ApiApplication/'+url,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (result) {
-                results = result;
-            }
-        })
-    ).then(initTable);
-
-    function initTable() {
+﻿
+    function initTable(results) {
         table = $('#applicationTable').DataTable({
             data: results,
             autoWidth: true,
@@ -29,7 +14,7 @@
                     data: 'adress.street'
                 },
                 {
-                    data: 'appplicationPictures.0.picturePath',
+                    data: 'applicationPictures.0.picturePath',
                     render: function (data) {
                         return '<img style="width: 150px; height: 150px"  src="' + data + '"/>';
                     }
@@ -62,4 +47,3 @@
         });
 
     }
-});

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracaInzWebApplication.Data;
 
 namespace PracaInzWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191129191559_seedGeolocationData")]
+    partial class seedGeolocationData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -548,7 +550,7 @@ namespace PracaInzWebApplication.Migrations
             modelBuilder.Entity("PracaInzWebApplication.Models.ApplicationPicture", b =>
                 {
                     b.HasOne("PracaInzWebApplication.Models.Application", null)
-                        .WithMany("ApplicationPictures")
+                        .WithMany("AppplicationPictures")
                         .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

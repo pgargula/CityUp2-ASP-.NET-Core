@@ -33,6 +33,8 @@
     <Compile Remove="Migrations\20191111220449_updateModels.Designer.cs" />
     <Compile Remove="Migrations\20191111221013_updateModels.cs" />
     <Compile Remove="Migrations\20191111221013_updateModels.Designer.cs" />
+    <Compile Remove="Migrations\20191129185409_seedGeolocationData.cs" />
+    <Compile Remove="Migrations\20191129185409_seedGeolocationData.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,7 +13,7 @@ namespace PracaInzWebApplication.Models
 
         public int UserId { get; set; }
         public User User { get; set; }
-        public ICollection<ApplicationPicture> AppplicationPictures { get; set; }
+        public ICollection<ApplicationPicture> ApplicationPictures { get; set; }
         public int AdressId { get; set; }
         public Adress Adress { get; set; }
 

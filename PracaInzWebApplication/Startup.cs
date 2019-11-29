@@ -19,8 +19,8 @@ using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Services.ApplicationService;
 using PracaInzWebApplication.Services.AuthenticationService;
+using PracaInzWebApplication.Services.CityService;
 using PracaInzWebApplication.Services.UserService;
-
 
 namespace PracaInzWebApplication
 {
@@ -103,6 +103,7 @@ namespace PracaInzWebApplication
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IApplicationService, ApplicationService>();
+            services.AddTransient<ICityService, CityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
