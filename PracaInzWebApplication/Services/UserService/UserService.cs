@@ -27,7 +27,9 @@ namespace PracaInzWebApplication.Services.UserService
 
         public async Task<string> LoginUser(string login, string password)
         {
-            User user = _dbContext.Users.SingleOrDefault(x => x.Login == login);
+            User user = _dbContext.Users
+                .Include(x=>x.City)
+                .SingleOrDefault(x => x.Login == login);
 
             if (user == null)
                 return null;

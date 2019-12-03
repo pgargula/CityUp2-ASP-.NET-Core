@@ -110,5 +110,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                  .Include(x=>x.User)
                  .Where(x => x.UserId == userId).ToListAsync();
         }
+
+        
     }
 }

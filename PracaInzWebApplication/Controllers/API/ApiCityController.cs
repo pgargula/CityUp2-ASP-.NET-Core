@@ -19,7 +19,11 @@ namespace PracaInzWebApplication.Controllers.API
         {
             _cityService = cityService;
         }
-
+        [HttpGet]
+        public async Task<IEnumerable<City>> GetCities()
+        {
+            return await _cityService.GetCities();
+        }
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<City> Get(int id)

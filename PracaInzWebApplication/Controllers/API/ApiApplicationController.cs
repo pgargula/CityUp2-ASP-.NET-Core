@@ -80,5 +80,7 @@ namespace PracaInzWebApplication.Controllers.API
         {
             await _applicationService.DeleteApplication(id);
         }
+
+
     }
 }

@@ -28,5 +28,17 @@ namespace PracaInzWebApplication.Services.CityService
                 throw ex;
             }
         }
+
+        public async Task<IEnumerable<City>> GetCities()
+        {
+            try
+            {
+                return await _context.Cities.ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
