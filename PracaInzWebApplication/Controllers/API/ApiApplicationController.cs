@@ -50,27 +50,16 @@ namespace PracaInzWebApplication.Controllers.API
 
         // POST api/ApiApplication
         [HttpPost]
-        public async Task Add([FromBody]Application application, IFormFile pictures)
+        public async Task<int> Add([FromBody]AddApplication application)
         {
-            List<string> picturePaths = new List<string>();
-            //todo : multiple pictures
-            if (pictures != null /*&& files.Count > 0*/)
-            {
-                if (pictures.Length > 0)
-                {
-                    string shortPicturePath = "/applications_pictures/" + application.ApplicationId + "/" + pictures.FileName;
-                    string PicturePath = _hostingEnvironment.WebRootPath + shortPicturePath.Replace('/', '\\');
+            return await _applicationService.AddApplication(application);
+        }
 
-                    picturePaths.Add(shortPicturePath);
+        [HttpPost("{applicationId}")]
+        public async Task AddPhotos([FromForm] List<IFormFile> file,int applicationId)
+        {
 
-                    using (var stream = new FileStream(PicturePath, FileMode.Create))
-                    {
-                        await pictures.CopyToAsync(stream);
-                    }
-                }
-                //}
-            }
-            await _applicationService.AddApplication(application, picturePaths);
+            await _applicationService.AddPhotos(file, applicationId);
         }
 
 

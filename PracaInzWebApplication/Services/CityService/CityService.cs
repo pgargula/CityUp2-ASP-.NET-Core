@@ -20,8 +20,10 @@ namespace PracaInzWebApplication.Services.CityService
         {
             try
             {
-                return await _context.Cities.Include(x => x.Geolocation)
-                    .Where(x => x.CityId == cityId).FirstOrDefaultAsync();
+                return await _context.Cities
+                    .Include(x => x.Geolocation)
+                    .Where(x => x.CityId == cityId)
+                    .FirstOrDefaultAsync();
             }
             catch(Exception ex)
             {
@@ -33,7 +35,9 @@ namespace PracaInzWebApplication.Services.CityService
         {
             try
             {
-                return await _context.Cities.ToListAsync();
+                return await _context.Cities
+                    .Include(x=>x.Geolocation)
+                    .ToListAsync();
             }
             catch(Exception ex)
             {

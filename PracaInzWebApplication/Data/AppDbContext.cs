@@ -20,6 +20,8 @@ namespace PracaInzWebApplication.Data
        public DbSet<Geolocation> Geolocations { get; set; }
        public DbSet<Status> Statuses { get; set; }
        public DbSet<Category> Categories { get; set; }
+       public DbSet<ApplicationPicture> ApplicationPictures { get; set; }
+       public DbSet<Adress> Adresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
