@@ -38,75 +38,66 @@ namespace PracaInzWebApplication.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> AllApplication()
+        {
+            return View();
+        }
 
         [Authorize(Roles.User)]
         [HttpPost]
         public async Task<IActionResult> AddNew(AddApplication addApplication)
         {
-            addApplication.UserId =Convert.ToInt32(User.Claims.Where(x => x.Type == "Id").FirstOrDefault().Value);
+            addApplication.UserId = Convert.ToInt32(User.Claims.Where(x => x.Type == "Id").FirstOrDefault().Value);
             var photos = addApplication.Photos;
             addApplication.Photos = null;
             var uri = new Uri(Consts.appAdress + "api/ApiApplication/Add");
             var uriPhoto = new Uri(Consts.appAdress + "api/ApiApplication/AddPhotos/");
-            //try
-            //{
-            //    using (HttpClient _httpClient = new HttpClient())
-            //    {
-            //        var requestBody = new StringContent(JsonConvert.SerializeObject(addApplication), Encoding.UTF8, "application/json");
-            //        var response = await _httpClient.PostAsync(uri, requestBody);
-            //        if (response.StatusCode == HttpStatusCode.OK)
-            //        {                    
-            //            var multipartFormDataContent = new MultipartFormDataContent();
-            //            //foreach (var photo in photos)
-            //            //{
-            //                var fileStream = photos.OpenReadStream();
+            HttpResponseMessage responsePhoto;
 
-            //                multipartFormDataContent.Add(new StreamContent(fileStream), "file", photos.FileName);
-
-            //           // }
-            //            var responsePhoto = await _httpClient.PostAsync(uriPhoto, multipartFormDataContent);
-
-            //            if (responsePhoto.StatusCode == HttpStatusCode.OK)
-            //            {
-            //                ViewBag.JavaScriptToRun = " showSnackbar()";
-            //                return View();
-            //            }
-            //            else
-            //                return null;
-            //        }
-            //        else
-            //            return null;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new WebException("Nie udało sie dodać zgłoszenia!");
-            //}
-            
             using (var httpClient = new HttpClient())
             {
-                var requestBody = new StringContent(JsonConvert.SerializeObject(addApplication), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync(uri, requestBody);
-
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (ModelState.IsValid)
                 {
-                    var applicationId = response.Content.ReadAsStringAsync();
-                    var form = new MultipartFormDataContent();
-                    foreach (var photo in photos)
+                    var requestBody = new StringContent(JsonConvert.SerializeObject(addApplication), Encoding.UTF8, "application/json");
+                    var response = await _httpClient.PostAsync(uri, requestBody);
+                    HttpContent noPhoto = new StringContent("noPhoto", Encoding.UTF8, "application/json");
+                    if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        var fileStream = photo.OpenReadStream();
-                        form.Add(new StreamContent(fileStream), "file", photo.FileName);
+                        var applicationId = response.Content.ReadAsStringAsync();
+                        var form = new MultipartFormDataContent();
+                        if (photos != null)
+                        {
+                            foreach (var photo in photos)
+                            {
+                                var fileStream = photo.OpenReadStream();
+                                form.Add(new StreamContent(fileStream), "file", photo.FileName);
+                            }
+                            responsePhoto = await httpClient.PostAsync(uriPhoto + applicationId.Result, form);
+
+
+                        }
+                        else
+                        {
+                            responsePhoto = await httpClient.PostAsync(uriPhoto + applicationId.Result, noPhoto);
+                        }
+                        
+                        if (responsePhoto.StatusCode == HttpStatusCode.OK)
+                        {
+                            ViewBag.JavaScriptToRun = "itemAddNotification(function () { window.location.href = '/Application/AddNew';}); ";
+                            return View();
+                        }
+                        else
+                        {
+                            return View();
+                        }
+                        //else
+                        //    ViewBag.JavaScriptToRun = "itemAddNotification(function () { window.location.href = '/Application/AddNew';}); ";
+                        //    return View();
                     }
-                    
-                    var responsePhoto = await httpClient.PostAsync(uriPhoto+applicationId.Result, form);
-                    if (responsePhoto.StatusCode == HttpStatusCode.OK)
-                    {
 
-                    }                 
                 }
-
+                return View();
             }
-            return View();
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracaInzWebApplication.Data;
 
 namespace PracaInzWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191207004502_addComemnetModels")]
+    partial class addComemnetModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -341,7 +343,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 1,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 7, 2, 16, 21, 679, DateTimeKind.Local).AddTicks(3990),
+                            Date = new DateTime(2019, 12, 7, 1, 45, 1, 544, DateTimeKind.Local).AddTicks(3585),
                             Text = "fajne",
                             UserId = 3
                         },
@@ -349,7 +351,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 2,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 7, 4, 16, 21, 683, DateTimeKind.Local).AddTicks(6915),
+                            Date = new DateTime(2019, 12, 7, 3, 45, 1, 548, DateTimeKind.Local).AddTicks(5591),
                             Text = "Lorem ipsum",
                             UserId = 2
                         },
@@ -357,7 +359,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 3,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 7, 2, 16, 21, 683, DateTimeKind.Local).AddTicks(7064),
+                            Date = new DateTime(2019, 12, 7, 1, 45, 1, 548, DateTimeKind.Local).AddTicks(5727),
                             Text = "Cracovia rządzi w krakowie",
                             UserId = 3
                         },
@@ -365,7 +367,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 4,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 7, 2, 20, 21, 683, DateTimeKind.Local).AddTicks(7078),
+                            Date = new DateTime(2019, 12, 7, 1, 49, 1, 548, DateTimeKind.Local).AddTicks(5736),
                             Text = "Legia to stara...",
                             UserId = 2
                         },
@@ -373,7 +375,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 5,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 7, 2, 27, 21, 683, DateTimeKind.Local).AddTicks(7106),
+                            Date = new DateTime(2019, 12, 7, 1, 56, 1, 548, DateTimeKind.Local).AddTicks(5769),
                             Text = "dobre pomarańczowe",
                             UserId = 3
                         });
@@ -411,7 +413,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 1,
                             CommentId = 1,
-                            Date = new DateTime(2019, 12, 7, 2, 18, 21, 684, DateTimeKind.Local).AddTicks(2266),
+                            Date = new DateTime(2019, 12, 7, 1, 47, 1, 549, DateTimeKind.Local).AddTicks(672),
                             Text = "dzięki",
                             UserId = 2
                         },
@@ -419,7 +421,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 2,
                             CommentId = 1,
-                            Date = new DateTime(2019, 12, 7, 2, 20, 21, 684, DateTimeKind.Local).AddTicks(3194),
+                            Date = new DateTime(2019, 12, 7, 1, 49, 1, 549, DateTimeKind.Local).AddTicks(1633),
                             Text = "spoko",
                             UserId = 3
                         },
@@ -427,7 +429,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 3,
                             CommentId = 2,
-                            Date = new DateTime(2019, 12, 7, 2, 22, 21, 684, DateTimeKind.Local).AddTicks(3218),
+                            Date = new DateTime(2019, 12, 7, 1, 51, 1, 549, DateTimeKind.Local).AddTicks(1670),
                             Text = "lolo",
                             UserId = 2
                         },
@@ -435,7 +437,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 4,
                             CommentId = 3,
-                            Date = new DateTime(2019, 12, 7, 2, 23, 21, 684, DateTimeKind.Local).AddTicks(3222),
+                            Date = new DateTime(2019, 12, 7, 1, 52, 1, 549, DateTimeKind.Local).AddTicks(1680),
                             Text = "dasdasd",
                             UserId = 2
                         },
@@ -443,7 +445,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 5,
                             CommentId = 4,
-                            Date = new DateTime(2019, 12, 7, 2, 24, 21, 684, DateTimeKind.Local).AddTicks(3227),
+                            Date = new DateTime(2019, 12, 7, 1, 53, 1, 549, DateTimeKind.Local).AddTicks(1684),
                             Text = "afafasfa",
                             UserId = 2
                         });
@@ -721,7 +723,7 @@ namespace PracaInzWebApplication.Migrations
             modelBuilder.Entity("PracaInzWebApplication.Models.CommentResponse", b =>
                 {
                     b.HasOne("PracaInzWebApplication.Models.Comment", "Comment")
-                        .WithMany("CommentResponses")
+                        .WithMany()
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

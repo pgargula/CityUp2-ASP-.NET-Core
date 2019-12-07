@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewData["Title"] = "CityApplications";
+﻿@{
+    ViewData["Title"] = "Moje zgłoszenia";
 }
 <div class="box">
     <div class="row justify-content-center">
@@ -48,18 +47,20 @@
     <script>
         var list = document.getElementById("list");
         var googleMap = document.getElementById("googleMap");
-        function showList() {
-            list.style.display = "block";
+
+        $('#showList').on('change', function () {       //showing list
+            list.style.display = "block";              
             googleMap.style.display = "none";
-        }
-        function showMap() {
+        });
+        $('#showMap').on('change', function () {   //show map
             list.style.display = "none";
             googleMap.style.display = "block";
-        }
+        });
 
-        var detailsPath="/City/"
-        var Id =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
-        var url="GetAllByCity/" + Id
+
+        var Id =@User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+        var url = "GetAllByUser/" + Id
+        var detailsPath="/User/"
     </script>
     <script src="~/js/getMapTableData.js" asp-append-version="true"></script>
     <script src="~/js/applicationTableContent.js" asp-append-version="true"></script>
@@ -69,4 +70,3 @@
     </script>
 
 }
-

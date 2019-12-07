@@ -94,24 +94,24 @@ body {
     min-height: 250px;
 }
 
-//////////////////snackbar config
-/* The snackbar - position it at the top and in the middle of the screen */
+/*SNACKBAR config*/
+
 #snackbar {
     visibility: hidden; /* Hidden by default. Visible on click */
     min-width: 350px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #29c670; /* Black background color */
-    color: #fff; /* White text color */
-    text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
-    padding: 30px; /* Padding */
-    position: fixed; /* Sit on top of the screen */
-    z-index: 1; /* Add a z-index if needed */
+    background-color: #8BFEB0;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 30px;
+    position: fixed;
+    z-index: 1;
     left: 50%; /* Center the snackbar */
     top: 130px; /* 30px from the top */
 }
 
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
+
 #snackbar.show {
     visibility: visible; /* Show the snackbar */
     /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 

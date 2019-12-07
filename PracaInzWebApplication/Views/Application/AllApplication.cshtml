@@ -1,16 +1,18 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "CityApplications";
 }
 <div class="box">
     <div class="row justify-content-center">
+        <select id="citySelect">
+            <option value="" selected disabled hidden id="loadingCities">Ładowanie...</option>
+        </select>      
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-outline-secondary active">
                 <input onclick="showList()" type="radio" name="options" id="showList" autocomplete="off" checked> <img src="~/images/list.png" width="20" /> Lista
             </label>
             <label class="btn btn-outline-secondary">
                 <input onclick="showMap()" type="radio" name="options" id="showMap" autocomplete="off"> <img src="~/images/map.png" width="20" /> Mapa
-            </label>
+            </label>            
         </div>
     </div>
 
@@ -22,8 +24,9 @@
                     <th>Kategoria</th>
                     <th>Ulica</th>
                     <th>Zdjęcie</th>
-                    <th class="text-center">Action</th>
-                    <th></th>
+                    <th class="text-center"></th>
+                    <th></th>   
+
                 </tr>
             </thead>
         </table>
@@ -46,27 +49,54 @@
 @section Scripts{
 
     <script>
+
+          var Id =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
+          var url="GetAllByCity/" + Id
+          var detailsPath="/User/"
+
         var list = document.getElementById("list");
         var googleMap = document.getElementById("googleMap");
-        function showList() {
+
+        $('#showList').on('change', function () {
             list.style.display = "block";
             googleMap.style.display = "none";
-        }
-        function showMap() {
+        });
+        $('#showMap').on('change', function () {
             list.style.display = "none";
             googleMap.style.display = "block";
-        }
+        });
 
-        var detailsPath="/City/"
-        var Id =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
-        var url="GetAllByCity/" + Id
+           //populating city select
+        $.ajax({
+            type: 'GET',
+            url: '/api/ApiCity/',
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (cities) {
+                $.each(cities, function (key, modelName) {
+                    var option = new Option(modelName, modelName);
+                    $(option).html(modelName);
+                    $("#citySelect").append('<option value="' + modelName.cityId + '" data-lng="' + modelName.geolocation.longitude + '" data-ltd="' + modelName.geolocation.latitude + '">' + modelName.name + '</option>');
+                });
+                $('#citySelect').val(Id).change();      //set user default city
+            }
+        });
+
+        $('#citySelect').on('change', function () {/// changing map display location after changing city
+            var selected = $(this).find('option:selected');
+            Id = selected.val();
+            url="GetAllByCity/" + Id
+            initListMap();
+        });
+
+
+
     </script>
     <script src="~/js/getMapTableData.js" asp-append-version="true"></script>
     <script src="~/js/applicationTableContent.js" asp-append-version="true"></script>
-    <script src="~/js/map.js" asp-append-version="true"></script>  
+    <script src="~/js/map.js" asp-append-version="true"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&callback=initMap">
     </script>
 
 }
-

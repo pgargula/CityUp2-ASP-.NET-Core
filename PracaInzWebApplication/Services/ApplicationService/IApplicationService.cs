@@ -9,10 +9,11 @@ namespace PracaInzWebApplication.Services.ApplicationService
     public interface IApplicationService
     {
         Task<int> AddApplication(AddApplication applicationDto);
+        Task AddPhotos(List<IFormFile> photos, int applicationId);
         Task DeleteApplication(int applicationId);
         Task<IEnumerable<Application>> GetAllByCity(int cityId);
         Task<IEnumerable<Application>> GetAllByUser(int userId);
         Task<ApplicationDetails> GetDetails(int applicationId);
-        Task AddPhotos(List<IFormFile> photos, int applicationId);
+        Task<bool> IsUserApp(int applicationId, int userId);
     }
 }

@@ -1,6 +1,7 @@
-﻿
+﻿var table;
     function initTable(results) {
         table = $('#applicationTable').DataTable({
+            destroy: true,
             data: results,
             autoWidth: true,
             columns: [
@@ -22,11 +23,19 @@
                 {
                     data: "applicationId",
                     render: function (data) {
-                        return `<a class="btn btn-primary" role="button" href="ApplicationDetails?applicationId=${data}">Detale</a>`;
+                        return `<a class="btn btn-primary" role="button" href="${detailsPath}ApplicationDetails?applicationId=${data}">Detale</a>`;
                     }
+                },
+                {
+                    data: "adress.city.name"
                 }
+
             ],
             columnDefs: [
+                {
+                    targets: [5],
+                    visible: false
+                },
                 {
                     targets: [4],
                     className: 'dt-body-center action-column',
@@ -45,5 +54,6 @@
                 }
             ]
         });
+        
+}
 
-    }

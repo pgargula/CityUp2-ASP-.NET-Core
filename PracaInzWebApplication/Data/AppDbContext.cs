@@ -22,6 +22,8 @@ namespace PracaInzWebApplication.Data
        public DbSet<Category> Categories { get; set; }
        public DbSet<ApplicationPicture> ApplicationPictures { get; set; }
        public DbSet<Adress> Adresses { get; set; }
+       public DbSet<Comment> Comments { get; set; }
+       public DbSet<CommentResponse> CommentResponses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -82,7 +84,21 @@ namespace PracaInzWebApplication.Data
                 new ApplicationPicture { ApplicationPictureId = 10, PicturePath = "https://picsum.photos/500", ApplicationId = 3 },
                 new ApplicationPicture { ApplicationPictureId = 11, PicturePath = "https://picsum.photos/500", ApplicationId = 3 }
             );
+            modelBuilder.Entity<Comment>().HasData(
+                new Comment { CommentId = 1, UserId =3, Text="fajne", Date=DateTime.Now, ApplicationId=1 },
+                new Comment { CommentId = 2, UserId = 2, Text = "Lorem ipsum", Date = DateTime.Now.AddHours(2), ApplicationId = 1 },
+                new Comment { CommentId = 3, UserId = 3, Text = "Cracovia rządzi w krakowie", Date = DateTime.Now, ApplicationId = 1 },
+                new Comment { CommentId = 4, UserId = 2, Text = "Legia to stara...", Date = DateTime.Now.AddMinutes(4), ApplicationId = 1 },
+                new Comment { CommentId = 5, UserId = 3, Text = "dobre pomarańczowe", Date = DateTime.Now.AddMinutes(11), ApplicationId = 1 }
+                );
+            modelBuilder.Entity<CommentResponse>().HasData(
+                new CommentResponse {CommentResponseId=1, UserId=2, CommentId=1, Text="dzięki", Date=DateTime.Now.AddMinutes(2)},
+                new CommentResponse { CommentResponseId = 2, UserId = 3, CommentId = 1, Text = "spoko", Date = DateTime.Now.AddMinutes(4) },
+                new CommentResponse { CommentResponseId = 3, UserId = 2, CommentId = 2, Text = "lolo", Date = DateTime.Now.AddMinutes(6) },
+                new CommentResponse { CommentResponseId = 4, UserId = 2, CommentId = 3, Text = "dasdasd", Date = DateTime.Now.AddMinutes(7) },
+                new CommentResponse { CommentResponseId = 5, UserId = 2, CommentId = 4, Text = "afafasfa", Date = DateTime.Now.AddMinutes(8) }
 
+                );;
         }
     
     }

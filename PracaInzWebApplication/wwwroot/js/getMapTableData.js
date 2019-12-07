@@ -1,13 +1,19 @@
-﻿$.ajax({
-    type: 'GET',
-    url: '/api/ApiCity/' + cityId,
-    contentType: "application/json",
-    dataType: 'json',
-    success: function (cityGeo) {
-        getAppData();
-        initMap(cityGeo);
-    }
-});
+﻿document.addEventListener('DOMContentLoaded', function () {
+    initListMap();
+}, false);
+var cityGeo
+function initListMap() {
+    $.ajax({
+        type: 'GET',
+        url: '/api/ApiCity/' +Id,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (cityGeo) {
+            getAppData();
+            initMap(cityGeo);
+        }
+    });
+};
 
 function getAppData() {
     $.ajax({

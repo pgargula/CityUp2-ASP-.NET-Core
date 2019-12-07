@@ -54,6 +54,22 @@ namespace PracaInzWebApplication.Services.ApplicationService
 
         }
 
+        public async Task<bool> IsUserApp(int applicationId, int userId)
+        {
+            try
+            {
+                var tmp = await _context.Applications.Where(x => x.ApplicationId == applicationId &&  x.UserId==userId).ToListAsync();
+                if (tmp.Count > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<ApplicationDetails> GetDetails(int applicationId)
         {
             try
@@ -144,25 +160,33 @@ namespace PracaInzWebApplication.Services.ApplicationService
             {
                 try
                 {
-                    foreach (var photo in photos)
+                    if (photos.Count > 0)
                     {
-                        string shortPicturePath = "/applications_pictures /" + DateTime.Now.Ticks + photo.FileName ;
-                        string PicturePath = _hostEnvironment.WebRootPath + shortPicturePath.Replace('/', '\\');
-
-                        picturePaths.Add(shortPicturePath);
-
-                        using (var stream = new FileStream(PicturePath, FileMode.Create))
+                        foreach (var photo in photos)
                         {
-                            await photo.CopyToAsync(stream);
+                            string shortPicturePath = "/applications_pictures/" + DateTime.Now.Ticks + photo.FileName;
+                            string PicturePath = _hostEnvironment.WebRootPath + shortPicturePath.Replace('/', '\\');
+
+                            picturePaths.Add(shortPicturePath);
+
+                            using (var stream = new FileStream(PicturePath, FileMode.Create))
+                            {
+                                await photo.CopyToAsync(stream);
+                            }
                         }
+                        foreach (var path in picturePaths)
+                        {
+                            _context.ApplicationPictures.Add(new ApplicationPicture { ApplicationId = applicationId, PicturePath = path });
+                        }
+                        await _context.SaveChangesAsync();
                     }
-                    foreach (var path in picturePaths)
+                    else
                     {
-                        _context.ApplicationPictures.Add(new ApplicationPicture { ApplicationId = applicationId, PicturePath = path });
+                        _context.ApplicationPictures.Add(new ApplicationPicture { ApplicationId = applicationId, PicturePath = "/applications_pictures/NoPhoto.jpg" });
+                        await _context.SaveChangesAsync();
                     }
-                    await _context.SaveChangesAsync();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }

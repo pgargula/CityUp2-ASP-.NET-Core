@@ -18,12 +18,10 @@ namespace PracaInzWebApplication.Controllers.API
     public class ApiApplicationController : Controller
     {
         private readonly IApplicationService _applicationService;
-        private IWebHostEnvironment _hostingEnvironment;
-
-        public ApiApplicationController(IApplicationService applicationService, IWebHostEnvironment webHostEnvironment)
+        public ApiApplicationController(IApplicationService applicationService)
         {
             _applicationService = applicationService;
-            _hostingEnvironment = webHostEnvironment;
+            
         }
 
 
@@ -48,6 +46,13 @@ namespace PracaInzWebApplication.Controllers.API
             return await _applicationService.GetDetails(applicationId);
         }
 
+        [HttpGet("{applicationId}/{userId}")]
+        public async Task<bool> IsUserApp(int applicationId, int userId)
+        {
+            return await _applicationService.IsUserApp(applicationId, userId);
+        }
+
+
         // POST api/ApiApplication
         [HttpPost]
         public async Task<int> Add([FromBody]AddApplication application)
@@ -61,6 +66,8 @@ namespace PracaInzWebApplication.Controllers.API
 
             await _applicationService.AddPhotos(file, applicationId);
         }
+
+
 
 
         // DELETE api/<controller>/5

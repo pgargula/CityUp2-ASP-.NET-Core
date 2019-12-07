@@ -1,0 +1,19 @@
+﻿<!-- User/ApplicationDetails-->
+<div class="row">
+    @if (ViewBag.IsUserApp == "userApp")
+    {
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj</a>
+                <a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń</a>
+
+            </div>
+        </div>
+    }
+    <div class="col">
+        <div class="box">
+            @await Component.InvokeAsync("ApplicationDetails", @ViewBag.ApplicationId)
+        </div>
+    </div>
+</div>
+

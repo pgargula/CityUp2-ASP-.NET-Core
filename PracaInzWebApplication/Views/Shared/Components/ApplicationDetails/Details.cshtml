@@ -13,10 +13,10 @@
                 <div class=" text-center " style="  height: 400px;" >
                     <img class="img-fluid align-middle  " style="max-height: 100%" id="mainPhoto" src="@Model.Pictures[0].PicturePath" alt="">
                 </div>
-                <div class="row my-2 align-middle" >
+                <div class="row my-2 align-middle" style="background-color:rgba(0,0,0,0.4);" >
                     @for (int i = 0; i < Model.Pictures.Count; i++)
                     {
-                    <div class="col-md-3 text-center" style="height: 100px;  background-color:rgba(0,0,0,0.4)">
+                    <div class="col-md-3 text-center" style="height: 100px;  ">
                         <img src="@Model.Pictures[i].PicturePath"  id="photo+@i" onclick="changeMainPhoto(this)" class="img-fluid rounded" style="height: 100px; ">
                     </div>
                     }
@@ -47,5 +47,4 @@
         var newSrc = $(e).attr('src');
         $('#mainPhoto').attr("src", newSrc);
     }
-
 </script>
