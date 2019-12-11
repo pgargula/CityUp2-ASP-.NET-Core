@@ -43,6 +43,7 @@ namespace PracaInzWebApplication.Controllers
         {
             return View();
         }
+        [Authorize]
         public async Task<IActionResult> ApplicationDetails(int applicationId)
         {
             ViewBag.ApplicationId = applicationId;

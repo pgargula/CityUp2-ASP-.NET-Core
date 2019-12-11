@@ -38,6 +38,7 @@ namespace PracaInzWebApplication.Controllers
         {
             return View();
         }
+        [Authorize]
         public async Task<IActionResult> AllApplication()
         {
             return View();
@@ -83,7 +84,7 @@ namespace PracaInzWebApplication.Controllers
                         
                         if (responsePhoto.StatusCode == HttpStatusCode.OK)
                         {
-                            ViewBag.JavaScriptToRun = "itemAddNotification(function () { window.location.href = '/Application/AddNew';}); ";
+                            ViewBag.JavaScriptToRun = "AddNotification(function () { window.location.href = '/Application/AddNew';}, 'Pomyślnie dodano zgłoszenie'); ";
                             return View();
                         }
                         else

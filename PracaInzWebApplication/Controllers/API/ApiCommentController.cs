@@ -27,21 +27,26 @@ namespace PracaInzWebApplication.Controllers.API
 
         
         [HttpGet("{applicationId}")]
-        public async Task<IEnumerable<Comment>> GetCommets(int applicationId)
+        public async Task<IEnumerable<Comment>> GetComments(int applicationId)
         {
             return await _commentService.GetComments(applicationId);
         }
 
         
         [HttpPost]
-        public async Task Add([FromBody]Comment comment)
+        public async Task Add([FromForm]Comment comment)
         {
             await _commentService.AddComment(comment);
         }
 
-        
+        [HttpPost]
+        public async Task AddResponse([FromForm]CommentResponse comment)
+        {
+            await _commentService.AddCommentResponse(comment);
+        }
 
-        
+
+
         [HttpDelete("{CmmentId}")]
         public void Delete(int CommentId)
         {

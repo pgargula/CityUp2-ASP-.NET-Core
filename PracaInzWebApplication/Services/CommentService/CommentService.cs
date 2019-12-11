@@ -47,7 +47,11 @@ namespace PracaInzWebApplication.Services.CommentService
         {
             try
             {
-                return await _context.Comments.Include(x => x.CommentResponses).Where(x => x.ApplicationId == applicationId).ToListAsync();
+                return await _context.Comments
+                    .Include(x => x.CommentResponses)
+                    .Include(x=>x.User)
+                    .Where(x => x.ApplicationId == applicationId)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -60,7 +64,7 @@ namespace PracaInzWebApplication.Services.CommentService
         {
             try
             {
-                return await _context.Comments.Include(x => x.CommentResponses.Where(y => y.UserId == userId)).Where(x => x.UserId == userId).ToListAsync();
+                return await _context.Comments.Include(x => x.CommentResponses.Where(y => y.UserId == userId)).Where(x => x.UserId == userId).ToListAsync();/////TODO: cant put where inside include
             }
             catch (Exception ex)
             {

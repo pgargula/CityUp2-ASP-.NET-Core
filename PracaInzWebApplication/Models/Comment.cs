@@ -14,6 +14,7 @@ namespace PracaInzWebApplication.Models
         public Application Application { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        
         public string Text { get; set; }
         public DateTime Date { get; set; }
         public IEnumerable<CommentResponse> CommentResponses { get; set; }
