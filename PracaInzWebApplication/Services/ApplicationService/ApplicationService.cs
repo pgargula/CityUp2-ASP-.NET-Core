@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Models.ViewModels;
+using PracaInzWebApplication.Services.TextControlService;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,8 +19,10 @@ namespace PracaInzWebApplication.Services.ApplicationService
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public ApplicationService(AppDbContext context, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+        private readonly ITextControlService _textControlService;
+        public ApplicationService(AppDbContext context, IMapper mapper, IWebHostEnvironment webHostEnvironment, ITextControlService textControlService)
         {
+            _textControlService = textControlService;
             _mapper = mapper;
             _context = context;
             _hostEnvironment = webHostEnvironment;
@@ -115,6 +118,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
             return await _context.Applications.Include(x => x.Adress)
                  .Include(x => x.Adress.City)
                  .Include(x => x.Status)
+                 .Include(x=>x.Category)
                  .Include(x => x.ApplicationPictures)
                  .Include(x => x.User)
                  .Where(x => x.UserId == userId).ToListAsync();
@@ -134,6 +138,8 @@ namespace PracaInzWebApplication.Services.ApplicationService
                 application = _mapper.Map<AddApplication, Application>(applicationDto);
                 application.AdressId = adress.AdressId;
                 application.StatusId = 1;
+                application.Title = await _textControlService.CensorText(application.Title);
+                application.Description = await _textControlService.CensorText(application.Description);
             }
             catch(Exception ex)
             {

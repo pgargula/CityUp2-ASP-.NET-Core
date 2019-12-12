@@ -21,11 +21,13 @@ using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Models.ViewModels;
+using PracaInzWebApplication.Services;
 using PracaInzWebApplication.Services.ApplicationService;
 using PracaInzWebApplication.Services.AuthenticationService;
 using PracaInzWebApplication.Services.CategoryService;
 using PracaInzWebApplication.Services.CityService;
 using PracaInzWebApplication.Services.CommentService;
+using PracaInzWebApplication.Services.TextControlService;
 using PracaInzWebApplication.Services.UserService;
 
 namespace PracaInzWebApplication
@@ -114,6 +116,7 @@ namespace PracaInzWebApplication
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<ITextControlService, TextControlService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

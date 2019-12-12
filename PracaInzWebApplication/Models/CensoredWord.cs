@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Models
 {
-    public class Category
+    public class CensoredWord
     {
         [Key]
-        public int CategoryId { get; set; }
-        public string Name { get; set; }
-        public List<TagCategory> TagCategories { get; set; }
+        public int CensoredWordId { get; set; }
+        [Required]
+        public string Word { get; set; }
     }
 }

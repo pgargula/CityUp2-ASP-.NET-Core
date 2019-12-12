@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Models
 {
-    public class Category
+    public class Tag
     {
         [Key]
-        public int CategoryId { get; set; }
+        public int TagId { get; set; }
         public string Name { get; set; }
         public List<TagCategory> TagCategories { get; set; }
     }

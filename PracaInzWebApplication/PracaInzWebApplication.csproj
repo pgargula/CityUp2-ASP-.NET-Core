@@ -33,8 +33,34 @@
     <Compile Remove="Migrations\20191111220449_updateModels.Designer.cs" />
     <Compile Remove="Migrations\20191111221013_updateModels.cs" />
     <Compile Remove="Migrations\20191111221013_updateModels.Designer.cs" />
+    <Compile Remove="Migrations\20191111232556_updateModels.cs" />
+    <Compile Remove="Migrations\20191111232556_updateModels.Designer.cs" />
+    <Compile Remove="Migrations\20191112000044_fixApliationModel.cs" />
+    <Compile Remove="Migrations\20191112000044_fixApliationModel.Designer.cs" />
+    <Compile Remove="Migrations\20191112000624_fixApliationModel1.cs" />
+    <Compile Remove="Migrations\20191112000624_fixApliationModel1.Designer.cs" />
+    <Compile Remove="Migrations\20191126214123_seedData.cs" />
+    <Compile Remove="Migrations\20191126214123_seedData.Designer.cs" />
     <Compile Remove="Migrations\20191129185409_seedGeolocationData.cs" />
     <Compile Remove="Migrations\20191129185409_seedGeolocationData.Designer.cs" />
+    <Compile Remove="Migrations\20191129191559_seedGeolocationData.cs" />
+    <Compile Remove="Migrations\20191129191559_seedGeolocationData.Designer.cs" />
+    <Compile Remove="Migrations\20191129213959_fixApplicationModel.cs" />
+    <Compile Remove="Migrations\20191129213959_fixApplicationModel.Designer.cs" />
+    <Compile Remove="Migrations\20191205015843_fixDbSet.cs" />
+    <Compile Remove="Migrations\20191205015843_fixDbSet.Designer.cs" />
+    <Compile Remove="Migrations\20191205024305_fixDbSet1.cs" />
+    <Compile Remove="Migrations\20191205024305_fixDbSet1.Designer.cs" />
+    <Compile Remove="Migrations\20191207004502_addComemnetModels.cs" />
+    <Compile Remove="Migrations\20191207004502_addComemnetModels.Designer.cs" />
+    <Compile Remove="Migrations\20191207011622_addComemnetModels1.cs" />
+    <Compile Remove="Migrations\20191207011622_addComemnetModels1.Designer.cs" />
+    <Compile Remove="Migrations\20191209195751_fixbug.cs" />
+    <Compile Remove="Migrations\20191209195751_fixbug.Designer.cs" />
+    <Compile Remove="Migrations\20191211212631_seedTagData.cs" />
+    <Compile Remove="Migrations\20191211212631_seedTagData.Designer.cs" />
+    <Compile Remove="Migrations\20191211215227_seedTagData1.cs" />
+    <Compile Remove="Migrations\20191211215227_seedTagData1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

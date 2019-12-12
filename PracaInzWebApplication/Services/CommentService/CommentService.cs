@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Models;
+using PracaInzWebApplication.Services.TextControlService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,16 @@ namespace PracaInzWebApplication.Services.CommentService
     public class CommentService : ICommentService
     {
         private readonly AppDbContext _context;
-        public CommentService(AppDbContext context)
+        private readonly ITextControlService _censorshipService;
+        public CommentService(AppDbContext context, ITextControlService censorshipService)
         {
             _context = context;
+            _censorshipService = censorshipService;
         }
 
         public async Task AddComment(Comment comment)
         {
+            comment.Text = await _censorshipService.CensorText(comment.Text);
             try
             {
                 await _context.Comments.AddAsync(comment);
@@ -31,6 +35,7 @@ namespace PracaInzWebApplication.Services.CommentService
 
         public async Task AddCommentResponse(CommentResponse commentResponse)
         {
+            commentResponse.Text = await _censorshipService.CensorText(commentResponse.Text);
             try
             {
                 await _context.CommentResponses.AddAsync(commentResponse);

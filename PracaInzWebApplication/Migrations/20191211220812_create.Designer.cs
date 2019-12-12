@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracaInzWebApplication.Data;
 
 namespace PracaInzWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191211220812_create")]
+    partial class create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3489,7 +3491,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 1,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 17, 31, 583, DateTimeKind.Local).AddTicks(9175),
+                            Date = new DateTime(2019, 12, 11, 23, 8, 11, 70, DateTimeKind.Local).AddTicks(7530),
                             Text = "fajne",
                             UserId = 3
                         },
@@ -3497,7 +3499,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 2,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 3, 17, 31, 586, DateTimeKind.Local).AddTicks(9500),
+                            Date = new DateTime(2019, 12, 12, 1, 8, 11, 74, DateTimeKind.Local).AddTicks(3756),
                             Text = "Smietnik jest rozwalony od 2 tygodni",
                             UserId = 2
                         },
@@ -3505,7 +3507,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 3,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 17, 31, 586, DateTimeKind.Local).AddTicks(9607),
+                            Date = new DateTime(2019, 12, 11, 23, 8, 11, 74, DateTimeKind.Local).AddTicks(3840),
                             Text = "Smieci coraz więcej",
                             UserId = 3
                         },
@@ -3513,7 +3515,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 4,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 21, 31, 586, DateTimeKind.Local).AddTicks(9617),
+                            Date = new DateTime(2019, 12, 11, 23, 12, 11, 74, DateTimeKind.Local).AddTicks(3849),
                             Text = "Mam nadzieje że zostanie to szybko usunięte",
                             UserId = 2
                         },
@@ -3521,7 +3523,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 5,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 28, 31, 586, DateTimeKind.Local).AddTicks(9635),
+                            Date = new DateTime(2019, 12, 11, 23, 19, 11, 74, DateTimeKind.Local).AddTicks(3868),
                             Text = "dobre pomarańczowe",
                             UserId = 3
                         });
@@ -3559,7 +3561,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 1,
                             CommentId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 19, 31, 587, DateTimeKind.Local).AddTicks(3461),
+                            Date = new DateTime(2019, 12, 11, 23, 10, 11, 74, DateTimeKind.Local).AddTicks(7558),
                             Text = "dzięki",
                             UserId = 2
                         },
@@ -3567,7 +3569,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 2,
                             CommentId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 21, 31, 587, DateTimeKind.Local).AddTicks(4198),
+                            Date = new DateTime(2019, 12, 11, 23, 12, 11, 74, DateTimeKind.Local).AddTicks(8319),
                             Text = "spoko",
                             UserId = 3
                         },
@@ -3575,7 +3577,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 3,
                             CommentId = 2,
-                            Date = new DateTime(2019, 12, 12, 1, 23, 31, 587, DateTimeKind.Local).AddTicks(4226),
+                            Date = new DateTime(2019, 12, 11, 23, 14, 11, 74, DateTimeKind.Local).AddTicks(8342),
                             Text = "lolo",
                             UserId = 2
                         },
@@ -3583,7 +3585,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 4,
                             CommentId = 3,
-                            Date = new DateTime(2019, 12, 12, 1, 24, 31, 587, DateTimeKind.Local).AddTicks(4231),
+                            Date = new DateTime(2019, 12, 11, 23, 15, 11, 74, DateTimeKind.Local).AddTicks(8347),
                             Text = "test",
                             UserId = 2
                         },
@@ -3591,7 +3593,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 5,
                             CommentId = 4,
-                            Date = new DateTime(2019, 12, 12, 1, 25, 31, 587, DateTimeKind.Local).AddTicks(4235),
+                            Date = new DateTime(2019, 12, 11, 23, 16, 11, 74, DateTimeKind.Local).AddTicks(8352),
                             Text = "test",
                             UserId = 2
                         });
@@ -3871,12 +3873,12 @@ namespace PracaInzWebApplication.Migrations
                         new
                         {
                             TagId = 27,
-                            Name = "agresywne"
+                            Name = "agresyne"
                         },
                         new
                         {
                             TagId = 28,
-                            Name = "agresywny"
+                            Name = "agresyny"
                         },
                         new
                         {
@@ -3922,11 +3924,6 @@ namespace PracaInzWebApplication.Migrations
                         {
                             TagId = 37,
                             Name = "proponuje"
-                        },
-                        new
-                        {
-                            TagId = 38,
-                            Name = "kosza"
                         });
                 });
 
@@ -3956,7 +3953,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             TagCategoryId = 1,
                             CategoryId = 1,
-                            TagId = 38
+                            TagId = 1
                         },
                         new
                         {

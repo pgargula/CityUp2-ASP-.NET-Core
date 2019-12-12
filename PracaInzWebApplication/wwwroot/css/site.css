@@ -93,6 +93,9 @@ body {
     width: 100%;
     min-height: 250px;
 }
+.textField {
+    word-wrap:break-word;
+}
 
 /*SNACKBAR config*/
 

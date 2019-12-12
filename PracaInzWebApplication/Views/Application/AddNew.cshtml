@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label>Tytuł:</label>
-                        <input asp-for="@Model.Title" class="form-control" />
+                        <input id="title" asp-for="@Model.Title" onkeypress="onTextChangeDesc();" class="form-control" />
                         <span asp-validation-for="@Model.Title" class="text-danger" />
                     </div>
                     <div class="col-md-6">
@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label>Opis:</label>
-                        <textarea asp-for="@Model.Description" class="form-control" placeholder="Dodaj opis" style="min-height:250px; "></textarea>
+                        <textarea id="description" asp-for="@Model.Description" class="form-control" onkeypress="onTextChangeDesc();" placeholder="Dodaj opis" style="min-height:250px; "></textarea>
                         <span asp-validation-for="@Model.Description" class="text-danger" />
                     </div>
                 </div>
@@ -74,6 +74,31 @@
         var defaultCity =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value; //set dafault user cityId
     </script>
     <script src="~/js/AddApplicationPage.js" asp-append-version="true"></script>
+<script>
+    var url = "/api/ApiTextControl";
+
+    /// Hint Category
+    function onTextChangeDesc() { //text from description
+        var key = window.event.keyCode;
+        // If the user has pressed enter
+        var text = $('#description').val()+" "+$('#title').val();
+        var model = { text: text }
+        if (key === 13 || key == 32 || key == 190 || key==46) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: model,
+                success: function (response) {
+                     if (response != 100) {
+                         $('#categorySelect').val(response).change();
+                         }
+                }
+            });
+
+        }
+    }
+
+</script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&libraries=places&callback=initMap">
     </script>
