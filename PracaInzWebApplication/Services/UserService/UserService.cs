@@ -33,7 +33,7 @@ namespace PracaInzWebApplication.Services.UserService
 
             if (user == null)
                 return null;
-            if (user.Password == password)
+            if (_authenticationService.VerifyPassword(password, user.Password, user.Salt))
             {
                 return await _authenticationService.GetToken(user);
             }
@@ -49,8 +49,11 @@ namespace PracaInzWebApplication.Services.UserService
                 var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Login == userRegisterDTO.Login);
                 if (user == null)
                 {
+                    string salt;
+                    userRegisterDTO.Password = _authenticationService.HashPassword(userRegisterDTO.Password,out salt);
                     var userToAdd = _mapper.Map<User>(userRegisterDTO);
                     userToAdd.Role = Roles.User;
+                    userToAdd.Salt = salt;
                     await _dbContext.Users.AddAsync(userToAdd);
                     await _dbContext.SaveChangesAsync();
                     return "OK";

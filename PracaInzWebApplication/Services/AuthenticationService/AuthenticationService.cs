@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Services.AuthenticationService
 {
     public class AuthenticationService : IAuthenticationService
     {
+        private readonly HashAlgorithmName HashAlgorithmName = HashAlgorithmName.SHA256;
         public async Task<string> GetToken(User user)
         {
             var secretKey = System.Text.Encoding.ASCII.GetBytes("70ZaBE-5LxoAjV4ibfCdS8afpizTY60GjY7tebchbTHTiayOQa1Eaetxy5T4nS7DVf");
@@ -42,6 +45,52 @@ namespace PracaInzWebApplication.Services.AuthenticationService
                 new Claim("City",user.City.Name)
             };
             return claims;
+        }
+
+        public string HashPassword(string password, out string salt)
+        {
+            if (password == null)
+                throw new ArgumentNullException(nameof(password));
+
+            salt = GenerateSalt(128);
+            byte[] hashPasswdSalt = HashPasswordWithSalt(password, salt);
+
+            return Convert.ToBase64String(hashPasswdSalt);
+        }
+
+        public bool VerifyPassword(string password, string hashPassword, string salt)
+        {
+            if (password == null || salt == null)
+                return false;
+            byte[] hashPasswordToVerify = HashPasswordWithSalt(password, salt);
+            if (hashPassword == Convert.ToBase64String(hashPasswordToVerify))
+                return true;
+            else
+                return false;
+        }
+
+
+        private string GenerateSalt(int byteLength)
+        {
+            using (var cryptoServiceProvider = new RNGCryptoServiceProvider())
+            {
+                var salt = new byte[byteLength];
+                cryptoServiceProvider.GetBytes(salt);
+                return Convert.ToBase64String(salt);
+            }
+        }
+        private byte[] HashPasswordWithSalt(string password, string salt)
+        {
+            byte[] hash;
+            using (var hashAlgorithm = HashAlgorithm.Create(HashAlgorithmName.Name))
+            {
+                var passwdSalt = password + salt;
+                byte[] input = Encoding.UTF8.GetBytes(passwdSalt);
+
+                hash = hashAlgorithm.ComputeHash(input);
+            }
+
+            return hash;
         }
 
     }
