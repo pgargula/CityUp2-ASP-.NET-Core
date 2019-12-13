@@ -67,7 +67,7 @@ function createMarker(model) {
                     model.description +
                     '</p>' +
                     '<img style="width: 140px; height: 140px"  src="' + model.picture + '"/>' +
-                    '<a class="btn btn-primary" role="button" href="ApplicationDetails?applicationId=' + model.id + '">Detale</a>');
+                    '<a class="btn btn-primary" role="button" href="/Application/ApplicationDetails?applicationId=' + model.id + '">Detale</a>');
                 infowindow.open(map, marker);
             }
         })(marker));

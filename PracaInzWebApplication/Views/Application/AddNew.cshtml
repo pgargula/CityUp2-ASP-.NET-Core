@@ -74,31 +74,7 @@
         var defaultCity =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value; //set dafault user cityId
     </script>
     <script src="~/js/AddApplicationPage.js" asp-append-version="true"></script>
-<script>
-    var url = "/api/ApiTextControl";
 
-    /// Hint Category
-    function onTextChangeDesc() { //text from description
-        var key = window.event.keyCode;
-        // If the user has pressed enter
-        var text = $('#description').val()+" "+$('#title').val();
-        var model = { text: text }
-        if (key === 13 || key == 32 || key == 190 || key==46) {
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: model,
-                success: function (response) {
-                     if (response != 100) {
-                         $('#categorySelect').val(response).change();
-                         }
-                }
-            });
-
-        }
-    }
-
-</script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&libraries=places&callback=initMap">
     </script>

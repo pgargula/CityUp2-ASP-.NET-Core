@@ -1,4 +1,36 @@
 ﻿
+var urlHint = "/api/ApiTextControl";
+var cityLocation;
+var citySelect = document.getElementById('citySelect');
+var selectedCity = citySelect.options[citySelect.selectedIndex].text;
+var input = document.getElementById('streetInput');
+var lng = document.getElementById('lng');
+var ltd = document.getElementById('ltd');
+var map;
+var marker;
+var geocoder
+
+
+/// Hint Category
+function onTextChangeDesc() { //text from description
+    var key = window.event.keyCode;
+    // If the user has pressed enter
+    var text = $('#description').val() + " " + $('#title').val();
+    var model = { text: text }
+    if (key === 13 || key == 32 || key == 190 || key == 46) {
+        $.ajax({
+            type: "POST",
+            url: urlHint,
+            data: model,
+            success: function (response) {
+                if (response != 100) {
+                    $('#categorySelect').val(response).change();
+                }
+            }
+        });
+
+    }
+}
         //populating city select
     $.ajax({
             type: 'GET',
@@ -31,16 +63,7 @@
                 }
             });
 
-        var cityLocation;
-            var citySelect = document.getElementById('citySelect');
-            var selectedCity = citySelect.options[citySelect.selectedIndex].text;
-            var input = document.getElementById('streetInput');
-            var lng = document.getElementById('lng');
-            var ltd = document.getElementById('ltd');
-            var map;
-            var marker;
-            var geocoder
-
+           
         /// insert text about choosen photes
         $(document).ready(function () {
             $('.custom-file-input').on("change", function () {
@@ -96,7 +119,7 @@
 
                 autocomplete.addListener('place_changed', function () {
                     lng.value = marker.getPosition().lng();
-                    lng.value = marker.getPosition().lat();
+                    ltd.value = marker.getPosition().lat();
                     marker.setVisible(false);
                     var place = autocomplete.getPlace();
                     if (!place.geometry) {

@@ -80,6 +80,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                 var appDetails = await _context.Applications
                          .Include(x => x.Adress.City)
                          .Include(x => x.Adress)
+                         .Include(x=>x.Adress.Geolocation)
                          .Include(x => x.Status)
                          .Include(x => x.ApplicationPictures)
                          .Include(x => x.User)
@@ -98,7 +99,9 @@ namespace PracaInzWebApplication.Services.ApplicationService
                         Pictures = appDetails.ApplicationPictures.ToList(),
                         Status = appDetails.Status.Label,
                         Street = appDetails.Adress.Street,
-                        User = appDetails.User.Login
+                        User = appDetails.User.Login,
+                        Geolocation = appDetails.Adress.Geolocation
+                        
                     };
                 }
                 else
@@ -117,6 +120,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
         {
             return await _context.Applications.Include(x => x.Adress)
                  .Include(x => x.Adress.City)
+                 .Include(x => x.Adress.Geolocation)
                  .Include(x => x.Status)
                  .Include(x=>x.Category)
                  .Include(x => x.ApplicationPictures)

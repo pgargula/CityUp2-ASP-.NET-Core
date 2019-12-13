@@ -1,0 +1,118 @@
+﻿@model PracaInzWebApplication.Models.ViewModels.ApplicationDetails
+
+<div id="snackbar">Comment</div>
+<div class="row box">
+    @if (ViewBag.IsUserApp == "userApp")
+    {
+        <div class="col-md-4 ">
+
+
+            <div class=" row justify-content-between">
+                <div class="col-md-5"><a href="#" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj</a></div>
+                <div class="col-md-5 " style="text-align:end"><a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń</a></div>
+            </div>
+            <hr />
+
+            <div class="col-md-12">
+
+                <h3>Status:</h3>
+                <div class="alert alert-info" role="alert">
+                    W realizacji
+                </div>
+                <hr />
+                <h3>Komentarz administracji:</h3>
+                <div class="col-md-12 box textField">Dziękujemy za zgłoszenie. Alert został przyjęty do rozpoznania. Uprzejmie informujemy, że awaria został zgłoszona do wykonawcy celem naprawy. </div>
+                <hr />
+                <div class="row">
+
+                    <div id="googleMap" class="detailAppMap"></div>
+
+                </div>
+            </div>
+        </div>
+       
+    }
+
+    <div class="col verticalLine ">
+
+        <div class="container">
+
+
+            <h1 class="my-3">
+                <small>Tytuł:</small>
+                @Model.Title
+            </h1>
+
+            <div class="row  ">
+                <div class="col-md-7 justify-content-center  " style="background-color: rgba(0, 0, 0, 0.1);">
+                    <div class=" text-center " style="  height: 400px;">
+                        <img class="img-fluid align-middle  " style="max-height: 100%" id="mainPhoto" src="@Model.Pictures[0].PicturePath" alt="">
+                    </div>
+                    <div class="row my-2 align-middle" style="background-color:rgba(0,0,0,0.4);">
+                        @for (int i = 0; i < Model.Pictures.Count; i++)
+                        {
+                            <div class="col-md-3 text-center" style="height: 100px;  ">
+                                <img src="@Model.Pictures[i].PicturePath" id="photo+@i" onclick="changeMainPhoto(this)" class="img-fluid rounded" style="height: 100px; ">
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <h3 class="my-3">Szczegóły</h3>
+                    <ul>
+                        <li>Autor: <b>@Model.User</b></li>
+                        <li>Kategoria:<b>@Model.Category</b></li>
+                        <li>Miasto: <b>@Model.City</b></li>
+                        @if (Model.District != null)
+                        {
+                            <li>Dzielnica: <b>@Model.District</b></li>
+                        }
+                        <li>Ulica: <b>@Model.Street</b></li>
+                    </ul>
+                    <h3 class="my-3">Opis:</h3>
+                    <p>@Model.Description</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="row mt-3 box">
+    <div id="commentContainer" class="col-md-12">
+        @await Component.InvokeAsync("Comment", @ViewBag.ApplicationId)
+    </div>
+</div>
+
+@section scripts{
+    <script>
+    var commnentText;
+    var user = @User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+        var appId =@ViewBag.ApplicationId;
+
+                function changeMainPhoto(e) {
+                    var newSrc = $(e).attr('src');
+                    $('#mainPhoto').attr("src", newSrc);
+                }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function initMap() {
+            var applicationLocation = new google.maps.LatLng(@Model.Geolocation.Latitude , @Model.Geolocation.Longitude);
+            var map = new google.maps.Map(document.getElementById('googleMap'), { zoom: 18, center: applicationLocation });
+
+            var marker = new google.maps.Marker({
+                position: applicationLocation,
+                map: map,
+                
+            });
+        }
+    </script>
+
+}
+<script src="~/js/commentSystem.js" asp-append-version="true"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&libraries=places&callback=initMap">
+</script>

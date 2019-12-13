@@ -32,6 +32,48 @@ namespace PracaInzWebApplication.Controllers
         {
             return View();
         }
+        [Authorize]
+        public async Task<IActionResult> ApplicationDetails(int applicationId)
+        {
+            ///check isuserapp
+            ViewBag.ApplicationId = applicationId;
+            var userId = User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            var uriIsUserApp = new Uri(Consts.appAdress + "api/ApiApplication/IsUserApp/" + applicationId + "/" + userId);
+            try
+            {
+                var response = await _httpClient.GetAsync(uriIsUserApp);
+                var resultContent = Convert.ToBoolean(await response.Content.ReadAsStringAsync());
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    if (resultContent)
+                    {
+                        ViewBag.IsUserApp = "userApp";
+                    }
+                }
+                else
+                    Redirect("~/Home/Index");
+
+                /// dowload application details
+                var uri = new Uri(Consts.appAdress + "api/ApiApplication/GetDetails/" + applicationId);
+           
+                using (HttpClient _httpClient = new HttpClient())
+                {
+                    var responseDetails = await _httpClient.GetAsync(uri);
+                    if (responseDetails.StatusCode == HttpStatusCode.OK)
+                    {
+                        ApplicationDetails model= JsonConvert.DeserializeObject<ApplicationDetails>(await responseDetails.Content.ReadAsStringAsync());
+                        return View(model);
+                    }
+                    else
+                        return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
         [Authorize(Roles.User)]
         [HttpGet]
         public async Task<IActionResult> AddNew()

@@ -23,7 +23,7 @@
                 {
                     data: "applicationId",
                     render: function (data) {
-                        return `<a class="btn btn-primary" role="button" href="${detailsPath}ApplicationDetails?applicationId=${data}">Detale</a>`;
+                        return `<a class="btn btn-primary" role="button" href="/Application/ApplicationDetails?applicationId=${data}">Detale</a>`;
                     }
                 },
                 {

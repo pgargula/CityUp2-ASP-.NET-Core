@@ -93,8 +93,17 @@ body {
     width: 100%;
     min-height: 250px;
 }
+.detailAppMap {
+    height: 211px;
+    width: 100%;
+    min-height: 211px;
+}
 .textField {
     word-wrap:break-word;
+}
+
+.verticalLine {
+    border-left: 1px solid #d9d9d9;
 }
 
 /*SNACKBAR config*/

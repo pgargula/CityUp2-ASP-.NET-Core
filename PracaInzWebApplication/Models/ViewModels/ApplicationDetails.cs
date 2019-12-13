@@ -15,6 +15,8 @@ namespace PracaInzWebApplication.Models.ViewModels
         public string Street { get; set; }
         public string Status { get; set; }
         public string Category { get; set; }
+        public int GeolocationId { get; set; }
+        public Geolocation Geolocation { get; set; }
         public List<ApplicationPicture>  Pictures { get; set; }
     }
 }
