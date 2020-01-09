@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Services.ApplicationService
 {
-    public class ApplicationService : IApplicationService
+    public class ApplicationService :  IApplicationService
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
             _hostEnvironment = webHostEnvironment;
         }
 
-       
+
 
         public async Task DeleteApplication(int applicationId)
         {
@@ -61,13 +61,60 @@ namespace PracaInzWebApplication.Services.ApplicationService
         {
             try
             {
-                var tmp = await _context.Applications.Where(x => x.ApplicationId == applicationId &&  x.UserId==userId).ToListAsync();
+                var tmp = await _context.Applications.Where(x => x.ApplicationId == applicationId && x.UserId == userId).ToListAsync();
                 if (tmp.Count > 0)
                     return true;
                 else
                     return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<ScoreViewModel> GetScore(int applicationId, int userId)
+        {
+            try
+            {
+                bool isUserVote = false;
+                var votesTmp = await _context.userVotes.Where(x => x.ApplicationId == applicationId).ToListAsync();
+                foreach (var vote in votesTmp)
+                {
+                    if (vote.UserId == userId)
+                        isUserVote = true;
+                }
+                return new ScoreViewModel { Score = votesTmp.Count(), IsUserVote = isUserVote };
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task AddVote(int applicationId, int userId)
+        {
+            try
+            {
+                await _context.userVotes.AddAsync(new UserVote { ApplicationId = applicationId, UserId = userId });
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public async Task DeleteVote(int applicationId, int userId)
+        {
+            try
+            {
+                var userVoteToDelete = await _context.userVotes.Where(x => x.ApplicationId == applicationId && x.UserId == userId).FirstOrDefaultAsync();
+                _context.userVotes.Remove(userVoteToDelete);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -80,7 +127,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                 var appDetails = await _context.Applications
                          .Include(x => x.Adress.City)
                          .Include(x => x.Adress)
-                         .Include(x=>x.Adress.Geolocation)
+                         .Include(x => x.Adress.Geolocation)
                          .Include(x => x.Status)
                          .Include(x => x.ApplicationPictures)
                          .Include(x => x.User)
@@ -95,13 +142,13 @@ namespace PracaInzWebApplication.Services.ApplicationService
                         Category = appDetails.Category.Name,
                         City = appDetails.Adress.City.Name,
                         Description = appDetails.Description,
-                        // District = appDetails.Adress.District.Name,
+                        AdminMsg = appDetails.AdminMsg,
                         Pictures = appDetails.ApplicationPictures.ToList(),
                         Status = appDetails.Status.Label,
                         Street = appDetails.Adress.Street,
                         User = appDetails.User.Login,
                         Geolocation = appDetails.Adress.Geolocation
-                        
+
                     };
                 }
                 else
@@ -122,7 +169,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                  .Include(x => x.Adress.City)
                  .Include(x => x.Adress.Geolocation)
                  .Include(x => x.Status)
-                 .Include(x=>x.Category)
+                 .Include(x => x.Category)
                  .Include(x => x.ApplicationPictures)
                  .Include(x => x.User)
                  .Where(x => x.UserId == userId).ToListAsync();
@@ -145,7 +192,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                 application.Title = await _textControlService.CensorText(application.Title);
                 application.Description = await _textControlService.CensorText(application.Description);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -178,17 +225,15 @@ namespace PracaInzWebApplication.Services.ApplicationService
                             string PicturePath = _hostEnvironment.WebRootPath + shortPicturePath.Replace('/', '\\');
 
                             picturePaths.Add(shortPicturePath);
+                            _context.ApplicationPictures.Add(new ApplicationPicture { ApplicationId = applicationId, PicturePath = shortPicturePath });
+                            await _context.SaveChangesAsync();
 
                             using (var stream = new FileStream(PicturePath, FileMode.Create))
                             {
                                 await photo.CopyToAsync(stream);
                             }
                         }
-                        foreach (var path in picturePaths)
-                        {
-                            _context.ApplicationPictures.Add(new ApplicationPicture { ApplicationId = applicationId, PicturePath = path });
-                        }
-                        await _context.SaveChangesAsync();
+
                     }
                     else
                     {
@@ -201,7 +246,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                     throw ex;
                 }
             }
-            
+
         }
     }
 

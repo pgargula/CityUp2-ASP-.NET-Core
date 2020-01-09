@@ -1,0 +1,15 @@
+﻿@model PracaInzWebApplication.Models.ViewModels.ScoreViewModel
+
+@if (Model.IsUserVote == false)
+{
+    <button type="button" data-toggle="button" aria-pressed="false" onclick="addVote()" class="btn btn-outline-info" style="height: 40px;">
+        Poprzyj <i class="far fa-thumbs-up"></i>
+    </button>
+}
+else
+{
+    <button type="button" data-toggle="button" aria-pressed="true" onclick="deleteVote()" class="btn btn-outline-info active" style="height: 40px;">
+        Poprzyj <i class="far fa-thumbs-up"></i>
+    </button>
+}
+<h3 class="mx-2" style="color: #17a2b8;">@Model.Score</h3>

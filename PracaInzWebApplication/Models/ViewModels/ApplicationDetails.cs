@@ -18,5 +18,6 @@ namespace PracaInzWebApplication.Models.ViewModels
         public int GeolocationId { get; set; }
         public Geolocation Geolocation { get; set; }
         public List<ApplicationPicture>  Pictures { get; set; }
+        public string AdminMsg { get; set; }
     }
 }

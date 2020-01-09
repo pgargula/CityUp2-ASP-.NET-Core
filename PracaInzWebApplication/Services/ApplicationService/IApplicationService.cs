@@ -10,10 +10,13 @@ namespace PracaInzWebApplication.Services.ApplicationService
     {
         Task<int> AddApplication(AddApplication applicationDto);
         Task AddPhotos(List<IFormFile> photos, int applicationId);
+        Task AddVote(int applicationId, int userId);
         Task DeleteApplication(int applicationId);
+        Task DeleteVote(int applicationId, int userId);
         Task<IEnumerable<Application>> GetAllByCity(int cityId);
         Task<IEnumerable<Application>> GetAllByUser(int userId);
         Task<ApplicationDetails> GetDetails(int applicationId);
+        Task<ScoreViewModel> GetScore(int applicationId, int userId);
         Task<bool> IsUserApp(int applicationId, int userId);
     }
 }

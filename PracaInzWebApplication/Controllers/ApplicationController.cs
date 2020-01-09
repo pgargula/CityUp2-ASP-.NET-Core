@@ -33,6 +33,12 @@ namespace PracaInzWebApplication.Controllers
             return View();
         }
         [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ScoreView(int applicationId)
+        {
+            return ViewComponent("Score", applicationId);
+        }
+        [Authorize]
         public async Task<IActionResult> ApplicationDetails(int applicationId)
         {
             ///check isuserapp

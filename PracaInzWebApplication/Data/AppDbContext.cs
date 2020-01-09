@@ -27,6 +27,7 @@ namespace PracaInzWebApplication.Data
         public DbSet<CensoredWord> CensoredWords { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TagCategory> TagCategories { get; set; }
+        public DbSet<UserVote> userVotes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -151,9 +152,32 @@ namespace PracaInzWebApplication.Data
                 );
 
             modelBuilder.Entity<Application>().HasData(
-                new Application { ApplicationId = 1, AdressId = 1, Score=22, AdminMsg="brak wiadomości", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ", StatusId = 1, UserId = 2, CategoryId=1, Title="Rozwalony śmietnk" },
-                new Application { ApplicationId = 2, AdressId = 2, Score = 12, AdminMsg = "brak wiadomości", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ", StatusId = 2, UserId = 2, CategoryId=2, Title="Wrak na poboczu" },
-                new Application { ApplicationId = 3, AdressId = 4, Score = 24, AdminMsg = "brak wiadomości", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ", StatusId = 1, UserId = 3, CategoryId=3, Title= "Dzikie Psy" }
+                new Application { ApplicationId = 1, AdressId = 1, AdminMsg="brak wiadomości", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ", StatusId = 1, UserId = 2, CategoryId=1, Title="Rozwalony śmietnk" },
+                new Application { ApplicationId = 2, AdressId = 2, AdminMsg = "brak wiadomości", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ", StatusId = 2, UserId = 2, CategoryId=2, Title="Wrak na poboczu" },
+                new Application { ApplicationId = 3, AdressId = 4, AdminMsg = "brak wiadomości", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ", StatusId = 1, UserId = 3, CategoryId=3, Title= "Dzikie Psy" }
+                );
+            modelBuilder.Entity<UserVote>().HasData(
+                new UserVote { UserVoteId=1, ApplicationId=1, UserId=1},
+                new UserVote { UserVoteId = 2, ApplicationId = 1, UserId = 2 },
+                new UserVote { UserVoteId = 3, ApplicationId = 1, UserId = 3 },
+                new UserVote { UserVoteId = 4, ApplicationId = 1, UserId = 4 },
+                new UserVote { UserVoteId = 5, ApplicationId = 1, UserId = 5 },
+                new UserVote { UserVoteId = 6, ApplicationId = 2, UserId = 2 },
+                new UserVote { UserVoteId = 7, ApplicationId = 2, UserId = 3 },
+                new UserVote { UserVoteId = 8, ApplicationId = 3, UserId = 1 },
+                new UserVote { UserVoteId = 9, ApplicationId = 3, UserId = 2 },
+                new UserVote { UserVoteId = 10, ApplicationId = 3, UserId = 3 },
+                new UserVote { UserVoteId = 11, ApplicationId = 3, UserId = 4 },
+                new UserVote { UserVoteId = 12, ApplicationId = 4, UserId = 1 },
+                new UserVote { UserVoteId = 13, ApplicationId = 4, UserId = 2 },
+                new UserVote { UserVoteId = 14, ApplicationId = 4, UserId = 3 },
+                new UserVote { UserVoteId = 15, ApplicationId = 5, UserId = 1 },
+                new UserVote { UserVoteId = 16, ApplicationId = 5, UserId = 2 },
+                new UserVote { UserVoteId = 17, ApplicationId = 6, UserId = 1 },
+                new UserVote { UserVoteId = 18, ApplicationId = 6, UserId = 2 },
+                new UserVote { UserVoteId = 19, ApplicationId = 6, UserId = 3 },
+                new UserVote { UserVoteId = 20, ApplicationId = 6, UserId = 4 },
+                new UserVote { UserVoteId = 21, ApplicationId = 6, UserId = 5 }
                 );
             modelBuilder.Entity<Status>().HasData(
                 new Status { StatusId = 1, Label = "W oczekiwaniu" },

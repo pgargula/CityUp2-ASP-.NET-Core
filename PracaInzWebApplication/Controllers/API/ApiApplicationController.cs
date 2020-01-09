@@ -52,6 +52,21 @@ namespace PracaInzWebApplication.Controllers.API
             return await _applicationService.IsUserApp(applicationId, userId);
         }
 
+        [HttpGet("{applicationId}/{userId}")]
+        public async Task<ScoreViewModel> GetScore(int applicationId, int userId)
+        {
+            return await _applicationService.GetScore(applicationId, userId);
+        }
+        [HttpPost]
+        public async Task AddVote([FromForm]int applicationId, [FromForm]int userId)
+        {
+             await _applicationService.AddVote(applicationId,userId);
+        }
+        [HttpPost]
+        public async Task DeleteVote([FromForm]int applicationId, [FromForm]int userId)
+        {
+             await _applicationService.DeleteVote(applicationId, userId);
+        }
 
         // POST api/ApiApplication
         [HttpPost]

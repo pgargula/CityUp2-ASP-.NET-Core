@@ -2,46 +2,60 @@
 
 <div id="snackbar">Comment</div>
 <div class="row box">
-    @if (ViewBag.IsUserApp == "userApp")
-    {
-        <div class="col-md-4 ">
+   
+    <div class="col-md-4 ">
 
-
+        @if (ViewBag.IsUserApp == "userApp")
+        {
             <div class=" row justify-content-between">
                 <div class="col-md-5"><a href="#" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj</a></div>
                 <div class="col-md-5 " style="text-align:end"><a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń</a></div>
             </div>
             <hr />
+        }
+        <div class="col-md-12">
 
-            <div class="col-md-12">
+            <h3>Status:</h3>
+            <div class="alert alert-info" role="alert">
+                @Model.Status
+            </div>
+            <hr />
+            <h3>Komentarz administracji:</h3>
+            @{ if (@Model.AdminMsg != null)
+                {
+                    <div class="col-md-12 box textField">@Model.AdminMsg</div>
+                } 
+                else 
+                { 
+                    <div class="col-md-12 box textField">Brak wiadomości</div>
+                } 
+              } 
+            <hr />
+            <div class="row">
 
-                <h3>Status:</h3>
-                <div class="alert alert-info" role="alert">
-                    W realizacji
-                </div>
-                <hr />
-                <h3>Komentarz administracji:</h3>
-                <div class="col-md-12 box textField">Dziękujemy za zgłoszenie. Alert został przyjęty do rozpoznania. Uprzejmie informujemy, że awaria został zgłoszona do wykonawcy celem naprawy. </div>
-                <hr />
-                <div class="row">
+                <div id="googleMap" class="detailAppMap"></div>
 
-                    <div id="googleMap" class="detailAppMap"></div>
-
-                </div>
             </div>
         </div>
+    </div>
        
-    }
+    
 
     <div class="col verticalLine ">
 
         <div class="container">
 
 
-            <h1 class="my-3">
-                <small>Tytuł:</small>
-                @Model.Title
-            </h1>
+            <div class="row justify-content-between">
+                <h1 class="my-3">
+                    <small>Tytuł:</small>
+                    @Model.Title
+                </h1>
+
+                <div id="scoreContainer" class="row my-4">
+                    @await Component.InvokeAsync("Score", @ViewBag.ApplicationId)
+                </div>
+            </div>
 
             <div class="row  ">
                 <div class="col-md-7 justify-content-center  " style="background-color: rgba(0, 0, 0, 0.1);">
@@ -90,12 +104,12 @@
     <script>
     var commnentText;
     var user = @User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
-        var appId =@ViewBag.ApplicationId;
+    var appId =@ViewBag.ApplicationId;
 
-                function changeMainPhoto(e) {
-                    var newSrc = $(e).attr('src');
-                    $('#mainPhoto').attr("src", newSrc);
-                }
+    function changeMainPhoto(e) {
+       var newSrc = $(e).attr('src');
+       $('#mainPhoto').attr("src", newSrc);
+     }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,12 +120,13 @@
             var marker = new google.maps.Marker({
                 position: applicationLocation,
                 map: map,
-                
+
             });
         }
     </script>
 
 }
+<script src="~/js/Score.js" asp-append-version="true"></script>
 <script src="~/js/commentSystem.js" asp-append-version="true"></script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&libraries=places&callback=initMap">

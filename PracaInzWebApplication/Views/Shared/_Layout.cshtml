@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - PracaInzWebApplication</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/fontawesome-free-5.12.0-web/css/all.css" rel="stylesheet">
     @RenderSection("Styles", required: false)
 </head>
 <body >
@@ -45,7 +46,7 @@
                             @if (User.HasClaim("Role", "User"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AddNew">Nowe zgłoszenie</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AddNew">Nowe zgłoszenie <i class="far fa-plus-square"></i></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserApplications">Moje zgłoszenia</a>

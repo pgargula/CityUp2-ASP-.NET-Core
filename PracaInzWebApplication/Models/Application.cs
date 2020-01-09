@@ -24,7 +24,7 @@ namespace PracaInzWebApplication.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string AdminMsg { get; set; }
-        public int Score { get; set; }
+        public List<UserVote> UserVotes { get; set; }
 
     }
 }
