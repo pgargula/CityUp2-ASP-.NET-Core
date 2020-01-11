@@ -2,35 +2,65 @@
 
 <div id="snackbar">Comment</div>
 <div class="row box">
-   
+
     <div class="col-md-4 ">
 
-        @if (ViewBag.IsUserApp == "userApp")
+        @if (ViewBag.IsUserApp == "userApp" || User.HasClaim("Role", "CityAdministrator"))
         {
             <div class=" row justify-content-between">
-                <div class="col-md-5"><a href="#" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj</a></div>
-                <div class="col-md-5 " style="text-align:end"><a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń</a></div>
+                <div class="col-md-5"><a href="#" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj <i class="far fa-edit"></i></a></div>
+                <div class="col-md-5 " style="text-align:end"><a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń <i class="far fa-trash-alt"></i></a></div>
             </div>
             <hr />
         }
-        <div class="col-md-12">
 
-            <h3>Status:</h3>
-            <div class="alert alert-info" role="alert">
-                @Model.Status
+        <div class="col-md-12">
+            @*status section*@
+            <div class="row justify-content-between">
+                <h3>Status:</h3>
+                @if (User.HasClaim("Role", "CityAdministrator"))
+                {
+                    <div class="col-md-2" style="padding-left:0px;"><a id="statusButton" onclick="editStatus()" href="#" class="btn  btn-outline-warning">Zmień</a></div>
+                }
+            </div>
+            <div class="row " style="padding-right:0px">
+                <div id="statusView" class="col-md-12" style="display:block; padding-left:0px; padding-right:0px;">
+                    <div id="statusAlert" class="alert alert-info" role="alert">
+                        @Model.Status
+                    </div>
+                </div>
+                <div id="status" class="col-md-12" style="display:none; padding-left:0px; padding-right:0px;">
+                    <select id="statusSelect" class="form-control" >
+                        <option value="" selected disabled hidden id="loadingCities">Ładowanie...</option>
+                    </select>
+                </div>
             </div>
             <hr />
-            <h3>Komentarz administracji:</h3>
-            @{ if (@Model.AdminMsg != null)
+            @*admin comment section*@
+            <div class="row justify-content-between">
+                <h3>Komentarz administracji:</h3>
+                @if (User.HasClaim("Role", "CityAdministrator"))
                 {
-                    <div class="col-md-12 box textField">@Model.AdminMsg</div>
-                } 
-                else 
-                { 
-                    <div class="col-md-12 box textField">Brak wiadomości</div>
-                } 
-              } 
+                    <div  class="col-md-2" style="padding-left:0px;"><a id="adminMsgButton" href="#" onclick="editAdminMsg()" class="btn  btn-outline-warning">Zmień</a></div>
+                }
+            </div>
+
+            <div class="row">
+                @{ if (@Model.AdminMsg != null)
+                    {
+                        <div id="adminMsgView" style="display:block;" class="col-md-12 box textField">@Model.AdminMsg</div>
+                    }
+                    else
+                    {
+                        <div  id="adminMsgView" style="display:block;" class="col-md-12 box textField">Brak wiadomości</div>
+                    }
+                }
+                <div id="adminMsgInput" class="col-md-12" style="display:none;">
+                    <textarea id="adminMsgText" style="min-height:80px; width: 100%" placeholder=""> @Model.AdminMsg</textarea>
+                </div>
+            </div>
             <hr />
+            @*map section*@
             <div class="row">
 
                 <div id="googleMap" class="detailAppMap"></div>
@@ -38,8 +68,8 @@
             </div>
         </div>
     </div>
-       
-    
+
+
 
     <div class="col verticalLine ">
 
@@ -101,33 +131,19 @@
 </div>
 
 @section scripts{
-    <script>
+<script>
     var commnentText;
     var user = @User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
     var appId =@ViewBag.ApplicationId;
+    var ltd = @Model.Geolocation.Latitude;
+    var lng = @Model.Geolocation.Longitude;
 
-    function changeMainPhoto(e) {
-       var newSrc = $(e).attr('src');
-       $('#mainPhoto').attr("src", newSrc);
-     }
+</script>
 
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        function initMap() {
-            var applicationLocation = new google.maps.LatLng(@Model.Geolocation.Latitude , @Model.Geolocation.Longitude);
-            var map = new google.maps.Map(document.getElementById('googleMap'), { zoom: 18, center: applicationLocation });
-
-            var marker = new google.maps.Marker({
-                position: applicationLocation,
-                map: map,
-
-            });
-        }
-    </script>
-
-}
+<script src="~/js/applicationDetailsPage.js" asp-append-version="true"></script>
 <script src="~/js/Score.js" asp-append-version="true"></script>
 <script src="~/js/commentSystem.js" asp-append-version="true"></script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&libraries=places&callback=initMap">
 </script>
+}

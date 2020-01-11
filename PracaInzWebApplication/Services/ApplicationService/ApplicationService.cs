@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PracaInzWebApplication.Services.ApplicationService
 {
-    public class ApplicationService :  IApplicationService
+    public class ApplicationService : IApplicationService
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -248,6 +248,24 @@ namespace PracaInzWebApplication.Services.ApplicationService
             }
 
         }
+
+        public async Task<IEnumerable<Status>> GetStatuses()
+        {
+            return await _context.Statuses.ToListAsync();
+        }
+        public async Task ChangeStatus(int applicationId, int statusId)
+        {
+            var applicationTmp = await _context.Applications.FirstOrDefaultAsync(x => x.ApplicationId == applicationId);
+            applicationTmp.StatusId = statusId;
+            await _context.SaveChangesAsync();
+        }
+        public async Task ChangeAdminMsg(int applicationId, string adminMsg)
+        {
+            var applicationTmp = await _context.Applications.FirstOrDefaultAsync(x => x.ApplicationId == applicationId);
+            applicationTmp.AdminMsg = adminMsg;
+            await _context.SaveChangesAsync();
+        }
+
     }
 
 }

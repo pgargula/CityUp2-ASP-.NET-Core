@@ -57,6 +57,24 @@ namespace PracaInzWebApplication.Controllers.API
         {
             return await _applicationService.GetScore(applicationId, userId);
         }
+        [HttpGet]
+        public async Task<IEnumerable<Status>> GetStatuses()
+        {
+            return await _applicationService.GetStatuses();
+        }
+        
+        [HttpPost]
+        public async Task UpdateStatus([FromForm]int applicationId, [FromForm] int statusId)
+        {
+            await _applicationService.ChangeStatus(applicationId, statusId);
+        }
+
+        [HttpPost]
+        public async Task UpdateAdminMsg([FromForm]int applicationId, [FromForm]string msg)
+        {
+            await _applicationService.ChangeAdminMsg(applicationId, msg);
+        }
+
         [HttpPost]
         public async Task AddVote([FromForm]int applicationId, [FromForm]int userId)
         {

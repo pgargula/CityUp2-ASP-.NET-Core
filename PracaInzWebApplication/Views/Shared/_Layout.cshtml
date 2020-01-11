@@ -34,13 +34,13 @@
                             @if (User.HasClaim("Role", "CityAdministrator"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="CityApplications">Przeglądaj zgłoszenia</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="CityApplications">Przeglądaj zgłoszenia <i class="far fa-list-alt"></i></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Stats">Statystyki</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Stats">Statystyki <i class="far fa-chart-bar"></i></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Moderate">Zarządzaj</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Moderate">Zarządzaj <i class="fas fa-cogs"></i></a>
                                 </li>
                             }
                             @if (User.HasClaim("Role", "User"))
@@ -49,14 +49,14 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AddNew">Nowe zgłoszenie <i class="far fa-plus-square"></i></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserApplications">Moje zgłoszenia</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserApplications">Moje zgłoszenia <i class="far fa-address-book"></i></a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AllApplication">Przeglądaj zgłszenia</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AllApplication">Przeglądaj zgłszenia <i class="far fa-list-alt"></i></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyProfile">Moj profil</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyProfile">Mój profil <i class="far fa-user"></i></a>
                                 </li>
                             }
                         }
@@ -66,16 +66,16 @@
                         {
                             @User.Identity.Name
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logoff">Wyloguj</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logoff">Wyloguj <i class="fas fa-sign-out-alt"></i></a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Logowanie</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Logowanie <i class="fas fa-sign-in-alt"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Rejestracja</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Rejestracja <i class="fas fa-user-plus"></i></a>
                             </li>
                         }
                     </ul>
@@ -91,7 +91,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - PracaInzWebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Praca Inżynierska Piotr Gargula - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
