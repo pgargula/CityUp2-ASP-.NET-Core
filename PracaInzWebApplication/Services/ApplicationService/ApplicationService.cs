@@ -266,6 +266,37 @@ namespace PracaInzWebApplication.Services.ApplicationService
             await _context.SaveChangesAsync();
         }
 
+        public async Task<EditApplication> GetAppToEdit(int applicationId)
+        {
+            var appTmp = await _context.Applications
+                .Include(x => x.Adress)
+                .Include(x => x.Adress.Geolocation)
+                .FirstOrDefaultAsync(x => x.ApplicationId == applicationId);
+            var application = _mapper.Map<Application, EditApplication>(appTmp);
+            application.CityId = appTmp.Adress.CityId;
+            application.Street = appTmp.Adress.Street;
+            application.Latitude = appTmp.Adress.Geolocation.Latitude;
+            application.Longitude = appTmp.Adress.Geolocation.Longitude;
+            return application;
+        }
+
+        public async Task UpdateApplication(EditApplication applicationDto)
+        {
+            var appTmp = await _context.Applications
+               .Include(x => x.Adress)
+               .Include(x => x.Adress.Geolocation)
+               .FirstOrDefaultAsync(x => x.ApplicationId == applicationDto.ApplicationId);
+            appTmp.CategoryId = applicationDto.CategoryId;
+            appTmp.Description = applicationDto.Description;
+            appTmp.Title = applicationDto.Title;
+            appTmp.Adress.CityId = applicationDto.CityId;
+            appTmp.Adress.Street = applicationDto.Street;
+            appTmp.Adress.Geolocation.Latitude = applicationDto.Latitude;
+            appTmp.Adress.Geolocation.Longitude = applicationDto.Longitude;
+
+            await _context.SaveChangesAsync();
+
+        }
     }
 
 }

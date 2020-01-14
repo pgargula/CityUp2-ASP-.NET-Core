@@ -8,7 +8,7 @@
         @if (ViewBag.IsUserApp == "userApp" || User.HasClaim("Role", "CityAdministrator"))
         {
             <div class=" row justify-content-between">
-                <div class="col-md-5"><a href="#" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj <i class="far fa-edit"></i></a></div>
+                <div class="col-md-5"><a href="/Application/EditApplication?applicationId=@ViewBag.ApplicationId" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj <i class="far fa-edit"></i></a></div>
                 <div class="col-md-5 " style="text-align:end"><a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń <i class="far fa-trash-alt"></i></a></div>
             </div>
             <hr />

@@ -17,9 +17,11 @@ namespace PracaInzWebApplication.Services.ApplicationService
         Task DeleteVote(int applicationId, int userId);
         Task<IEnumerable<Application>> GetAllByCity(int cityId);
         Task<IEnumerable<Application>> GetAllByUser(int userId);
+        Task<EditApplication> GetAppToEdit(int applicationId);
         Task<ApplicationDetails> GetDetails(int applicationId);
         Task<ScoreViewModel> GetScore(int applicationId, int userId);
         Task<IEnumerable<Status>> GetStatuses();
         Task<bool> IsUserApp(int applicationId, int userId);
+        Task UpdateApplication(EditApplication applicationDto);
     }
 }

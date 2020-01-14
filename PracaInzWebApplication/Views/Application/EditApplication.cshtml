@@ -1,4 +1,4 @@
-﻿@model PracaInzWebApplication.Models.ViewModels.AddApplication
+﻿@model PracaInzWebApplication.Models.ViewModels.EditApplication
 
 <div id="snackbar">Game</div>
 <div class="container box">
@@ -6,8 +6,8 @@
     <form enctype="multipart/form-data" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row ">
-            <div class="col-md-6  justify-content-start"><h3>Dodaj nowe zgłoszenie: </h3></div>
-            <div class="col-md-6 d-flex justify-content-md-end"><button type="submit" class="btn btn-primary">Dodaj zgłoszenie</button></div>
+            <div class="col-md-6  justify-content-start"><h3>Edytuj zgłoszenie: </h3></div>
+            <div class="col-md-6 d-flex justify-content-md-end"><button type="submit" class="btn btn-primary">Zapisz</button></div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -32,15 +32,7 @@
                         <span asp-validation-for="@Model.Description" class="text-danger" />
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="row ">
-                        <label>Zdjęcia:</label>
-                        <div class="custom-file">
-                            <input asp-for="Photos" class="form-control custom-file-input">
-                            <label class="custom-file-label" data-browse="Wybierz">Wybierz zdjęcie/a...</label>
-                        </div>
-                    </div>
-                </div>
+     
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -69,11 +61,12 @@
 </div>
 @section scripts{
 
-    <script>      
+    <script>
+
         @Html.Raw(ViewBag.JavaScriptToRun) ///open notification window when succed
         var defaultCity =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value; //set dafault user cityId
-        var categoryIdViewModel = null;
-        var cityIdViewModel = null;
+        var categoryIdViewModel = @Model.CategoryId;
+        var cityIdViewModel = @Model.CityId;
     </script>
     <script src="~/js/AddApplicationPage.js" asp-append-version="true"></script>
 

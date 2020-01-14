@@ -43,7 +43,13 @@ function onTextChangeDesc() { //text from description
                 $(option).html(modelName);
                 $("#citySelect").append('<option value="' + modelName.cityId +'" data-lng="' + modelName.geolocation.longitude + '" data-ltd="' + modelName.geolocation.latitude +'">' + modelName.name + '</option>');
                     });
-           $('#citySelect').val(defaultCity).change();      //set user default city
+           
+            if (cityIdViewModel == null) {
+                $('#citySelect').val(defaultCity).change();      //set user default city
+            }
+            else {
+                $('#citySelect').val(cityIdViewModel).change();
+            }
                 }
             });
 
@@ -58,8 +64,13 @@ function onTextChangeDesc() { //text from description
                         var option = new Option(modelName, modelName);
                 $(option).html(modelName);
                 $("#categorySelect").append('<option value="' + modelName.categoryId + '">' + modelName.name + '</option>');
-                    });
-           $('#categorySelect').val(1).change();
+            });
+            if (categoryIdViewModel == null) {
+                $('#categorySelect').val(1).change();
+            }
+            else {
+                $('#categorySelect').val(categoryIdViewModel).change();
+            }
                 }
             });
 

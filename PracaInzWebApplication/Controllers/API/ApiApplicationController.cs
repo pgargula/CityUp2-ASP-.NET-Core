@@ -52,6 +52,12 @@ namespace PracaInzWebApplication.Controllers.API
             return await _applicationService.IsUserApp(applicationId, userId);
         }
 
+        [HttpGet("{applicationId}")]
+        public async Task<EditApplication> GetApplicationToEdit(int applicationId)
+        {
+            return await _applicationService.GetAppToEdit(applicationId);
+        }
+        
         [HttpGet("{applicationId}/{userId}")]
         public async Task<ScoreViewModel> GetScore(int applicationId, int userId)
         {
@@ -91,6 +97,12 @@ namespace PracaInzWebApplication.Controllers.API
         public async Task<int> Add([FromBody]AddApplication application)
         {
             return await _applicationService.AddApplication(application);
+        }
+
+        [HttpPost]
+        public async Task UpdateApplication([FromBody]EditApplication application)
+        {
+             await _applicationService.UpdateApplication(application);
         }
 
         [HttpPost("{applicationId}")]

@@ -23,6 +23,75 @@ namespace PracaInzWebApplication.Controllers
             _mapper = mapper;
         }
         [Authorize]
+        [Authorize]
+        public async Task<IActionResult> EditApplication(int applicationId)
+        {
+            ViewBag.ApplicationId = applicationId;
+            var userId = User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            var uriIsUserApp = new Uri(Consts.appAdress + "api/ApiApplication/IsUserApp/" + applicationId + "/" + userId);
+            try
+            {
+                var response = await _httpClient.GetAsync(uriIsUserApp);
+                var resultContent = Convert.ToBoolean(await response.Content.ReadAsStringAsync());
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    if (resultContent)
+                    {
+                        ViewBag.IsUserApp = "userApp";
+                    }
+                }
+                else
+                    Redirect("~/Home/NoPermisions");
+
+                /// dowload application details
+                var uri = new Uri(Consts.appAdress + "api/ApiApplication/GetApplicationToEdit/" + applicationId);
+
+                using (HttpClient _httpClient = new HttpClient())
+                {
+                    var responseDetails = await _httpClient.GetAsync(uri);
+                    if (responseDetails.StatusCode == HttpStatusCode.OK)
+                    {
+                        EditApplication model = JsonConvert.DeserializeObject<EditApplication>(await responseDetails.Content.ReadAsStringAsync());
+                        return View(model);
+                    }
+                    else
+                        return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [Authorize(Roles.User)]
+        [HttpPost]
+        public async Task<IActionResult> EditApplication(EditApplication editApplication)
+        {
+            var uri = new Uri(Consts.appAdress + "api/ApiApplication/UpdateApplication");
+            using (var httpClient = new HttpClient())
+            {
+                if (ModelState.IsValid)
+                {
+                    var requestBody = new StringContent(JsonConvert.SerializeObject(editApplication), Encoding.UTF8, "application/json");
+                    var response = await _httpClient.PostAsync(uri, requestBody);
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        ViewBag.JavaScriptToRun = "AddNotification(function () { window.location.href = '/Application/ApplicationDetails?applicationId=" + editApplication.ApplicationId + "';}, 'Pomyślnie zaktualizowano zgłoszenie'); ";
+                        return View(editApplication);
+           
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+                else
+                {
+                    return View(editApplication);
+                }
+            }
+        }
         public IActionResult UserApplications()
         {
             return View();
@@ -57,7 +126,7 @@ namespace PracaInzWebApplication.Controllers
                     }
                 }
                 else
-                    Redirect("~/Home/Index");
+                    Redirect("~/Home/NoPermisions");
 
                 /// dowload application details
                 var uri = new Uri(Consts.appAdress + "api/ApiApplication/GetDetails/" + applicationId);
