@@ -1,25 +1,30 @@
-﻿
+﻿@model PracaInzWebApplication.Models.ViewModels.UserDetails
+<div class="row box">
+    <div class="col-md-4">
+        <h2>Dane użytkownika:</h2>
+        <ul class="mylist">
+            <li><h4>Login:</h4><h5>@Model.Login</h5></li>
+
+            <li><h4>Adres Email:</h4><h5>@Model.Email</h5></li>
+            <li><h4>Miasto</h4><h5>@Model.City</h5></li>
+        </ul>
+    </div>
+    <div class="col verticalLine ">
+        <div class="col-md-12">
+            <h2>Statystyki:</h2>
+            <ul class="mylist">
+                <li><h4>Liczba dodanych zgłoszeń:</h4><h5>@Model.AppNumber</h5></li>
+                <li><h4>Liczba zgłoszeń w kategori zanieczyszczenie:</h4><h5>@Model.DirtAppNumber</h5></li>
+                <li><h4>Liczba zgłoszeń w kategori zagrożenie:</h4><h5>@Model.DangerAppNumber</h5></li>
+                <li><h4>Liczba zgłoszeń w kategori awaria:</h4><h5>@Model.DamageAppNumber</h5></li>
+                <li><h4>Liczba zgłoszeń w kategori inicjatywa:</h4><h5>@Model.InitiativeAppnumber</h5></li>
+                <li><h4>Liczba zgłoszeń w kategori inne:</h4><h5>@Model.OtherAppNumber</h5></li>
+                <li><h4>Suma zebranych punktów poparcia:</h4><h5>@Model.VoteNumber</h5></li>
+                <li><h4>Suma dodanych komentarzy:</h4><h5>@Model.CommentNumber</h5></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 
 
-
-
-@section scripts{
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            loadComments();
-        }, false);
-
-        function loadComments() {
-            $.ajax({
-                type: 'GET',
-                url: '/api/ApiComments/' + Id,
-                contentType: "application/json",
-                dataType: 'json',
-                success: function (cityGeo) {
-                    initCommets();
-                }
-            });
-        }
-    </script>
-}

@@ -13,6 +13,7 @@ using PracaInzWebApplication.CustomAtributes;
 using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Models.DTO;
+using PracaInzWebApplication.Models.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,42 +35,36 @@ namespace PracaInzWebApplication.Controllers
         }
         [Authorize]
         [HttpGet]
-        public IActionResult MyProfile()
+        public async Task<IActionResult> MyProfile()
         {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            var uri = new Uri(Consts.appAdress + "api/ApiUser/GetDetails/?userId=" + userId);
+            try
+            {
+                using (HttpClient _httpClient = new HttpClient())
+                {
+                    var responseDetails = await _httpClient.GetAsync(uri);
+                    if (responseDetails.StatusCode == HttpStatusCode.OK)
+                    {
+                        UserDetails model = JsonConvert.DeserializeObject<UserDetails>(await responseDetails.Content.ReadAsStringAsync());
+                        return View(model);
+                    }
+                    else
+                        return View();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //Redirect("~/Home/Index");
+                throw ex;
+            }
+
             return View();
         }
         [Authorize(Roles.User)]
         public IActionResult UserApplications()
         {
-            return View();
-        }
-        [Authorize]
-        public async Task<IActionResult> ApplicationDetails(int applicationId)
-        {
-            ViewBag.ApplicationId = applicationId;
-            var userId = User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
-            var uri = new Uri(Consts.appAdress + "api/ApiApplication/IsUserApp/" + applicationId + "/" + userId );
-            try
-            {
-                var response = await _httpClient.GetAsync(uri);
-                var resultContent =  Convert.ToBoolean(await response.Content.ReadAsStringAsync());
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    if (resultContent)
-                    {
-                        ViewBag.IsUserApp = "userApp";
-                    }
-                }
-                else
-                    Redirect("~/Home/Index");
-
-            }
-            catch(Exception ex)
-            {
-                //Redirect("~/Home/Index");
-                throw ex;
-            }
-            
             return View();
         }
 
