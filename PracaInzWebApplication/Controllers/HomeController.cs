@@ -27,6 +27,11 @@ namespace PracaInzWebApplication.Controllers
             return View();
         }
 
+        public IActionResult NoPermisions()
+        {
+            return View();
+        }
+
         [Authorize(Roles.CityAdministrator)]
         public IActionResult Privacy()
         {

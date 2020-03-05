@@ -80,6 +80,8 @@ namespace PracaInzWebApplication
             {
                 mc.CreateMap<Application, AddApplication>();
                 mc.CreateMap<AddApplication,Application>();
+                mc.CreateMap<Application, EditApplication>();
+                mc.CreateMap<EditApplication, Application>();
                 mc.AddProfile(new MappingProfile());
             });
 

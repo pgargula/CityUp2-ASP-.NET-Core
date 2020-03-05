@@ -59,10 +59,9 @@ html {
 }
 
 body {
-    
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-image: url(../images/ravenna.png);
+    background-image: url(../images/houndstooth-pattern.png); /* Background pattern from Toptal Subtle Patterns */
 }
 .footer {
   position: absolute;
@@ -73,7 +72,7 @@ body {
 }
 
 .box {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
     padding: 10px;
 }
@@ -93,8 +92,17 @@ body {
     width: 100%;
     min-height: 250px;
 }
+.detailAppMap {
+    height: 211px;
+    width: 100%;
+    min-height: 211px;
+}
 .textField {
     word-wrap:break-word;
+}
+
+.verticalLine {
+    border-left: 1px solid #d9d9d9;
 }
 
 /*SNACKBAR config*/
@@ -170,4 +178,16 @@ body {
         top: 120px;
         opacity: 0;
     }
+}
+
+
+
+.page-item.active .page-link {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+
+.mylist li {
+    border-bottom: 1px solid #d9d9d9;
 }

@@ -46,24 +46,13 @@
 @section Scripts{
 
     <script>
-        var list = document.getElementById("list");
-        var googleMap = document.getElementById("googleMap");
-        function showList() {
-            list.style.display = "block";
-            googleMap.style.display = "none";
-        }
-        function showMap() {
-            list.style.display = "none";
-            googleMap.style.display = "block";
-        }
 
-        var detailsPath="/City/"
-        var Id =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
-        var url="GetAllByCity/" + Id
-    </script>
+
+     var cityId =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;</script>
+    <script src="~/js/allAplicationPage.js" asp-append-version="true"></script>
     <script src="~/js/getMapTableData.js" asp-append-version="true"></script>
     <script src="~/js/applicationTableContent.js" asp-append-version="true"></script>
-    <script src="~/js/map.js" asp-append-version="true"></script>  
+    <script src="~/js/map.js" asp-append-version="true"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&callback=initMap">
     </script>

@@ -1,0 +1,76 @@
+﻿@model PracaInzWebApplication.Models.ViewModels.EditApplication
+
+<div id="snackbar">Game</div>
+<div class="container box">
+
+    <form enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row ">
+            <div class="col-md-6  justify-content-start"><h3>Edytuj zgłoszenie: </h3></div>
+            <div class="col-md-6 d-flex justify-content-md-end"><button type="submit" class="btn btn-primary">Zapisz</button></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Tytuł:</label>
+                        <input id="title" asp-for="@Model.Title" onkeypress="onTextChangeDesc();" class="form-control" />
+                        <span asp-validation-for="@Model.Title" class="text-danger" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Kategoria:</label>
+                        <select asp-for="@Model.CategoryId" class="form-control" id="categorySelect">
+                            <option value="" selected disabled hidden id="loadingCategories">Ładowanie...</option>
+                        </select>
+                        <span asp-validation-for="@Model.CategoryId" class="text-danger" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Opis:</label>
+                        <textarea id="description" asp-for="@Model.Description" class="form-control" onkeypress="onTextChangeDesc();" placeholder="Dodaj opis" style="min-height:250px; "></textarea>
+                        <span asp-validation-for="@Model.Description" class="text-danger" />
+                    </div>
+                </div>
+     
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label>Wybierz miasto:</label>
+                        <select asp-for="@Model.CityId" class="form-control" id="citySelect">
+                            <option value="" selected disabled hidden id="loadingCities">Ładowanie...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <label>Ulica:</label>
+                        <input asp-for="@Model.Street" class="form-control" id="streetInput" />
+                        <input asp-for="@Model.Longitude" type="hidden" class="form-control" id="lng" />
+                        <input asp-for="@Model.Latitude" type="hidden" class="form-control" id="ltd" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Mapa: </label>
+                        <div class="addAppMap" id="googleMap"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section scripts{
+
+    <script>
+
+        @Html.Raw(ViewBag.JavaScriptToRun) ///open notification window when succed
+        var defaultCity =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value; //set dafault user cityId
+        var categoryIdViewModel = @Model.CategoryId;
+        var cityIdViewModel = @Model.CityId;
+    </script>
+    <script src="~/js/AddApplicationPage.js" asp-append-version="true"></script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&libraries=places&callback=initMap">
+    </script>
+}

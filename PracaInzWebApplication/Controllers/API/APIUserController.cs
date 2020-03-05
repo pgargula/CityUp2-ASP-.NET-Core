@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PracaInzWebApplication.Models.DTO;
+using PracaInzWebApplication.Models.ViewModels;
 using PracaInzWebApplication.Services;
 using PracaInzWebApplication.Services.UserService;
 
@@ -50,6 +51,11 @@ namespace PracaInzWebApplication.API
             }
         }
 
-
+        [HttpGet]
+        [Route("GetDetails")]
+        public async Task<UserDetails> GetDetails(int userId)
+        {
+            return await _userService.GetUserDetails(userId);
+        }
     }
 }

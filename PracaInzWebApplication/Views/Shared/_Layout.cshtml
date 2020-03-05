@@ -6,82 +6,87 @@
     <title>@ViewData["Title"] - PracaInzWebApplication</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/fontawesome-free-5.12.0-web/css/all.css" rel="stylesheet">
     @RenderSection("Styles", required: false)
 </head>
-<body >
+<body>
     <header>
         <nav class="navbar  navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3   ">
-            
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PracaInzWebApplication</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            @if (User.HasClaim("Role", "CityModerator"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="SubCityApplications">Moja dzielnica</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="SubCityStats">Statystyki</a>
-                                </li>
-                            }
-                            @if (User.HasClaim("Role", "CityAdministrator"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="CityApplications">Przeglądaj zgłoszenia</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Stats">Statystyki</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Moderate">Zarządzaj</a>
-                                </li>
-                            }
-                            @if (User.HasClaim("Role", "User"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AddNew">Nowe zgłoszenie</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserApplications">Moje zgłoszenia</a>
-                                </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AllApplication">Przeglądaj zgłszenia</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyProfile">Moj profil</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                    <ul class="navbar-nav flex-grow-1-reverse">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            @User.Identity.Name
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logoff">Wyloguj</a>
-                            </li>
-                        }
-                        else
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/images/logo.png" width="60" height="50" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                <ul class="navbar-nav flex-grow-1">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.HasClaim("Role", "CityModerator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Logowanie</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="SubCityApplications">Moja dzielnica</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Rejestracja</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="SubCityStats">Statystyki</a>
                             </li>
                         }
-                    </ul>
-                </div>
-            
+                        @if (User.HasClaim("Role", "CityAdministrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="CityApplications">Przeglądaj zgłoszenia <i class="far fa-list-alt"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Stats">Statystyki <i class="far fa-chart-bar"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Moderate">Zarządzaj <i class="fas fa-cogs"></i></a>
+                            </li>
+                        }
+                        @if (User.HasClaim("Role", "User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AddNew">Nowe zgłoszenie <i class="far fa-plus-square"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserApplications">Moje zgłoszenia <i class="far fa-address-book"></i></a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Application" asp-action="AllApplication">Przeglądaj zgłszenia <i class="far fa-list-alt"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyProfile">Mój profil <i class="far fa-user"></i></a>
+                            </li>
+                        }
+                    }
+                </ul>
+                <ul class="navbar-nav flex-grow-1-reverse">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @User.Identity.Name
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logoff">Wyloguj <i class="fas fa-sign-out-alt"></i></a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Logowanie <i class="fas fa-sign-in-alt"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Rejestracja <i class="fas fa-user-plus"></i></a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
         </nav>
+       
     </header>
+   
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -90,17 +95,17 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - PracaInzWebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Praca Inżynierska Piotr Gargula
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <environment include="Development">
-        <script src="~/js/datatables.js" asp-append-version="true"></script> 
+        <script src="~/js/datatables.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/datatables.min.js" asp-append-version="true" ></script>/>
+        <script src="~/js/datatables.min.js" asp-append-version="true"></script>/>
     </environment>
     @RenderSection("Scripts", required: false)
 </body>

@@ -19,7 +19,6 @@ namespace PracaInzWebApplication.Services.TextControlService
         {
             try
             {
-                // var punctuation = text.Where(Char.IsPunctuation).Distinct().ToArray();
                 var words = text.Split(new [] {' ', '\n', '\r', '\t' });
                 int i = 0;
                 foreach (var word in words)

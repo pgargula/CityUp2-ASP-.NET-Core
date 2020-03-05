@@ -86,6 +86,9 @@ namespace PracaInzWebApplication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AdminMsg")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AdressId")
                         .HasColumnType("int");
 
@@ -120,6 +123,7 @@ namespace PracaInzWebApplication.Migrations
                         new
                         {
                             ApplicationId = 1,
+                            AdminMsg = "brak wiadomości",
                             AdressId = 1,
                             CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ",
@@ -130,6 +134,7 @@ namespace PracaInzWebApplication.Migrations
                         new
                         {
                             ApplicationId = 2,
+                            AdminMsg = "brak wiadomości",
                             AdressId = 2,
                             CategoryId = 2,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ",
@@ -140,6 +145,7 @@ namespace PracaInzWebApplication.Migrations
                         new
                         {
                             ApplicationId = 3,
+                            AdminMsg = "brak wiadomości",
                             AdressId = 4,
                             CategoryId = 3,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis ex ipsum, sagittis malesuada ante volutpat et. Aenean accumsan, eros ac tristique semper, odio quam convallis sapien, eget fermentum tellus nibh et metus. Etiam rutrum consectetur pretium. Aenean dapibus luctus odio, at eleifend lacus porttitor condimentum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis. ",
@@ -3489,7 +3495,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 1,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 17, 31, 583, DateTimeKind.Local).AddTicks(9175),
+                            Date = new DateTime(2020, 1, 9, 19, 33, 40, 700, DateTimeKind.Local).AddTicks(1396),
                             Text = "fajne",
                             UserId = 3
                         },
@@ -3497,7 +3503,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 2,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 3, 17, 31, 586, DateTimeKind.Local).AddTicks(9500),
+                            Date = new DateTime(2020, 1, 9, 21, 33, 40, 703, DateTimeKind.Local).AddTicks(2299),
                             Text = "Smietnik jest rozwalony od 2 tygodni",
                             UserId = 2
                         },
@@ -3505,7 +3511,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 3,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 17, 31, 586, DateTimeKind.Local).AddTicks(9607),
+                            Date = new DateTime(2020, 1, 9, 19, 33, 40, 703, DateTimeKind.Local).AddTicks(2406),
                             Text = "Smieci coraz więcej",
                             UserId = 3
                         },
@@ -3513,7 +3519,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 4,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 21, 31, 586, DateTimeKind.Local).AddTicks(9617),
+                            Date = new DateTime(2020, 1, 9, 19, 37, 40, 703, DateTimeKind.Local).AddTicks(2416),
                             Text = "Mam nadzieje że zostanie to szybko usunięte",
                             UserId = 2
                         },
@@ -3521,7 +3527,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentId = 5,
                             ApplicationId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 28, 31, 586, DateTimeKind.Local).AddTicks(9635),
+                            Date = new DateTime(2020, 1, 9, 19, 44, 40, 703, DateTimeKind.Local).AddTicks(2439),
                             Text = "dobre pomarańczowe",
                             UserId = 3
                         });
@@ -3559,7 +3565,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 1,
                             CommentId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 19, 31, 587, DateTimeKind.Local).AddTicks(3461),
+                            Date = new DateTime(2020, 1, 9, 19, 35, 40, 703, DateTimeKind.Local).AddTicks(6983),
                             Text = "dzięki",
                             UserId = 2
                         },
@@ -3567,7 +3573,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 2,
                             CommentId = 1,
-                            Date = new DateTime(2019, 12, 12, 1, 21, 31, 587, DateTimeKind.Local).AddTicks(4198),
+                            Date = new DateTime(2020, 1, 9, 19, 37, 40, 703, DateTimeKind.Local).AddTicks(7706),
                             Text = "spoko",
                             UserId = 3
                         },
@@ -3575,7 +3581,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 3,
                             CommentId = 2,
-                            Date = new DateTime(2019, 12, 12, 1, 23, 31, 587, DateTimeKind.Local).AddTicks(4226),
+                            Date = new DateTime(2020, 1, 9, 19, 39, 40, 703, DateTimeKind.Local).AddTicks(7729),
                             Text = "lolo",
                             UserId = 2
                         },
@@ -3583,7 +3589,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 4,
                             CommentId = 3,
-                            Date = new DateTime(2019, 12, 12, 1, 24, 31, 587, DateTimeKind.Local).AddTicks(4231),
+                            Date = new DateTime(2020, 1, 9, 19, 40, 40, 703, DateTimeKind.Local).AddTicks(7734),
                             Text = "test",
                             UserId = 2
                         },
@@ -3591,7 +3597,7 @@ namespace PracaInzWebApplication.Migrations
                         {
                             CommentResponseId = 5,
                             CommentId = 4,
-                            Date = new DateTime(2019, 12, 12, 1, 25, 31, 587, DateTimeKind.Local).AddTicks(4235),
+                            Date = new DateTime(2020, 1, 9, 19, 41, 40, 703, DateTimeKind.Local).AddTicks(7739),
                             Text = "test",
                             UserId = 2
                         });
@@ -4210,6 +4216,9 @@ namespace PracaInzWebApplication.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Salt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId");
 
                     b.HasIndex("CityId");
@@ -4261,6 +4270,154 @@ namespace PracaInzWebApplication.Migrations
                             Login = "citymoderator",
                             Password = "citymoderator",
                             Role = "CityModerator"
+                        });
+                });
+
+            modelBuilder.Entity("PracaInzWebApplication.Models.UserVote", b =>
+                {
+                    b.Property<int>("UserVoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserVoteId");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.ToTable("userVotes");
+
+                    b.HasData(
+                        new
+                        {
+                            UserVoteId = 1,
+                            ApplicationId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserVoteId = 2,
+                            ApplicationId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            UserVoteId = 3,
+                            ApplicationId = 1,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            UserVoteId = 4,
+                            ApplicationId = 1,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            UserVoteId = 5,
+                            ApplicationId = 1,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            UserVoteId = 6,
+                            ApplicationId = 2,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            UserVoteId = 7,
+                            ApplicationId = 2,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            UserVoteId = 8,
+                            ApplicationId = 3,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserVoteId = 9,
+                            ApplicationId = 3,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            UserVoteId = 10,
+                            ApplicationId = 3,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            UserVoteId = 11,
+                            ApplicationId = 3,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            UserVoteId = 12,
+                            ApplicationId = 4,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserVoteId = 13,
+                            ApplicationId = 4,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            UserVoteId = 14,
+                            ApplicationId = 4,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            UserVoteId = 15,
+                            ApplicationId = 5,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserVoteId = 16,
+                            ApplicationId = 5,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            UserVoteId = 17,
+                            ApplicationId = 6,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserVoteId = 18,
+                            ApplicationId = 6,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            UserVoteId = 19,
+                            ApplicationId = 6,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            UserVoteId = 20,
+                            ApplicationId = 6,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            UserVoteId = 21,
+                            ApplicationId = 6,
+                            UserId = 5
                         });
                 });
 
@@ -4376,6 +4533,15 @@ namespace PracaInzWebApplication.Migrations
                     b.HasOne("PracaInzWebApplication.Models.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PracaInzWebApplication.Models.UserVote", b =>
+                {
+                    b.HasOne("PracaInzWebApplication.Models.Application", "Application")
+                        .WithMany("UserVotes")
+                        .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

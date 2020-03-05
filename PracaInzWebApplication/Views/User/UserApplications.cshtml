@@ -45,22 +45,9 @@
 @section Scripts{
 
     <script>
-        var list = document.getElementById("list");
-        var googleMap = document.getElementById("googleMap");
-
-        $('#showList').on('change', function () {       //showing list
-            list.style.display = "block";              
-            googleMap.style.display = "none";
-        });
-        $('#showMap').on('change', function () {   //show map
-            list.style.display = "none";
-            googleMap.style.display = "block";
-        });
-
-
         var Id =@User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
-        var url = "GetAllByUser/" + Id
-        var detailsPath="/User/"
+        var cityId =@User.Claims.FirstOrDefault(x => x.Type == "CityId").Value;
+        var url = "GetAllByUser/" + Id       
     </script>
     <script src="~/js/getMapTableData.js" asp-append-version="true"></script>
     <script src="~/js/applicationTableContent.js" asp-append-version="true"></script>

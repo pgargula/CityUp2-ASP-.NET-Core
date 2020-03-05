@@ -1,10 +1,12 @@
-﻿using PracaInzWebApplication.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using PracaInzWebApplication.Models;
 
 namespace PracaInzWebApplication.Services.AuthenticationService
 {
     public interface IAuthenticationService
     {
-       public Task<string> GetToken(User user);
+        Task<string> GetToken(User user);
+        string HashPassword(string password, out string salt);
+        bool VerifyPassword(string password, string hashPassword, string salt);
     }
 }

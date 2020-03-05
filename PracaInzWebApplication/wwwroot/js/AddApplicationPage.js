@@ -1,4 +1,36 @@
 ﻿
+var urlHint = "/api/ApiTextControl";
+var cityLocation;
+var citySelect = document.getElementById('citySelect');
+var selectedCity = citySelect.options[citySelect.selectedIndex].text;
+var input = document.getElementById('streetInput');
+var lng = document.getElementById('lng');
+var ltd = document.getElementById('ltd');
+var map;
+var marker;
+var geocoder
+
+
+/// Hint Category
+function onTextChangeDesc() { //text from description
+    var key = window.event.keyCode;
+    // If the user has pressed enter
+    var text = $('#description').val() + " " + $('#title').val();
+    var model = { text: text }
+    if (key === 13 || key == 32 || key == 190 || key == 46) {
+        $.ajax({
+            type: "POST",
+            url: urlHint,
+            data: model,
+            success: function (response) {
+                if (response != 100) {
+                    $('#categorySelect').val(response).change();
+                }
+            }
+        });
+
+    }
+}
         //populating city select
     $.ajax({
             type: 'GET',
@@ -11,7 +43,13 @@
                 $(option).html(modelName);
                 $("#citySelect").append('<option value="' + modelName.cityId +'" data-lng="' + modelName.geolocation.longitude + '" data-ltd="' + modelName.geolocation.latitude +'">' + modelName.name + '</option>');
                     });
-           $('#citySelect').val(defaultCity).change();      //set user default city
+           
+            if (cityIdViewModel == null) {
+                $('#citySelect').val(defaultCity).change();      //set user default city
+            }
+            else {
+                $('#citySelect').val(cityIdViewModel).change();
+            }
                 }
             });
 
@@ -26,21 +64,17 @@
                         var option = new Option(modelName, modelName);
                 $(option).html(modelName);
                 $("#categorySelect").append('<option value="' + modelName.categoryId + '">' + modelName.name + '</option>');
-                    });
-           $('#categorySelect').val(1).change();
+            });
+            if (categoryIdViewModel == null) {
+                $('#categorySelect').val(1).change();
+            }
+            else {
+                $('#categorySelect').val(categoryIdViewModel).change();
+            }
                 }
             });
 
-        var cityLocation;
-            var citySelect = document.getElementById('citySelect');
-            var selectedCity = citySelect.options[citySelect.selectedIndex].text;
-            var input = document.getElementById('streetInput');
-            var lng = document.getElementById('lng');
-            var ltd = document.getElementById('ltd');
-            var map;
-            var marker;
-            var geocoder
-
+           
         /// insert text about choosen photes
         $(document).ready(function () {
             $('.custom-file-input').on("change", function () {
@@ -96,7 +130,7 @@
 
                 autocomplete.addListener('place_changed', function () {
                     lng.value = marker.getPosition().lng();
-                    lng.value = marker.getPosition().lat();
+                    ltd.value = marker.getPosition().lat();
                     marker.setVisible(false);
                     var place = autocomplete.getPlace();
                     if (!place.geometry) {

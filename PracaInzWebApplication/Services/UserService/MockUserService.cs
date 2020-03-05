@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using PracaInzWebApplication.Helpers;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Models.DTO;
+using PracaInzWebApplication.Models.ViewModels;
 using PracaInzWebApplication.Services.AuthenticationService;
 using PracaInzWebApplication.Services.UserService;
 using System;
@@ -67,6 +68,10 @@ namespace PracaInzWebApplication.Services.UserService
             {
                 throw ex;
             }
+        }
+        public async Task<UserDetails> GetUserDetails(int userId)
+        {
+            throw new NotImplementedException();
         }
 
     }

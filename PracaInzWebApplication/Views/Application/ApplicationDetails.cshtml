@@ -1,0 +1,149 @@
+﻿@model PracaInzWebApplication.Models.ViewModels.ApplicationDetails
+
+<div id="snackbar">Comment</div>
+<div class="row box">
+
+    <div class="col-md-4 ">
+
+        @if (ViewBag.IsUserApp == "userApp" || User.HasClaim("Role", "CityAdministrator"))
+        {
+            <div class=" row justify-content-between">
+                <div class="col-md-5"><a href="/Application/EditApplication?applicationId=@ViewBag.ApplicationId" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj <i class="far fa-edit"></i></a></div>
+                <div class="col-md-5 " style="text-align:end"><a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń <i class="far fa-trash-alt"></i></a></div>
+            </div>
+            <hr />
+        }
+
+        <div class="col-md-12">
+            @*status section*@
+            <div class="row justify-content-between">
+                <h3>Status:</h3>
+                @if (User.HasClaim("Role", "CityAdministrator"))
+                {
+                    <div class="col-md-2" style="padding-left:0px;"><a id="statusButton" onclick="editStatus()" href="#" class="btn  btn-outline-warning">Zmień</a></div>
+                }
+            </div>
+            <div class="row " style="padding-right:0px">
+                <div id="statusView" class="col-md-12" style="display:block; padding-left:0px; padding-right:0px;">
+                    <div id="statusAlert" class="alert alert-info" role="alert">
+                        @Model.Status
+                    </div>
+                </div>
+                <div id="status" class="col-md-12" style="display:none; padding-left:0px; padding-right:0px;">
+                    <select id="statusSelect" class="form-control" >
+                        <option value="" selected disabled hidden id="loadingCities">Ładowanie...</option>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            @*admin comment section*@
+            <div class="row justify-content-between">
+                <h3>Komentarz administracji:</h3>
+                @if (User.HasClaim("Role", "CityAdministrator"))
+                {
+                    <div  class="col-md-2" style="padding-left:0px;"><a id="adminMsgButton" href="#" onclick="editAdminMsg()" class="btn  btn-outline-warning">Zmień</a></div>
+                }
+            </div>
+
+            <div class="row">
+                @{ if (@Model.AdminMsg != null)
+                    {
+                        <div id="adminMsgView" style="display:block;" class="col-md-12 box textField">@Model.AdminMsg</div>
+                    }
+                    else
+                    {
+                        <div  id="adminMsgView" style="display:block;" class="col-md-12 box textField">Brak wiadomości</div>
+                    }
+                }
+                <div id="adminMsgInput" class="col-md-12" style="display:none;">
+                    <textarea id="adminMsgText" style="min-height:80px; width: 100%" placeholder=""> @Model.AdminMsg</textarea>
+                </div>
+            </div>
+            <hr />
+            @*map section*@
+            <div class="row">
+
+                <div id="googleMap" class="detailAppMap"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col verticalLine ">
+
+        <div class="container">
+
+
+            <div class="row justify-content-between">
+                <h1 class="my-3">
+                    <small>Tytuł:</small>
+                    @Model.Title
+                </h1>
+
+                <div id="scoreContainer" class="row my-4">
+                    @await Component.InvokeAsync("Score", @ViewBag.ApplicationId)
+                </div>
+            </div>
+
+            <div class="row  ">
+                <div class="col-md-7 justify-content-center  " style="background-color: rgba(0, 0, 0, 0.1);">
+                    <div class=" text-center " style="  height: 400px;">
+                        <img class="img-fluid align-middle  " style="max-height: 100%" id="mainPhoto" src="@Model.Pictures[0].PicturePath" alt="">
+                    </div>
+                    <div class="row my-2 align-middle" style="background-color:rgba(0,0,0,0.4);">
+                        @for (int i = 0; i < Model.Pictures.Count; i++)
+                        {
+                            <div class="col-md-3 text-center" style="height: 100px;  ">
+                                <img src="@Model.Pictures[i].PicturePath" id="photo+@i" onclick="changeMainPhoto(this)" class="img-fluid rounded" style="height: 100px; ">
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <h3 class="my-3">Szczegóły</h3>
+                    <ul>
+                        <li>Autor: <b>@Model.User</b></li>
+                        <li>Kategoria:<b>@Model.Category</b></li>
+                        <li>Miasto: <b>@Model.City</b></li>
+                        @if (Model.District != null)
+                        {
+                            <li>Dzielnica: <b>@Model.District</b></li>
+                        }
+                        <li>Ulica: <b>@Model.Street</b></li>
+                    </ul>
+                    <h3 class="my-3">Opis:</h3>
+                    <p>@Model.Description</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="row mt-3 box">
+    <div id="commentContainer" class="col-md-12">
+        @await Component.InvokeAsync("Comment", @ViewBag.ApplicationId)
+    </div>
+</div>
+
+@section scripts{
+<script>
+    var commnentText;
+    var user = @User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+    var appId =@ViewBag.ApplicationId;
+    var ltd = @Model.Geolocation.Latitude;
+    var lng = @Model.Geolocation.Longitude;
+
+</script>
+
+<script src="~/js/applicationDetailsPage.js" asp-append-version="true"></script>
+<script src="~/js/Score.js" asp-append-version="true"></script>
+<script src="~/js/commentSystem.js" asp-append-version="true"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&libraries=places&callback=initMap">
+</script>
+}
