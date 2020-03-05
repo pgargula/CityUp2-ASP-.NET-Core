@@ -82,9 +82,92 @@ body {
     max-width: 1340px;
 }
 
-/*map style*/
-#googleMap {
+/*map styles*/
+.appMap {
     height: 800px;
     width: 100%;
     min-height: 250px;
+}
+.addAppMap {
+    height: 320px; 
+    width: 100%;
+    min-height: 250px;
+}
+.textField {
+    word-wrap:break-word;
+}
+
+/*SNACKBAR config*/
+
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 350px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #8BFEB0;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 30px;
+    position: fixed;
+    z-index: 1;
+    left: 50%; /* Center the snackbar */
+    top: 130px; /* 30px from the top */
+}
+
+
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+  However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 3.0s;
+    animation: fadein 0.5s, fadeout 0.5s 3.0s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {
+        top: 120px;
+        opacity: 0;
+    }
+
+    to {
+        top: 130px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        top: 120px;
+        opacity: 0;
+    }
+
+    to {
+        top: 130px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        top: 130px;
+        opacity: 1;
+    }
+
+    to {
+        top: 120px;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        top: 130px;
+        opacity: 1;
+    }
+
+    to {
+        top: 120px;
+        opacity: 0;
+    }
 }

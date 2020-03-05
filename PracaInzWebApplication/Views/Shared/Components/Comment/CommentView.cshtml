@@ -1,0 +1,79 @@
+﻿@model PracaInzWebApplication.Models.ViewModels.CommentViewModel
+    
+    <div class="box">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class=" row justify-content-between">
+                    <h5>Dodaj komentarz:</h5>
+                    <button id="addComment" onclick="sendComment()" class="btn btn-outline-success">Dodaj</button>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <textarea id="commentText"  style="min-height:200px; width: 100%" placeholder="Wpisz treść..."> </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+<div class="box mt-1">
+    <div class="row ">
+        <div class="col-md-11"><h4>Komentarze:</h4></div>
+
+    </div>
+    <hr />
+    @{
+        foreach (var comment in Model.Comments.Reverse())
+        {
+            <div class="box mt-2">
+                <div class="row justify-content-between">
+                    <div class="col-md-3">Autor: @comment.User.Login</div>
+                    <div class="col-md-3 text-md-right">Data: @comment.Date</div>
+                </div>
+                <hr />
+                <div class="row justify-content-end">
+                    <div class="col-md-9 textField" ><h5><p>@comment.Text</p></h5></div>
+                    <div class="col-md-2"><button id="@comment.CommentId" class="btn btn-outline-dark" onclick="showResponseArea(this.id)">Odpowiedz</button></div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div  class="col-md-10" >
+                    <div id="@("responseArea"+comment.CommentId)" class="row justify-content-center mt-1" style="display: none;"><!--Comment response-->
+                        <div class="col-md-7">
+                            <div class=" row justify-content-between">
+                                <h5>Dodaj komentarz:</h5>
+                                <button id="@comment.CommentId" onclick="sendResponse(this.id)" class="btn btn-outline-success">Dodaj</button>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*<textarea id="commentId" style="display:none;" >@comment.CommentId</textarea>*@
+                                    <textarea id="@("commentTextResponse"+comment.CommentId)"  style="min-height:150px; width: 100%" placeholder="Wpisz treść..."> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (var commentResponse in comment.CommentResponses)
+                    {
+                        <div class="box mt-1">
+                            <div class="row justify-content-between">
+                                <div class="col-md-7">Autor: @commentResponse.User.Login, w odpowiedzi do: @comment.User.Login </div>
+                                <div class="col-md-3 text-md-right">Data: @commentResponse.Date</div>
+                            </div>
+                            <hr />
+                            <div class="row justify-content-center">
+                                <div class="col-md-9 textField" ><h5>@commentResponse.Text</h5></div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        }
+
+    }
+</div>

@@ -1,0 +1,103 @@
+﻿<!-- User/ApplicationDetails-->
+    <div id="snackbar">Comment</div>
+<div class="row">
+    @if (ViewBag.IsUserApp == "userApp")
+    {
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="btn  btn-warning"><span class="glyphicon glyphicon-edit"></span> Edytuj</a>
+                <a href="#" class="btn  btn-danger"><span class="glyphicon glyphicon-trash"></span> Usuń</a>
+
+            </div>
+        </div>
+    }
+    <div class="col">
+        <div class="box">
+            @await Component.InvokeAsync("ApplicationDetails", @ViewBag.ApplicationId)
+        </div>
+    </div>
+
+</div>
+<div class="row mt-3">
+    <div id="commentContainer"class="col-md-12">
+        @await Component.InvokeAsync("Comment", @ViewBag.ApplicationId)
+    </div>
+</div>
+
+@section scripts{
+    <script>
+    var commnentText;
+    var user = @User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+    var appId =@ViewBag.ApplicationId;
+    var date;
+    var url = "/api/ApiComment/Add"
+    var urlResponse = "/api/ApiComment/AddResponse"
+
+      /*  $('#response').click(function() {       //showing response
+            var responseArea = document.getElementById("responseArea");
+            responseArea.style.display = "block";
+        });*/
+        function showResponseArea(id) {
+            var responseAreaId = "responseArea" + id;
+            var responseArea = document.getElementById(responseAreaId);
+            if(responseArea.style.display == "block")
+                responseArea.style.display = "none";
+            else
+                responseArea.style.display = "block";
+        }
+
+
+    function sendComment() {  ///send comment
+        var commnentText = $('#commentText').val();
+        var date = new Date().toLocaleString();
+
+        var model = { applicationid: appId, userid: user, text: commnentText, date: date };
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: model,
+            success: function () {
+                
+                refreshComments();
+                AddNotification(function () { }, "Pomyślnie dododano komentarz");
+            }
+        });
+
+    }
+
+        function sendResponse(id) {  ///send comment response
+            var commnentTextResponse = $('#commentTextResponse' + id).val();
+            var date = new Date().toLocaleString();
+            var commentId =id;
+            var model = { commentid: commentId, userid: user, text: commnentTextResponse, date: date };
+
+            $.ajax({
+                type: "POST",
+                url: urlResponse,
+                data: model,
+                success: function () {
+                    refreshComments()
+                    AddNotification(function () {}, "Pomyślnie dododano komentarz");
+                }
+            });
+
+        }
+
+        function refreshComments() {
+            var container = $("#commentContainer");
+            $.ajax({
+                type: "GET",
+                url: "/Comment/CommentView/?applicationId="+appId,                
+                success: function (data) {
+                    container.html(data);
+                }
+            });
+           
+        }
+
+
+
+    </script>
+
+}

@@ -14,14 +14,6 @@ namespace PracaInzWebApplication.Views.Shared.Components
 {
     public class ApplicationDetailsViewComponent : ViewComponent
     {
-        //public static list<applicationpicture> pp = new list<applicationpicture>
-        //{
-        //   new applicationpicture { applicationpictureid = 1, picturepath = "https://mpi.krakow.pl/zalacznik/320782/4.jpg", applicationid = 1 },
-        //   new applicationpicture { applicationpictureid = 2, picturepath = "https://fajnepodroze.pl/wp-content/uploads/2018/01/krakow.jpg", applicationid = 2 },
-        //   new applicationpicture { applicationpictureid = 3, picturepath = "https://czasnawywczas.pl/wp-content/uploads/krakow-budynki.jpg", applicationid = 2 },
-        //   new applicationpicture { applicationpictureid = 4, picturepath = "https://czasnawywczas.pl/wp-content/uploads/krakow-runek-glowa.jpg", applicationid = 3 }
-        //};
-        //private applicationdetails aa = new applicationdetails { title = "weq", description = "dasd", category = "adasd", district = "district", city = "krakow", status = "wtrakcie", street = "dsa", user = "user", pictures=pp};
         private ApplicationDetails _applicationDetails;        
         public async Task<ApplicationDetails> GetDetails(int applicationId)
         {
@@ -48,6 +40,7 @@ namespace PracaInzWebApplication.Views.Shared.Components
         public async Task<IViewComponentResult> InvokeAsync(int applicationId)
         {
             _applicationDetails =await GetDetails(applicationId);
+            ViewBag.ApplicationId = applicationId;
             return View("Details",_applicationDetails);
         }
     }

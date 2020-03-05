@@ -1,51 +1,52 @@
 ﻿@model PracaInzWebApplication.Models.ViewModels.ApplicationDetails
 
-    <div class="container">
+<div class="container">
 
 
-        <h1 class="my-3">
-            <small>Tytuł:</small>
-            @Model.Title
-        </h1>
-    
-        <div class="row  ">
-            <div class="col-md-7 justify-content-center  " style="background-color: rgba(0, 0, 0, 0.1);">
-                <div class=" text-center " style="  height: 400px;" >
-                    <img class="img-fluid align-middle  " style="max-height: 100%" id="mainPhoto" src="@Model.Pictures[0].PicturePath" alt="">
-                </div>
-                <div class="row my-2 align-middle" >
-                    @for (int i = 0; i < Model.Pictures.Count; i++)
-                    {
-                    <div class="col-md-3 text-center" style="height: 100px;  background-color:rgba(0,0,0,0.4)">
-                        <img src="@Model.Pictures[i].PicturePath"  id="photo+@i" onclick="changeMainPhoto(this)" class="img-fluid rounded" style="height: 100px; ">
-                    </div>
-                    }
-                </div>
+    <h1 class="my-3">
+        <small>Tytuł:</small>
+        @Model.Title
+    </h1>
+
+    <div class="row  ">
+        <div class="col-md-7 justify-content-center  " style="background-color: rgba(0, 0, 0, 0.1);">
+            <div class=" text-center " style="  height: 400px;">
+                <img class="img-fluid align-middle  " style="max-height: 100%" id="mainPhoto" src="@Model.Pictures[0].PicturePath" alt="">
             </div>
-        
-            <div class="col-md-5">
-                <h3 class="my-3">Szczegóły</h3>
-                <ul>
-                    <li>Autor: <b>@Model.User</b></li>
-                    <li>Kategoria:<b>@Model.Category</b></li>
-                    <li>Miasto: <b>@Model.City</b></li>
-                    @if (Model.District != null)
+            <div class="row my-2 align-middle" style="background-color:rgba(0,0,0,0.4);">
+                @for (int i = 0; i < Model.Pictures.Count; i++)
                     {
-                        <li>Dzielnica: <b>@Model.District</b></li>
+                <div class="col-md-3 text-center" style="height: 100px;  ">
+                    <img src="@Model.Pictures[i].PicturePath" id="photo+@i" onclick="changeMainPhoto(this)" class="img-fluid rounded" style="height: 100px; ">
+                </div>
                     }
-                    <li>Ulica: <b>@Model.Street</b></li>
-                </ul>
-                <h3 class="my-3">Opis:</h3>
-                <p>@Model.Description</p>
             </div>
-
         </div>
+
+        <div class="col-md-5">
+            <h3 class="my-3">Szczegóły</h3>
+            <ul>
+                <li>Autor: <b>@Model.User</b></li>
+                <li>Kategoria:<b>@Model.Category</b></li>
+                <li>Miasto: <b>@Model.City</b></li>
+                @if (Model.District != null)
+                    {
+                <li>Dzielnica: <b>@Model.District</b></li>
+                    }
+                <li>Ulica: <b>@Model.Street</b></li>
+            </ul>
+            <h3 class="my-3">Opis:</h3>
+            <p>@Model.Description</p>
+        </div>
+
     </div>
+</div>
+
+
 
 <script>
     function changeMainPhoto(e) {
         var newSrc = $(e).attr('src');
         $('#mainPhoto').attr("src", newSrc);
     }
-
 </script>

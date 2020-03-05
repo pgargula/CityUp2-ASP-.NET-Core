@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,10 +19,16 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Helpers;
+using PracaInzWebApplication.Models;
+using PracaInzWebApplication.Models.ViewModels;
+using PracaInzWebApplication.Services;
 using PracaInzWebApplication.Services.ApplicationService;
 using PracaInzWebApplication.Services.AuthenticationService;
+using PracaInzWebApplication.Services.CategoryService;
+using PracaInzWebApplication.Services.CityService;
+using PracaInzWebApplication.Services.CommentService;
+using PracaInzWebApplication.Services.TextControlService;
 using PracaInzWebApplication.Services.UserService;
-
 
 namespace PracaInzWebApplication
 {
@@ -70,6 +78,8 @@ namespace PracaInzWebApplication
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
+                mc.CreateMap<Application, AddApplication>();
+                mc.CreateMap<AddApplication,Application>();
                 mc.AddProfile(new MappingProfile());
             });
 
@@ -103,11 +113,18 @@ namespace PracaInzWebApplication
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IApplicationService, ApplicationService>();
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<ITextControlService, TextControlService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var defaultCulture = "pl-PL";
+            var culture = new CultureInfo(defaultCulture);
+            culture.NumberFormat.NumberDecimalSeparator = ".";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -128,6 +145,18 @@ namespace PracaInzWebApplication
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(culture),
+                SupportedCultures = new List<CultureInfo>
+                {
+                    culture,
+                },
+                SupportedUICultures = new List<CultureInfo>
+                {
+                    culture,
+                }
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

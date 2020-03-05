@@ -38,6 +38,42 @@ namespace PracaInzWebApplication.Controllers
         {
             return View();
         }
+        [Authorize(Roles.User)]
+        public IActionResult UserApplications()
+        {
+            return View();
+        }
+        [Authorize]
+        public async Task<IActionResult> ApplicationDetails(int applicationId)
+        {
+            ViewBag.ApplicationId = applicationId;
+            var userId = User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            var uri = new Uri(Consts.appAdress + "api/ApiApplication/IsUserApp/" + applicationId + "/" + userId );
+            try
+            {
+                var response = await _httpClient.GetAsync(uri);
+                var resultContent =  Convert.ToBoolean(await response.Content.ReadAsStringAsync());
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    if (resultContent)
+                    {
+                        ViewBag.IsUserApp = "userApp";
+                    }
+                }
+                else
+                    Redirect("~/Home/Index");
+
+            }
+            catch(Exception ex)
+            {
+                //Redirect("~/Home/Index");
+                throw ex;
+            }
+            
+            return View();
+        }
+
+
         [HttpPost]
         public async Task <IActionResult> Login(UserLoginDTO userLoginDTO)   
         {        
@@ -78,10 +114,14 @@ namespace PracaInzWebApplication.Controllers
             { 
                 var requestBody = new StringContent(JsonConvert.SerializeObject(userRegisterDTO), Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(uri, requestBody);
-                var resultContent = await response.Content.ReadAsStringAsync();
-
                 if (response.StatusCode == HttpStatusCode.OK)
-                 return await Login(userLoginDTO);
+                {
+                    var resultContent = await response.Content.ReadAsStringAsync();
+                    if (resultContent=="OK")
+                        return await Login(userLoginDTO);
+                    else
+                        ModelState.AddModelError(string.Empty, "Login zajęty");
+                }
                 ModelState.AddModelError(string.Empty, "Nieudana próba rejestracji");
             }
             catch (Exception e)

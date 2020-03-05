@@ -11,6 +11,7 @@ namespace PracaInzWebApplication.Models.DTO
         [Required(ErrorMessage = "Wprowadź login")]
         public string Login { get; set; }
         [Required(ErrorMessage = "Wprowadź Email")]
+        [EmailAddress]
         public string Email { get; set; }
         [Required(ErrorMessage = "Wprowadź hasło")]
         [DataType(DataType.Password)]

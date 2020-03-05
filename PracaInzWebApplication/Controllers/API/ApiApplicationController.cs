@@ -18,12 +18,10 @@ namespace PracaInzWebApplication.Controllers.API
     public class ApiApplicationController : Controller
     {
         private readonly IApplicationService _applicationService;
-        private IWebHostEnvironment _hostingEnvironment;
-
-        public ApiApplicationController(IApplicationService applicationService, IWebHostEnvironment webHostEnvironment)
+        public ApiApplicationController(IApplicationService applicationService)
         {
             _applicationService = applicationService;
-            _hostingEnvironment = webHostEnvironment;
+            
         }
 
 
@@ -48,30 +46,28 @@ namespace PracaInzWebApplication.Controllers.API
             return await _applicationService.GetDetails(applicationId);
         }
 
+        [HttpGet("{applicationId}/{userId}")]
+        public async Task<bool> IsUserApp(int applicationId, int userId)
+        {
+            return await _applicationService.IsUserApp(applicationId, userId);
+        }
+
+
         // POST api/ApiApplication
         [HttpPost]
-        public async Task Add([FromBody]Application application, IFormFile pictures)
+        public async Task<int> Add([FromBody]AddApplication application)
         {
-            List<string> picturePaths = new List<string>();
-            //todo : multiple pictures
-            if (pictures != null /*&& files.Count > 0*/)
-            {
-                if (pictures.Length > 0)
-                {
-                    string shortPicturePath = "/applications_pictures/" + application.ApplicationId + "/" + pictures.FileName;
-                    string PicturePath = _hostingEnvironment.WebRootPath + shortPicturePath.Replace('/', '\\');
-
-                    picturePaths.Add(shortPicturePath);
-
-                    using (var stream = new FileStream(PicturePath, FileMode.Create))
-                    {
-                        await pictures.CopyToAsync(stream);
-                    }
-                }
-                //}
-            }
-            await _applicationService.AddApplication(application, picturePaths);
+            return await _applicationService.AddApplication(application);
         }
+
+        [HttpPost("{applicationId}")]
+        public async Task AddPhotos([FromForm] List<IFormFile> file,int applicationId)
+        {
+
+            await _applicationService.AddPhotos(file, applicationId);
+        }
+
+
 
 
         // DELETE api/<controller>/5
@@ -80,5 +76,7 @@ namespace PracaInzWebApplication.Controllers.API
         {
             await _applicationService.DeleteApplication(id);
         }
+
+
     }
 }

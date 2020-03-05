@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Moje zgłoszenia";
+}
+<div class="box">
+    <div class="row justify-content-center">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-outline-secondary active">
+                <input onclick="showList()" type="radio" name="options" id="showList" autocomplete="off" checked> <img src="~/images/list.png" width="20" /> Lista
+            </label>
+            <label class="btn btn-outline-secondary">
+                <input onclick="showMap()" type="radio" name="options" id="showMap" autocomplete="off"> <img src="~/images/map.png" width="20" /> Mapa
+            </label>
+        </div>
+    </div>
+
+    <div class="dataTable-custom" id="list">
+        <table id="applicationTable" class="display table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Kategoria</th>
+                    <th>Ulica</th>
+                    <th>Zdjęcie</th>
+                    <th class="text-center">Action</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="appMap" style="display: none;" id="googleMap"></div>
+
+</div>
+
+
+@section Styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/datatables.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/datatables.min.css" asp-append-version="true" />
+    </environment>
+}
+
+@section Scripts{
+
+    <script>
+        var list = document.getElementById("list");
+        var googleMap = document.getElementById("googleMap");
+
+        $('#showList').on('change', function () {       //showing list
+            list.style.display = "block";              
+            googleMap.style.display = "none";
+        });
+        $('#showMap').on('change', function () {   //show map
+            list.style.display = "none";
+            googleMap.style.display = "block";
+        });
+
+
+        var Id =@User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+        var url = "GetAllByUser/" + Id
+        var detailsPath="/User/"
+    </script>
+    <script src="~/js/getMapTableData.js" asp-append-version="true"></script>
+    <script src="~/js/applicationTableContent.js" asp-append-version="true"></script>
+    <script src="~/js/map.js" asp-append-version="true"></script>  
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Qw325kHLvatZTnfpP9M6lGsU5l8qLFI&callback=initMap">
+    </script>
+
+}

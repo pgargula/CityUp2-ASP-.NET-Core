@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PracaInzWebApplication.Data;
 using PracaInzWebApplication.Models;
 using PracaInzWebApplication.Models.ViewModels;
+using PracaInzWebApplication.Services.TextControlService;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,25 +18,17 @@ namespace PracaInzWebApplication.Services.ApplicationService
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-
-        public ApplicationService(AppDbContext context, IMapper mapper)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly ITextControlService _textControlService;
+        public ApplicationService(AppDbContext context, IMapper mapper, IWebHostEnvironment webHostEnvironment, ITextControlService textControlService)
         {
+            _textControlService = textControlService;
             _mapper = mapper;
             _context = context;
+            _hostEnvironment = webHostEnvironment;
         }
 
-        public async Task AddApplication(Application application, IEnumerable<string> picurePaths)
-        {
-
-            await _context.Applications.AddAsync(application);
-            await _context.SaveChangesAsync();
-            List<ApplicationPicture> applicationPictures = new List<ApplicationPicture>();
-            foreach(var picturePath in picurePaths)
-            {
-             applicationPictures.Add(new ApplicationPicture { ApplicationId = application.ApplicationId, PicturePath = picturePath });
-            }
-
-        }
+       
 
         public async Task DeleteApplication(int applicationId)
         {
@@ -47,17 +43,34 @@ namespace PracaInzWebApplication.Services.ApplicationService
             {
                 return await _context.Applications.Include(x => x.Adress)
                      .Include(x => x.Adress.City)
+                     .Include(x => x.Adress.Geolocation)
                      .Include(x => x.Status)
-                     .Include(x => x.AppplicationPictures)
+                     .Include(x => x.ApplicationPictures)
                      .Include(x => x.User)
                      .Include(x => x.Category)
-                     .Where(x => x.Adress.CityId == cityId).ToListAsync();  
+                     .Where(x => x.Adress.CityId == cityId).ToListAsync();
             }
-            catch(Exception ex)
-            { 
-                throw ex; 
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
+        }
+
+        public async Task<bool> IsUserApp(int applicationId, int userId)
+        {
+            try
+            {
+                var tmp = await _context.Applications.Where(x => x.ApplicationId == applicationId &&  x.UserId==userId).ToListAsync();
+                if (tmp.Count > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<ApplicationDetails> GetDetails(int applicationId)
@@ -68,7 +81,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                          .Include(x => x.Adress.City)
                          .Include(x => x.Adress)
                          .Include(x => x.Status)
-                         .Include(x => x.AppplicationPictures)
+                         .Include(x => x.ApplicationPictures)
                          .Include(x => x.User)
                          .Include(x => x.Category)
                          .Where(x => x.ApplicationId == applicationId).FirstOrDefaultAsync();
@@ -81,8 +94,8 @@ namespace PracaInzWebApplication.Services.ApplicationService
                         Category = appDetails.Category.Name,
                         City = appDetails.Adress.City.Name,
                         Description = appDetails.Description,
-                       // District = appDetails.Adress.District.Name,
-                        Pictures = appDetails.AppplicationPictures.ToList(),
+                        // District = appDetails.Adress.District.Name,
+                        Pictures = appDetails.ApplicationPictures.ToList(),
                         Status = appDetails.Status.Label,
                         Street = appDetails.Adress.Street,
                         User = appDetails.User.Login
@@ -94,7 +107,7 @@ namespace PracaInzWebApplication.Services.ApplicationService
                 }
                 //return tmp;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -105,9 +118,94 @@ namespace PracaInzWebApplication.Services.ApplicationService
             return await _context.Applications.Include(x => x.Adress)
                  .Include(x => x.Adress.City)
                  .Include(x => x.Status)
-                 .Include(x => x.AppplicationPictures)
-                 .Include(x=>x.User)
+                 .Include(x=>x.Category)
+                 .Include(x => x.ApplicationPictures)
+                 .Include(x => x.User)
                  .Where(x => x.UserId == userId).ToListAsync();
         }
+        public async Task<int> AddApplication(AddApplication applicationDto)
+        {
+
+            Application application;
+            try
+            {
+                Geolocation geolocation = new Geolocation { Latitude = applicationDto.Latitude, Longitude = applicationDto.Longitude };
+                await _context.Geolocations.AddAsync(geolocation);
+                await _context.SaveChangesAsync();
+                Adress adress = new Adress { CityId = applicationDto.CityId, Street = applicationDto.Street, GeolocationId = geolocation.GeolocationId };
+                await _context.Adresses.AddAsync(adress);
+                await _context.SaveChangesAsync();
+                application = _mapper.Map<AddApplication, Application>(applicationDto);
+                application.AdressId = adress.AdressId;
+                application.StatusId = 1;
+                application.Title = await _textControlService.CensorText(application.Title);
+                application.Description = await _textControlService.CensorText(application.Description);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            try
+            {
+                await _context.Applications.AddAsync(application);
+                await _context.SaveChangesAsync();
+                return application.ApplicationId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task AddPhotos(List<IFormFile> photos, int applicationId)
+        {
+            List<string> picturePaths = new List<string>();
+            Random rnd = new Random();
+            if (photos != null)
+            {
+                try
+                {
+                    if (photos.Count > 0)
+                    {
+                        foreach (var photo in photos)
+                        {
+                            string shortPicturePath = "/applications_pictures/" + DateTime.Now.Ticks + photo.FileName;
+                            string PicturePath = _hostEnvironment.WebRootPath + shortPicturePath.Replace('/', '\\');
+
+                            picturePaths.Add(shortPicturePath);
+
+                            using (var stream = new FileStream(PicturePath, FileMode.Create))
+                            {
+                                await photo.CopyToAsync(stream);
+                            }
+                        }
+                        foreach (var path in picturePaths)
+                        {
+                            _context.ApplicationPictures.Add(new ApplicationPicture { ApplicationId = applicationId, PicturePath = path });
+                        }
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        _context.ApplicationPictures.Add(new ApplicationPicture { ApplicationId = applicationId, PicturePath = "/applications_pictures/NoPhoto.jpg" });
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            
+        }
     }
+
 }
+
+
+                
+            
+        
+    
+

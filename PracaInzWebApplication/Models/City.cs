@@ -12,5 +12,7 @@ namespace PracaInzWebApplication.Models
         public int CityId { get; set; }
         //[Required]
         public string Name { get; set; }
+        public int GeolocationId { get; set; }
+        public Geolocation Geolocation { get; set; }
     }
 }

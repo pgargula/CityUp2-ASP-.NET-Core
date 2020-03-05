@@ -11,6 +11,6 @@ namespace PracaInzWebApplication.Models
         [Key]
         public int CategoryId { get; set; }
         public string Name { get; set; }
-       // public IEnumerable<CategoryTag> CategoryTags { get; set; }
+        public List<TagCategory> TagCategories { get; set; }
     }
 }
