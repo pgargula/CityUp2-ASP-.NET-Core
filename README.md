@@ -1,4 +1,5 @@
 # CityUp2-ASP-.NET-Core
+Adres strony: http://cityup.hostingasp.pl, przykładowe konto: l:user, h:user
 Aplikacja internetowa tworzona w ramach pracy inżynierskiej jest to system, w którym użytkownicy mogą zgłaszać 
 
 napotkane problemy oraz inicjatywy w swoim mieście. Zgłoszenie składa się z: tytułu, opisu, zdjęć, oraz adresu 
